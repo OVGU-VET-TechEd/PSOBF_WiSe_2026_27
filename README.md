@@ -4,7 +4,7 @@ Von der Fachsystematik zur Prozessorientierung: Arbeitsprozesse analysieren, Han
 
 Otto-von-Guericke-Universität Magdeburg · Professur für Ingenieurpädagogik und Didaktik der technischen Bildung (Prof. Dr. Frank Bünning) · Wintersemester 2026/27
 
-**Kurswebseite: <https://ovgu-vet-teched.github.io/PSOBF_WiSe_2026_27/>**
+**Kurswebseite: <https://ovgu-vet-teched.github.io/PSOBF_WiSe_2026_27/>** · Montag, 15:00–17:00 Uhr · 12.10.2026 – 25.01.2027
 
 | Material | Öffnen |
 | --- | --- |
