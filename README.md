@@ -9,6 +9,7 @@ Otto-von-Guericke-Universität Magdeburg · Professur für Ingenieurpädagogik u
 | Material | Öffnen |
 | --- | --- |
 | Organisatorischer Überblick / Kursüberblick | [LiaScript](https://liascript.github.io/course/?https://raw.githubusercontent.com/OVGU-VET-TechEd/PSOBF_WiSe_2026_27/main/00_Organisation/organisational_overview_slide_PSOBF.md) |
+| Sitzung 1 – KI-Einführung I: Large Language Models & Prompting (Folien) | [LiaScript](https://liascript.github.io/course/?https://raw.githubusercontent.com/OVGU-VET-TechEd/PSOBF_WiSe_2026_27/main/Sitzungen/01_KI_Einfuehrung_I_LLM_Prompting.md) |
 | S01 – KI-Einführung I: Funktionsweise & Prompting (Selbstlerneinheit) | [LiaScript](https://liascript.github.io/course/?https://raw.githubusercontent.com/OVGU-VET-TechEd/PSOBF_WiSe_2026_27/main/Selflearn/S01_KI_Einfuehrung_I.md) |
 | S02 – KI-Einführung II: Werkzeuge, Grenzen, Ethik (Selbstlerneinheit) | [LiaScript](https://liascript.github.io/course/?https://raw.githubusercontent.com/OVGU-VET-TechEd/PSOBF_WiSe_2026_27/main/Selflearn/S02_KI_Einfuehrung_II.md) |
 | S03 – Von der Fachsystematik zur Prozessorientierung (Selbstlerneinheit) | [LiaScript](https://liascript.github.io/course/?https://raw.githubusercontent.com/OVGU-VET-TechEd/PSOBF_WiSe_2026_27/main/Selflearn/S03_Fachsystematik_Prozessorientierung.md) |

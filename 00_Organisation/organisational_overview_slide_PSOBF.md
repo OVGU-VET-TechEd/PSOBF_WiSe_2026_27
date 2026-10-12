@@ -64,7 +64,7 @@ Input → Recherche → **selbstständige Exkursion** in einen Betrieb → Präs
 
 | Nr. | Datum      | Format              | Thema                                                              |
 | --- | ---------- | ------------------- | ------------------------------------------------------------------ |
-| 1   | 12.10.2026 | 🟢 Live             | Einführung & Organisation · **KI-Einführung I**: Funktionsweise & Prompting |
+| 1   | 12.10.2026 | 🟢 Live             | Einführung & Organisation · [**KI-Einführung I**](https://liascript.github.io/course/?https://raw.githubusercontent.com/OVGU-VET-TechEd/PSOBF_WiSe_2026_27/main/Sitzungen/01_KI_Einfuehrung_I_LLM_Prompting.md): Funktionsweise & Prompting |
 | 2   | 19.10.2026 | 🔵 Selbstlernen     | **KI-Einführung II**: Werkzeuge, Grenzen, Ethik · Rechercheauftrag eigenes Berufsfeld |
 | 3   | 26.10.2026 | 🟢 Live             | Von der Fachsystematik zur Prozessorientierung                     |
 | 4   | 02.11.2026 | 🟢 Live             | Arbeitsprozesse analysieren und beschreiben I                      |
@@ -121,6 +121,8 @@ An drei Terminen bin ich nicht vor Ort. Sie arbeiten dann mit den Selbstlernmate
 ## Start: Einführung in KI & Prompting
 
 Jedes Seminar beginnt mit einer Einführung in Künstliche Intelligenz. **Teil I heute live, Teil II als Selbstlernmodul.**
+
+👉 **Folien zu Teil I:** [KI-Einführung I – Large Language Models & Prompting (LiaScript)](https://liascript.github.io/course/?https://raw.githubusercontent.com/OVGU-VET-TechEd/PSOBF_WiSe_2026_27/main/Sitzungen/01_KI_Einfuehrung_I_LLM_Prompting.md)
 
 {{1}}
 <section>
