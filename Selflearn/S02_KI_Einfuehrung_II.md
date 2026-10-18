@@ -22,7 +22,7 @@ tags:      PSOBF, Künstliche Intelligenz, Prompting, Halluzination, Faktencheck
 > An diesem Termin gibt es keine Präsenzveranstaltung. Bearbeiten Sie diese Einheit und danach den **Rechercheauftrag** (Abschnitt 4). Grundlage ist die Sitzung [KI-Einführung I](https://liascript.github.io/course/?https://raw.githubusercontent.com/OVGU-VET-TechEd/PSOBF_WiSe_2026_27/main/Sitzungen/01_KI_Einfuehrung_I_LLM_Prompting.md) – nehmen Sie Ihren Prompt vom 12.10. als Startpunkt. Offene Fragen besprechen wir am 26.10.
 
 > [!TIP] ✍️ Übung in Moodle
-> Bearbeiten Sie die Übung im Moodle-Kurs bis **25.10.2026, 23:59 Uhr**: [Übung in Moodle öffnen](https://elearning.ovgu.de/course/view.php?id=22043)
+> Bearbeiten Sie diese Einheit als Übung im Moodle-Kurs (dort wird Ihr Bearbeitungsstand gespeichert) bis **25.10.2026, 23:59 Uhr**: [Übung in Moodle öffnen](https://elearning.ovgu.de/mod/scorm/view.php?id=702171)
 
 **Ablauf (ca. 75 min + Rechercheauftrag)**
 
@@ -199,7 +199,7 @@ Anhang:         Prompt im Wortlaut, Datum, Zweck, was Sie übernommen bzw. geän
 [[___ ___ ___ ___]]
 
 > [!TIP] ✍️ Abgabe als Übung in Moodle
-> Laden Sie **Prompt(s) · Originalantwort · Nachschärfung · Faktencheck-Tabelle · Kennzeichnung** als ein PDF in der Moodle-Übung hoch – bis **25.10.2026, 23:59 Uhr**: [Übung in Moodle öffnen](https://elearning.ovgu.de/course/view.php?id=22043)
+> Laden Sie **Prompt(s) · Originalantwort · Nachschärfung · Faktencheck-Tabelle · Kennzeichnung** als ein PDF in der Moodle-Übung hoch – bis **25.10.2026, 23:59 Uhr**: [Übung in Moodle öffnen](https://elearning.ovgu.de/mod/scorm/view.php?id=702171)
 
 ## 5 · Abschluss
 
