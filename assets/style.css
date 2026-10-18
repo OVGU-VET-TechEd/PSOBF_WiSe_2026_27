@@ -100,6 +100,8 @@ td.links { white-space: nowrap; }
 .lia:hover { background: var(--main); color: #fff; }
 .lia.solid { background: var(--main); color: #fff; }
 .lia.solid:hover { background: var(--main-dark); }
+.lia.moodle { display: table; border-color: var(--self); color: var(--self); }
+.lia.moodle:hover { background: var(--self); color: #fff; }
 .lia.soon { border-style: dashed; color: var(--grey-2); border-color: var(--grey-3); }
 .lia.soon:hover { background: var(--grey-5); color: #000; }
 .legend { font-size: 14px; color: var(--grey-2); margin-top: 8px; }
