@@ -194,12 +194,28 @@ Anhang:         Prompt im Wortlaut, Datum, Zweck, was Sie übernommen bzw. geän
 
 5. **Kennzeichnung:** Werkzeug, Modell, Datum (APA 7).
 
-**Ihr Prompt (Entwurf):**
+> [!TIP] ✍️ Ergebnisse direkt hier eintragen
+> Tragen Sie Ihre Ergebnisse in die Felder unten ein und schicken Sie jedes Feld ab. In Moodle wird Ihr Bearbeitungsstand gespeichert. Die Übung gilt als erledigt, wenn Sie diese Einheit in Moodle bis **25.10.2026, 23:59 Uhr** vollständig bearbeitet haben – eine Datei-Abgabe ist nicht nötig.
+
+**1 · Ihr Prompt (Endfassung):**
 
 [[___ ___ ___ ___]]
 
-> [!TIP] ✍️ Abgabe als Übung in Moodle
-> Laden Sie **Prompt(s) · Originalantwort · Nachschärfung · Faktencheck-Tabelle · Kennzeichnung** als ein PDF in der Moodle-Übung hoch – bis **25.10.2026, 23:59 Uhr**: [Übung in Moodle öffnen](https://elearning.ovgu.de/mod/scorm/view.php?id=702171)
+**2 · Originalantwort** (Kernaussagen oder Auszug, unverändert):
+
+[[___ ___ ___ ___ ___]]
+
+**3 · Nachschärfung:** Was haben Sie geändert – und warum?
+
+[[___ ___ ___]]
+
+**4 · Faktencheck** – mindestens fünf Aussagen, je Zeile: *Aussage – Primärquelle – Ergebnis (✅/⚠️/❌) – Korrektur*
+
+[[___ ___ ___ ___ ___ ___]]
+
+**5 · Kennzeichnung** (Werkzeug, Modell, Datum nach APA 7):
+
+[[___ ___]]
 
 ## 5 · Abschluss
 
