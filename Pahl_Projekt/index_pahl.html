@@ -1,0 +1,1067 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Projekt und Technisches Projekt · PSOBF</title>
+<meta name="description" content="Musterlösung zu Pahl: Projekt und Technisches Projekt – Kennzeichnung nach Beurteilungskriterien, kritische Anmerkungen, Vergleich und Ausgestaltung der Verlaufsphasen mit der Arbeitsprozessmatrix am Beispiel Druckluft-Kolbenmotor.">
+<link rel="icon" href="../assets/ovgu_logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=Barlow+Semi+Condensed:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: light;
+  --main: #7a003f; --main-dark: #5c002f; --second: #bc7f9f; --third: #f5ebf0;
+  --grey-1: #3e3f40; --grey-2: #686a6c; --grey-3: #96999c; --grey-4: #cfd3d6; --grey-5: #e7e9ea; --grey-6: #f8f8f8;
+  --tp: #1565c0; --tp-dark: #0d4a8f; --tp-bg: #eef4fb; --tp-line: #a9c6ea;
+  --ok: #2e7d32; --ok-bg: #edf7ee; --bad: #b3261e; --bad-bg: #fbeeed; --warn: #7a4f00; --warn-bg: #fff6e0;
+  --content-width: 1240px;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; font-family: "Barlow", "Helvetica Neue", Arial, sans-serif; font-size: 16px; line-height: 1.5; color: #000; background: #fff; overflow-wrap: anywhere; }
+a { color: var(--main); }
+button { font: inherit; }
+.wrap { max-width: var(--content-width); margin: 0 auto; padding: 0 16px; }
+.cond { font-family: "Barlow Semi Condensed", "Barlow", sans-serif; }
+b, strong { font-weight: 600; }
+
+/* header */
+.topbar { background: var(--grey-5); font-size: 14px; color: var(--grey-1); }
+.topbar .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding-top: 6px; padding-bottom: 6px; }
+.topbar a { color: var(--grey-1); text-decoration: none; }
+.topbar a:hover { color: var(--main); }
+.hero { background: var(--main); color: #fff; }
+.hero .wrap { padding-top: 24px; padding-bottom: 24px; display: flex; gap: 12px 32px; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; }
+.hero .kicker { font-family: "Barlow Semi Condensed", sans-serif; text-transform: uppercase; letter-spacing: .08em; font-size: 14px; opacity: .85; }
+.hero h1 { font-family: "Barlow Semi Condensed", sans-serif; font-weight: 600; font-size: clamp(28px, 4vw, 42px); line-height: 1.1; margin: 4px 0 6px; }
+.hero .sub { font-size: 18px; margin: 0; opacity: .95; }
+.hero .src { font-size: 14px; opacity: .9; max-width: 400px; }
+
+/* toolbar + tabs */
+.toolbar { position: sticky; top: 0; z-index: 20; background: #fff; border-bottom: 1px solid var(--grey-4); }
+.toolbar .wrap { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; justify-content: space-between; padding-top: 8px; padding-bottom: 8px; }
+.tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+.tab { border: 1px solid var(--grey-4); background: var(--grey-6); color: var(--grey-1); border-radius: 4px; padding: 6px 12px; cursor: pointer; font-size: 15px; line-height: 1.2; }
+.tab:hover:not([aria-selected="true"]) { border-color: var(--main); color: var(--main); }
+.tab[aria-selected="true"] { background: var(--main); border-color: var(--main); color: #fff; }
+.actions { display: flex; gap: 6px; flex-wrap: wrap; }
+.btn { border: 1px solid var(--grey-4); background: #fff; color: var(--grey-1); border-radius: 4px; padding: 5px 10px; cursor: pointer; font-size: 14px; text-decoration: none; display: inline-block; line-height: 1.35; }
+.btn:hover { border-color: var(--main); color: var(--main); }
+.btn.primary { background: var(--main); border-color: var(--main); color: #fff; }
+.btn.primary:hover { background: var(--main-dark); color: #fff; }
+@media (max-width: 640px) {
+  .tabs { flex-wrap: nowrap; overflow-x: auto; width: 100%; padding-bottom: 2px; scrollbar-width: thin; }
+  .tab { flex: none; }
+}
+
+/* panels + typography */
+main { padding-bottom: 32px; }
+.panel { display: none; }
+.panel.active { display: block; }
+.panel > h2 { font-family: "Barlow Semi Condensed", sans-serif; font-weight: 600; color: var(--main); font-size: 28px; line-height: 1.15; margin: 26px 0 6px; }
+.panel .lead { color: var(--grey-1); font-size: 17px; margin: 0 0 18px; max-width: 900px; }
+h3 { font-family: "Barlow Semi Condensed", sans-serif; font-weight: 600; font-size: 22px; line-height: 1.2; margin: 28px 0 10px; border-bottom: 3px solid var(--main); padding-bottom: 4px; }
+h4 { font-family: "Barlow Semi Condensed", sans-serif; font-weight: 600; font-size: 17px; margin: 0 0 6px; color: var(--grey-1); text-transform: uppercase; letter-spacing: .04em; }
+p { margin: 0 0 10px; }
+ul, ol { margin: 0 0 10px; padding-left: 22px; }
+li { margin: 2px 0; }
+.muted { color: var(--grey-2); }
+.small { font-size: 14px; }
+.pg { display: inline-block; font-size: 12px; color: var(--grey-2); border: 1px solid var(--grey-4); border-radius: 3px; padding: 0 5px; margin-left: 4px; white-space: nowrap; vertical-align: 1px; }
+
+/* method colours */
+.badge { display: inline-block; font-family: "Barlow Semi Condensed", sans-serif; font-weight: 600; font-size: 13px; letter-spacing: .04em; text-transform: uppercase; color: #fff; border-radius: 3px; padding: 1px 8px; white-space: nowrap; }
+.badge.p { background: var(--main); }
+.badge.t { background: var(--tp); }
+.badge.b { background: var(--grey-1); }
+.tag { display: inline-block; font-size: 13px; color: var(--grey-1); background: var(--grey-5); border-radius: 3px; padding: 1px 7px; white-space: nowrap; }
+
+/* callouts */
+.callout { border-left: 4px solid var(--grey-3); background: var(--grey-6); padding: 10px 14px; margin: 14px 0; border-radius: 0 4px 4px 0; }
+.callout > :last-child { margin-bottom: 0; }
+.callout .ct { font-weight: 600; display: block; margin-bottom: 2px; }
+.callout.lead-q { border-color: var(--main); background: var(--third); font-size: 18px; }
+.callout.warn { border-color: #c98a00; background: var(--warn-bg); }
+.callout.tip { border-color: var(--tp); background: var(--tp-bg); }
+.callout.own { border: 1px dashed var(--grey-3); border-left: 4px dashed var(--grey-3); background: #fff; }
+
+/* grids + cards */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.card { border: 1px solid var(--grey-4); border-radius: 6px; padding: 14px 16px; background: #fff; }
+.card.p { border-top: 4px solid var(--main); }
+.card.t { border-top: 4px solid var(--tp); }
+.card > :last-child { margin-bottom: 0; }
+@media (max-width: 900px) { .grid4 { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 760px) { .grid2, .grid4 { grid-template-columns: 1fr; } }
+
+/* task cards */
+.task .no { font-family: "Barlow Semi Condensed", sans-serif; font-weight: 600; color: var(--main); font-size: 15px; text-transform: uppercase; letter-spacing: .05em; }
+.task .q { font-weight: 600; margin: 4px 0 8px; }
+.task .a { font-size: 15px; color: var(--grey-1); }
+.task .btn { margin-top: 6px; }
+
+/* venn strip */
+.venn { display: grid; grid-template-columns: 1fr 1.25fr 1fr; gap: 0; margin: 12px 0 4px; border-radius: 8px; overflow: hidden; border: 1px solid var(--grey-4); }
+.venn > div { padding: 12px 14px; }
+.venn .vp { background: var(--third); }
+.venn .vb { background: linear-gradient(90deg, var(--third), var(--tp-bg)); border-left: 1px solid var(--grey-4); border-right: 1px solid var(--grey-4); }
+.venn .vt { background: var(--tp-bg); }
+.venn h4 { margin-bottom: 8px; }
+.venn .vp h4 { color: var(--main); }
+.venn .vt h4 { color: var(--tp); }
+.venn .chiplist { display: flex; flex-wrap: wrap; gap: 5px; }
+.venn .chiplist span { background: #fff; border: 1px solid var(--grey-4); border-radius: 999px; padding: 1px 9px; font-size: 14px; }
+@media (max-width: 760px) { .venn { grid-template-columns: 1fr; } .venn .vb { border: 0; border-top: 1px solid var(--grey-4); border-bottom: 1px solid var(--grey-4); } }
+
+/* chips + segmented controls */
+.ctrl { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; margin: 6px 0 14px; }
+.ctrl .lab { font-size: 14px; color: var(--grey-2); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { border: 1px solid var(--grey-4); background: #fff; border-radius: 999px; padding: 3px 12px; cursor: pointer; font-size: 14px; color: var(--grey-1); }
+.chip:hover { border-color: var(--main); color: var(--main); }
+.chip[aria-pressed="true"] { background: var(--third); border-color: var(--second); color: var(--main); font-weight: 600; }
+.seg { display: inline-flex; border: 1px solid var(--grey-4); border-radius: 4px; overflow: hidden; flex-wrap: wrap; }
+.seg button { border: 0; background: #fff; padding: 5px 12px; cursor: pointer; font-size: 14px; color: var(--grey-1); }
+.seg button + button { border-left: 1px solid var(--grey-4); }
+.seg button[aria-pressed="true"] { background: var(--grey-1); color: #fff; }
+.seg button[aria-pressed="true"].p { background: var(--main); }
+.seg button[aria-pressed="true"].t { background: var(--tp); }
+
+/* criteria */
+.crit { border: 1px solid var(--grey-4); border-radius: 6px; margin: 0 0 12px; overflow: hidden; }
+.crit-h { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; padding: 8px 14px; background: var(--grey-6); border-bottom: 1px solid var(--grey-4); }
+.crit-h .nr { font-family: "Barlow Semi Condensed", sans-serif; font-weight: 600; color: #fff; background: var(--grey-1); border-radius: 50%; width: 24px; height: 24px; display: inline-grid; place-items: center; font-size: 14px; flex: none; }
+.crit-h .nm { font-family: "Barlow Semi Condensed", sans-serif; font-weight: 600; font-size: 19px; }
+.crit-h .lq { color: var(--grey-2); font-size: 14px; font-style: italic; }
+.crit-b { display: grid; grid-template-columns: 1fr 1fr; }
+.crit-b > div { padding: 10px 14px; }
+.crit-b > .cp { border-right: 1px solid var(--grey-4); }
+.crit-b .mh { margin-bottom: 4px; }
+.crit-b.only-p, .crit-b.only-t { grid-template-columns: 1fr; }
+.crit-b.only-p > .ct, .crit-b.only-t > .cp { display: none; }
+.crit-b.only-p > .cp { border-right: 0; }
+@media (max-width: 760px) { .crit-b { grid-template-columns: 1fr; } .crit-b > .cp { border-right: 0; border-bottom: 1px solid var(--grey-4); } }
+
+/* phase explorer */
+.pgrid { display: grid; grid-template-columns: 150px 2fr 1.4fr 2fr; gap: 8px; align-items: stretch; }
+.pg-band { font-family: "Barlow Semi Condensed", sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; font-size: 14px; color: var(--grey-1); background: var(--grey-5); border-radius: 4px; padding: 4px 10px; text-align: center; }
+.pg-label { display: flex; align-items: center; font-family: "Barlow Semi Condensed", sans-serif; font-weight: 600; font-size: 17px; }
+.pg-label.p { color: var(--main); }
+.pg-label.t { color: var(--tp); }
+.pg-cell { display: flex; gap: 6px; flex-wrap: wrap; align-content: stretch; }
+.pg-cell .cap { display: none; }
+.step { flex: 1 1 120px; min-height: 64px; border-radius: 6px; border: 2px solid transparent; cursor: pointer; text-align: left; padding: 8px 10px; color: #fff; line-height: 1.2; font-size: 15px; }
+.step .sn { display: block; font-family: "Barlow Semi Condensed", sans-serif; font-size: 13px; opacity: .85; text-transform: uppercase; letter-spacing: .05em; }
+.step.p { background: var(--main); }
+.step.t { background: var(--tp); }
+.step:hover { filter: brightness(1.12); }
+.step[aria-pressed="true"] { outline: 3px solid #000; outline-offset: 2px; }
+.pdetail { margin-top: 16px; border: 1px solid var(--grey-4); border-radius: 6px; padding: 14px 16px; }
+.pdetail.p { border-left: 6px solid var(--main); }
+.pdetail.t { border-left: 6px solid var(--tp); }
+.pd-head { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; margin-bottom: 10px; }
+.pd-head h3 { border: 0; margin: 0; padding: 0; font-size: 24px; }
+@media (max-width: 720px) {
+  .pgrid { grid-template-columns: 1fr; }
+  .pg-band, .pg-corner { display: none; }
+  .pg-label { margin-top: 8px; }
+  .pg-cell .cap { display: block; width: 100%; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--grey-2); }
+}
+
+/* critique */
+.kcard { border: 1px solid var(--grey-4); border-radius: 6px; padding: 10px 12px; margin: 0 0 8px; display: grid; grid-template-columns: auto 1fr; gap: 4px 10px; }
+.kcard .kid { font-family: "Barlow Semi Condensed", sans-serif; font-weight: 600; font-size: 15px; border-radius: 4px; color: #fff; padding: 2px 7px; height: max-content; }
+.kcard.p .kid { background: var(--main); }
+.kcard.t .kid { background: var(--tp); }
+.kcard .kmeta { grid-column: 2; display: flex; gap: 6px; flex-wrap: wrap; }
+.colhead { display: flex; align-items: center; gap: 8px; margin: 0 0 10px; }
+.colhead h4 { margin: 0; }
+.empty { color: var(--grey-2); font-style: italic; }
+
+/* tables */
+.tablewrap { overflow-x: auto; margin: 0 0 14px; }
+table.data { border-collapse: collapse; width: 100%; font-size: 15px; }
+table.data th, table.data td { border: 1px solid var(--grey-4); padding: 7px 10px; vertical-align: top; text-align: left; }
+table.data thead th { background: var(--grey-5); font-family: "Barlow Semi Condensed", sans-serif; font-weight: 600; font-size: 16px; }
+table.data thead th.p { background: var(--main); color: #fff; }
+table.data thead th.t { background: var(--tp); color: #fff; }
+table.data tbody th { background: var(--grey-6); font-weight: 600; width: 18%; }
+@media (max-width: 760px) {
+  table.stack, table.stack tbody, table.stack tr, table.stack th, table.stack td { display: block; width: 100%; }
+  table.stack thead { display: none; }
+  table.stack tr { border: 1px solid var(--grey-4); border-radius: 6px; margin: 0 0 10px; overflow: hidden; }
+  table.stack th, table.stack td { border: 0; border-bottom: 1px solid var(--grey-5); }
+  table.stack td::before { content: attr(data-l); display: block; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--grey-2); font-weight: 600; }
+}
+
+/* commonalities */
+.common { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; margin: 0 0 6px; }
+.common .card { padding: 10px 12px; border-left: 4px solid var(--grey-1); }
+.common .card b { display: block; }
+
+/* quiz */
+.quiz { border: 1px solid var(--grey-4); border-radius: 6px; overflow: hidden; }
+.qhead { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; padding: 8px 14px; background: var(--grey-6); border-bottom: 1px solid var(--grey-4); }
+.qscore { font-weight: 600; }
+.qitem { padding: 10px 14px; border-bottom: 1px solid var(--grey-5); }
+.qitem:last-child { border-bottom: 0; }
+.qrow { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 16px; align-items: center; }
+.qopts { display: flex; gap: 6px; flex-wrap: wrap; }
+.qopt { border: 1px solid var(--grey-4); background: #fff; border-radius: 4px; padding: 3px 10px; cursor: pointer; font-size: 14px; }
+.qopt:hover:not(:disabled) { border-color: var(--grey-1); }
+.qopt:disabled { cursor: default; }
+.qopt.right { background: var(--ok); border-color: var(--ok); color: #fff; }
+.qopt.wrong { background: var(--bad); border-color: var(--bad); color: #fff; }
+.qfb { margin-top: 6px; font-size: 14px; padding: 6px 10px; border-radius: 4px; }
+.qfb.ok { background: var(--ok-bg); color: #1b5e20; }
+.qfb.no { background: var(--bad-bg); color: #8c1d18; }
+
+/* matrix */
+.flow { display: flex; flex-wrap: wrap; align-items: stretch; gap: 8px; margin: 6px 0 16px; }
+.flow .fb { flex: 1 1 200px; border: 1px solid var(--grey-4); border-radius: 6px; padding: 10px 12px; background: var(--grey-6); }
+.flow .fb.hl { background: var(--third); border-color: var(--second); }
+.flow .fa { align-self: center; color: var(--grey-3); font-size: 22px; }
+.flow .fb b { display: block; font-family: "Barlow Semi Condensed", sans-serif; font-size: 16px; }
+@media (max-width: 760px) { .flow .fa { transform: rotate(90deg); width: 100%; text-align: center; } }
+
+.chev { display: block; color: #fff; font-family: "Barlow Semi Condensed", sans-serif; font-weight: 600; font-size: 16px; padding: 7px 22px 7px 22px; clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 50%, calc(100% - 14px) 100%, 0 100%, 14px 50%); background: var(--grey-1); text-align: center; }
+.chev.first { clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 50%, calc(100% - 14px) 100%, 0 100%); padding-left: 12px; }
+.chev.p { background: var(--main); }
+.chev.t { background: var(--tp); }
+
+.map { display: grid; grid-template-columns: 170px repeat(4, 1fr); gap: 6px; align-items: stretch; }
+.map .ml { font-family: "Barlow Semi Condensed", sans-serif; font-weight: 600; display: flex; align-items: center; }
+.map .ml.p { color: var(--main); }
+.map .ml.t { color: var(--tp); }
+.map .mc { border-radius: 4px; padding: 6px 8px; font-size: 14px; }
+.map .mc.p { background: var(--third); }
+.map .mc.t { background: var(--tp-bg); }
+.map .mc .tag { margin-top: 3px; background: #fff; }
+.map .mcap { display: none; }
+@media (max-width: 760px) {
+  .map { grid-template-columns: 1fr 1fr; }
+  .map .mhead, .map .mcorner { display: none; }
+  .map .ml { grid-column: 1 / -1; margin-top: 6px; }
+  .map .mcap { display: block; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--grey-2); }
+}
+
+table.mx { border-collapse: separate; border-spacing: 0; width: 100%; font-size: 14.5px; table-layout: fixed; }
+table.mx th, table.mx td { vertical-align: top; text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--grey-4); border-right: 1px solid var(--grey-5); transition: opacity .15s; }
+table.mx thead th { border-bottom: 0; padding: 0 3px 8px; background: #fff; }
+table.mx thead th.colh { cursor: pointer; }
+table.mx thead th.colh:focus-visible { outline: 2px solid #000; }
+table.mx .pahl { display: block; font-size: 14px; font-weight: 600; margin-top: 5px; padding: 0 6px; }
+table.mx .band { display: inline-block; margin: 3px 6px 0; }
+table.mx tbody th { width: 150px; background: var(--grey-6); font-family: "Barlow Semi Condensed", sans-serif; font-weight: 600; font-size: 16px; }
+table.mx tbody th small { display: block; font-family: "Barlow", sans-serif; font-weight: 400; font-size: 12.5px; color: var(--grey-2); }
+table.mx thead th:first-child { width: 150px; }
+table.mx td ul, table.mx td ol { padding-left: 18px; margin: 0; }
+table.mx tr.r-fach td, table.mx tr.r-methode td, table.mx tr.r-sozial td { background: #fcfbfc; }
+table.mx.m-t tr.r-fach td, table.mx.m-t tr.r-methode td, table.mx.m-t tr.r-sozial td { background: #f9fbfe; }
+table.mx .dim { opacity: .28; }
+table.mx td.fc { box-shadow: inset 3px 0 0 var(--grey-1); }
+.mx-cards { display: none; }
+.mxcard { border: 1px solid var(--grey-4); border-radius: 6px; margin: 0 0 12px; overflow: hidden; }
+.mxcard .mxh { padding: 8px; background: var(--grey-6); }
+.mxcard .mxh .pahl { display: block; font-weight: 600; margin-top: 5px; }
+.mxcard .mxr { padding: 8px 12px; border-top: 1px solid var(--grey-5); font-size: 15px; }
+.mxcard .mxr .rl { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--grey-2); font-weight: 600; }
+.mxcard .mxr ul, .mxcard .mxr ol { padding-left: 18px; margin: 0; }
+@media (max-width: 900px) { .mx-tablewrap { display: none; } .mx-cards { display: block; } }
+.scenario { border: 1px solid var(--grey-4); border-radius: 6px; padding: 12px 14px; margin: 0 0 14px; }
+.scenario.p { border-left: 6px solid var(--main); background: var(--third); }
+.scenario.t { border-left: 6px solid var(--tp); background: var(--tp-bg); }
+.scenario h4 { margin-bottom: 4px; }
+
+.mapq { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 8px 16px; margin: 8px 0 10px; }
+.mapq label { display: flex; justify-content: space-between; align-items: center; gap: 8px; border: 1px solid var(--grey-4); border-radius: 4px; padding: 6px 8px; font-size: 15px; }
+.mapq label.ok { border-color: var(--ok); background: var(--ok-bg); }
+.mapq label.no { border-color: var(--bad); background: var(--bad-bg); }
+.mapq select { font: inherit; font-size: 14px; padding: 2px 4px; max-width: 150px; }
+
+details.more { border: 1px solid var(--grey-4); border-radius: 6px; padding: 8px 12px; margin: 10px 0 14px; }
+details.more > summary { cursor: pointer; font-weight: 600; color: var(--main); }
+details.more[open] > summary { margin-bottom: 10px; }
+
+footer { border-top: 1px solid var(--grey-4); background: var(--grey-6); color: var(--grey-2); font-size: 14px; }
+footer .wrap { padding-top: 14px; padding-bottom: 18px; }
+.print-only { display: none; }
+
+@media print {
+  .toolbar, .noprint, .actions, .ctrl, .qopts, .tabs { display: none !important; }
+  body.printall .panel { display: block !important; break-before: page; }
+  body.printall .panel:first-of-type { break-before: auto; }
+  body.printall #mx-screen { display: none; }
+  body.printall .print-only { display: block; }
+  .mx-tablewrap { display: block !important; }
+  .mx-cards { display: none !important; }
+  .hero { background: #fff; color: var(--main); border-bottom: 3px solid var(--main); }
+  .crit, .kcard, .card, .qitem, table.mx tr { break-inside: avoid; }
+  a { color: #000; }
+  details.more { border: 0; padding: 0; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="wrap">
+  <span><a href="https://www.ovgu.de" target="_blank" rel="noopener">Otto-von-Guericke-Universität Magdeburg</a> · Prozesse, Systeme und Organisation betrieblicher Facharbeit (PSOBF)</span>
+  <a href="../index.html">← Kurswebseite</a>
+</div></div>
+
+<div class="hero"><div class="wrap">
+  <div>
+    <div class="kicker">Musterlösung · Ausbildungs- und Unterrichtsverfahren nach Pahl</div>
+    <h1>Projekt und Technisches Projekt</h1>
+    <p class="sub">Kennzeichnung · Kritik · Vergleich · Verlaufsphasen mit der Arbeitsprozessmatrix</p>
+  </div>
+  <div class="src">Nach: Pahl (2021), „Projekt“ S. 387–392 und „Technisches Projekt und technische Projektierung“ S. 472–477 · Howe/Knutzen (2014), Lernbaustein 3</div>
+</div></div>
+
+<div class="toolbar"><div class="wrap">
+  <div class="tabs" role="tablist" aria-label="Abschnitte" id="tabs">
+    <button type="button" class="tab" role="tab" id="tab-start" aria-controls="start" data-tab="start">Überblick</button>
+    <button type="button" class="tab" role="tab" id="tab-kennzeichnung" aria-controls="kennzeichnung" data-tab="kennzeichnung">1 · Kennzeichnung</button>
+    <button type="button" class="tab" role="tab" id="tab-phasen" aria-controls="phasen" data-tab="phasen">Verlaufsphasen</button>
+    <button type="button" class="tab" role="tab" id="tab-kritik" aria-controls="kritik" data-tab="kritik">2 · Kritik</button>
+    <button type="button" class="tab" role="tab" id="tab-vergleich" aria-controls="vergleich" data-tab="vergleich">3 · Vergleich</button>
+    <button type="button" class="tab" role="tab" id="tab-matrix" aria-controls="matrix" data-tab="matrix">4 · Arbeitsprozessmatrix</button>
+    <button type="button" class="tab" role="tab" id="tab-quellen" aria-controls="quellen" data-tab="quellen">Quellen</button>
+  </div>
+  <div class="actions">
+    <a class="btn" href="https://liascript.github.io/course/?https://raw.githubusercontent.com/OVGU-VET-TechEd/PSOBF_WiSe_2026_27/main/Pahl_Projekt/Pahl_Projekt_Musterloesung.md" target="_blank" rel="noopener" title="Dieselbe Musterlösung als LiaScript-Kurs mit Quizzen">LiaScript-Fassung</a>
+    <button type="button" class="btn primary" id="b-print" title="Alle Abschnitte drucken oder als PDF speichern">Alles drucken</button>
+  </div>
+</div></div>
+
+<main class="wrap">
+<noscript><div class="callout warn"><span class="ct">JavaScript ist deaktiviert.</span>Die interaktiven Bereiche benötigen JavaScript. Die vollständige Musterlösung steht auch als LiaScript-Fassung zur Verfügung.</div></noscript>
+
+<!-- ===================== ÜBERBLICK ===================== -->
+<section class="panel" id="start" role="tabpanel" aria-labelledby="tab-start">
+  <h2>Aufgabe und Antworten auf einen Blick</h2>
+  <div class="callout lead-q"><span class="ct">🧭 Leitfrage</span>Was unterscheidet das allgemeine <b>Projekt</b> vom <b>Technischen Projekt</b> – und wie lassen sich die Verlaufsphasen beider Verfahren mit der <b>Arbeitsprozessmatrix</b> inhaltlich füllen?</div>
+
+  <div class="grid4" id="tasks"></div>
+
+  <h3>Die Verfahren im Verhältnis</h3>
+  <p class="muted">Das Technische Projekt ist eine fachspezifische Ausprägung des Projekts – die Grenzen sind fließend (Pahl, 2021, S. 387f.).</p>
+  <div class="venn">
+    <div class="vp"><h4>Nur Projekt</h4><div class="chiplist"><span>sinnvoller Gebrauchswert</span><span>Gesellschaft verändern</span><span>Reformpädagogik</span><span>Selbst- und Fremdbewertung</span><span>Planspiel</span><span>wer–was–wie–warum</span><span>Schemata-Skepsis (Frey)</span></div></div>
+    <div class="vb"><h4>Gemeinsam</h4><div class="chiplist"><span>Makromethode</span><span>praktische Tätigkeit</span><span>Lernende planen und führen aus</span><span>Produktorientierung</span><span>Einstieg–Hauptteil–Schluss</span><span>Brainstorming</span><span>arbeitsteilige Gruppen</span><span>3 Abschlussvarianten</span><span>Lernortkooperation</span><span>Fallstudie</span><span>hoher Aufwand</span></div></div>
+    <div class="vt"><h4>Nur Technisches Projekt</h4><div class="chiplist"><span>VDI 2222</span><span>Projektieren im Hauptteil</span><span>Ingenieurtradition</span><span>Pflichtenheft & Stückliste</span><span>Funktion + Ästhetik</span><span>Technisches Experiment</span><span>Transfer</span></div></div>
+  </div>
+
+  <div class="callout"><span class="ct">📖 Zur Textgrundlage</span>Die Aufgabenstellung verweist auf die Ausgabe von 2005 (S. 289 bzw. S. 379). Diese Lösung beruht auf den Kapiteln der Ausgabe von <b>2021</b>; alle Seitenangaben beziehen sich auf diese Ausgabe: „Projekt“ <b>S. 387–392</b>, „Technisches Projekt und technische Projektierung“ <b>S. 472–477</b>.</div>
+</section>
+
+<!-- ===================== KENNZEICHNUNG ===================== -->
+<section class="panel" id="kennzeichnung" role="tabpanel" aria-labelledby="tab-kennzeichnung">
+  <h2>1 · Wie sind die Verfahren gekennzeichnet?</h2>
+  <p class="lead">Pahl beschreibt jedes Verfahren mit derselben Übersicht aus <b>acht Beurteilungskriterien</b> (jeweils Abbildung 1). Davor stehen Einordnung und Kennzeichnung.</p>
+
+  <div class="grid2">
+    <div class="card p">
+      <div class="colhead"><span class="badge p">Projekt</span><span class="pg">S. 387f.</span></div>
+      <ul>
+        <li><b>Herkunft:</b> amerikanische (Richards, Dewey, Kilpatrick) und deutsche Reformpädagogik (Otto, Gaudig, Lietz, Petersen, Kerschensteiner), Anfang 20. Jh.</li>
+        <li><b>Anspruch:</b> einseitig frontalen Unterricht durchbrechen; Fachtheorie und Fachpraxis integrieren.</li>
+        <li><b>Abgrenzung:</b> Andere Bereiche (Gesellschaft, Wirtschaft) werden stärker thematisiert; die Spezifik von Arbeit und Technik ist nicht unbedingt vorrangig. Grenzen zum Technischen Projekt <b>fließend</b>.</li>
+        <li><b>Gemeinsamer Kern aller Projektbegriffe:</b> praktische Tätigkeit · Lernende in Planung und Ausführung · materielle Mittel · erweiterter Erfahrungshorizont in Berufs- und Lebenswelt.</li>
+        <li><b>Lernorte:</b> keine „tayloristische“ Zuweisung, sondern Projekte von Betrieb und Schule gemeinsam – z. B. „Druckluft-Kolbenmotor“ (Zimdars, 1992).</li>
+      </ul>
+    </div>
+    <div class="card t">
+      <div class="colhead"><span class="badge t">Technisches Projekt</span><span class="pg">S. 472</span></div>
+      <ul>
+        <li><b>Herkunft:</b> Frankreich, Anfang 18. Jh., im Technikbereich (Architektur); Schub durch den Ingenieurbedarf der Industrialisierung.</li>
+        <li><b>Begriff</b> (Gudjons, 1993): eine der vier Unterrichtsgroßformen nach Klafki – gemeinsam formuliertes Problem, Plan, handlungsorientierte Bearbeitung, Ergebnis als Produkt.</li>
+        <li><b>Kennzeichnung:</b> Aufgabe durch <b>Technik und die damit verbundene Arbeit</b> geprägt; der <b>technische Gehalt</b> ist die zentrale Größe.</li>
+        <li>Bedeutsam sind das <b>technische Artefakt</b> und der <b>Prozess seiner Erarbeitung</b> – daher entscheidet die arbeits- und technikdidaktische <b>Auswahl der Aufgabe</b>.</li>
+        <li><b>Projektieren</b> ist in der Technik ein gängiger Vorgang beim Entwerfen, Planen und Erstellen anspruchsvollerer Produkte.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Übersicht nach Beurteilungskriterien</h3>
+  <div class="ctrl">
+    <div><div class="lab">Kriterium</div><div class="chips" id="crit-chips"></div></div>
+    <div><div class="lab">Ansicht</div><div class="seg" id="crit-view">
+      <button type="button" data-view="both" aria-pressed="true">Nebeneinander</button>
+      <button type="button" data-view="p" class="p" aria-pressed="false">Nur Projekt</button>
+      <button type="button" data-view="t" class="t" aria-pressed="false">Nur Technisches Projekt</button>
+    </div></div>
+  </div>
+  <div id="crit-list"></div>
+</section>
+
+<!-- ===================== VERLAUFSPHASEN ===================== -->
+<section class="panel" id="phasen" role="tabpanel" aria-labelledby="tab-phasen">
+  <h2>Verlaufsphasen im Vergleich</h2>
+  <p class="lead">Beide Verfahren folgen der Grobstruktur <b>Einstieg – Hauptteil – Schluss</b>, schneiden sie aber unterschiedlich (jeweils Abbildung 2). Wählen Sie eine Stufe, um Handlungsablauf und didaktischen Kommentar zu sehen.</p>
+
+  <div class="pgrid" id="pgrid"></div>
+  <div id="pdetail"></div>
+
+  <div class="callout tip"><span class="ct">🔍 Beobachtung</span>Beim Technischen Projekt rückt die <b>Planung in den Hauptteil</b>: Das <b>Projektieren selbst</b> ist der Kern des Verfahrens und nicht nur Vorbereitung. Beurteilung und Abschluss verschmelzen zu einer Stufe, und der <b>Transfer</b> des Vorgehens („Lösungsalgorithmus“) wird ausdrücklich Ziel.</div>
+  <div class="callout warn"><span class="ct">⚠️ Nur Anregungen</span>Die Verlaufsphasen des Projekts sind ausdrücklich <b>Anregungen</b>; jedes nicht sach- und verlaufsgerechte Festhalten an einer starren Struktur schmälert den Erfolg (S. 391). Auch beim Technischen Projekt lässt sich das Artikulationsschema situativ modifizieren (S. 473).</div>
+
+  <h3>Schlussbetrachtungen</h3>
+  <div class="grid2">
+    <div class="card p">
+      <div class="colhead"><span class="badge p">Projekt</span><span class="pg">S. 391f.</span></div>
+      <ul>
+        <li>Erhebliche Bedeutung für die <b>Problemlösefähigkeit</b> künftiger Fachkräfte.</li>
+        <li><b>Fächerübergreifend, ganzheitlich, handlungsorientierend</b>; Problem im Gesamtzusammenhang, z. B. ökonomisch, ökologisch, sozial (Ott, 1997).</li>
+        <li>Verknüpfung von Theorie und Praxis „fast von selbst“; Ziele und Schritte von allen bestimmt → hohe <b>Selbstverwirklichung</b>.</li>
+        <li>Befreit aus verengter Betrachtungsweise; „kein planloses Ausprobieren, sondern zielgerichtetes Tun“.</li>
+        <li>Handlungssituationen <b>berufsdidaktisch organisieren</b>; <b>Mut und Engagement</b> der Lehrkräfte.</li>
+      </ul>
+    </div>
+    <div class="card t">
+      <div class="colhead"><span class="badge t">Technisches Projekt</span><span class="pg">S. 476f.</span></div>
+      <ul>
+        <li>Lernort von Fall zu Fall: Schule mit begrenzten Freiräumen; im Betrieb steht die <b>Arbeit für den Betrieb</b> im Vordergrund.</li>
+        <li>Idealfall <b>Lernortkooperation</b>: Projektierung in der Schule → Durchführung und Machbarkeit im Betrieb → Kontrolle und Abschluss in der Schule (Heidegger & Rauner, 1995); auch ÜBS (Bonz, 1986).</li>
+        <li>Lernpotenzial im <b>Fachlich-Prozessualen des Projektierens</b> (VDI-Richtlinie).</li>
+        <li>Projektieren ist <b>offen und dynamisch</b>, nur begrenzt steuerbar, vermittelt <b>Unsicherheit</b>; Lehrkraft begleitet und organisiert, hält das Projekt überschaubar.</li>
+        <li>Ertrag: <b>Realitätsbezug</b>, Zusammenhänge von Arbeit und Technik besser erfasst.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== KRITIK ===================== -->
+<section class="panel" id="kritik" role="tabpanel" aria-labelledby="tab-kritik">
+  <h2>2 · Welche kritischen Anmerkungen macht Pahl?</h2>
+  <p class="lead">Alle Punkte stammen aus den Texten (mit Seitenangabe). Filtern Sie nach Themen, um die Kritik beider Verfahren nebeneinander zu sehen.</p>
+  <div class="ctrl"><div><div class="lab">Thema</div><div class="chips" id="k-chips"></div></div></div>
+  <div class="grid2">
+    <div><div class="colhead"><span class="badge p">Projekt</span><span class="muted small" id="k-count-p"></span></div><div id="k-p"></div></div>
+    <div><div class="colhead"><span class="badge t">Technisches Projekt</span><span class="muted small" id="k-count-t"></span></div><div id="k-t"></div></div>
+  </div>
+  <div class="callout tip"><span class="ct">💡 Muster in der Kritik</span><b>Beide Texte</b> kritisieren den inflationären Projektbegriff und den hohen Aufwand. Beim <b>Projekt</b> zielt die Kritik vor allem auf die <b>Umsetzungspraxis</b> (zu selten, zu einseitig, zu schematisch). Beim <b>Technischen Projekt</b> zielt sie auf die <b>Offenheit und Komplexität der Sache</b> und die daraus folgende <b>Unsicherheit in der Steuerung</b>.</div>
+
+  <h3>Weiterführende eigene Einschätzung</h3>
+  <div class="callout own"><span class="ct">Nicht bei Pahl – Diskussionsimpulse</span><ul id="own" style="margin:6px 0 0"></ul></div>
+</section>
+
+<!-- ===================== VERGLEICH ===================== -->
+<section class="panel" id="vergleich" role="tabpanel" aria-labelledby="tab-vergleich">
+  <h2>3 · Gemeinsamkeiten, Unterschiede und Spezifika</h2>
+  <p class="lead">Das Technische Projekt ist die <b>fachspezifische Ausprägung</b> des Projekts für den Lernbereich Arbeit und Technik. Beide teilen Kern, Grobstruktur und Abschlusslogik und unterscheiden sich in der <b>Gewichtung</b>.</p>
+
+  <h3>Gemeinsamkeiten</h3>
+  <div class="common" id="common"></div>
+
+  <h3>Unterschiede</h3>
+  <div class="ctrl"><div><div class="lab">Dimension</div><div class="chips" id="d-chips"></div></div></div>
+  <div class="tablewrap"><table class="data stack" id="diff"></table></div>
+
+  <h3>Spezifika</h3>
+  <div class="grid2">
+    <div class="card p"><div class="colhead"><span class="badge p">Nur beim Projekt</span></div><ul id="spec-p"></ul></div>
+    <div class="card t"><div class="colhead"><span class="badge t">Nur beim Technischen Projekt</span></div><ul id="spec-t"></ul></div>
+  </div>
+
+  <h3>Übung: Projekt, Technisches Projekt oder beide?</h3>
+  <div class="quiz" id="quiz"></div>
+
+  <div class="callout lead-q" style="margin-top:18px"><span class="ct">Fazit</span>Bestimmen <b>gesellschaftliche, ökonomische und ökologische</b> Fragen das Problem, passt das <b>Projekt</b>. Stehen das <b>Projektieren eines technischen Produkts</b> und der technische Problemlösungsprozess im Mittelpunkt, passt das <b>Technische Projekt</b>. Da die Grenzen fließend sind, kann ein Technisches Projekt über Bewertungskriterien und Abschlussformen fachübergreifend geöffnet werden – und ein Projekt technische Projektierungsphasen enthalten.</div>
+</section>
+
+<!-- ===================== MATRIX ===================== -->
+<section class="panel" id="matrix" role="tabpanel" aria-labelledby="tab-matrix">
+  <h2>4 · Verlaufsphasen mit der Arbeitsprozessmatrix ausgestalten</h2>
+  <p class="lead">Ein <b>Berufliches Handlungsfeld</b> verallgemeinert typische Arbeitsprozesse (Howe & Knutzen, 2014). Seine Beschreibung – <b>Prozessablauf</b> und <b>Kompetenzprofil</b> – bildet die Arbeitsprozessmatrix. Mit ihr lassen sich Pahls Verlaufsphasen inhaltlich füllen.</p>
+
+  <div class="flow">
+    <div class="fb"><b>Lernbaustein 2</b>Arbeitsprozesse analysieren und beschreiben</div>
+    <div class="fa" aria-hidden="true">→</div>
+    <div class="fb hl"><b>Lernbaustein 3 · Arbeitsprozessmatrix</b><b class="small" style="font-family:inherit;font-weight:400;display:inline">① Prozessablauf: vier Arbeitsprozessphasen mit Handlungsschritten und „Besonderheiten / Ergänzungen / Streichung / Reihenfolge“ · ② Kompetenzprofil: Phase × fachlich / methodisch / sozial + Spezifikationen und Trends</b></div>
+    <div class="fa" aria-hidden="true">→</div>
+    <div class="fb"><b>Lernbaustein 4</b>Lern- und Arbeitsaufgaben entwickeln – z. B. ein Projekt</div>
+  </div>
+
+  <details class="more">
+    <summary>Generische Matrix aus der Arbeitsmappe (Teil B) anzeigen</summary>
+    <div class="tablewrap"><table class="data stack" id="gen"></table></div>
+    <p class="small muted">Quelle: Howe & Knutzen (2014), Lernbaustein 3, Arbeitsblätter „Prozessablauf“ und „Kompetenzprofil“ (Teil B). Interaktiv bearbeitbar in der <a href="../Transformierte_Arbeitsmappe_PSOBF/index.html">transformierten Arbeitsmappe</a>.</p>
+  </details>
+
+  <h3>Zuordnung: Pahls Stufen → Arbeitsprozessphasen</h3>
+  <div class="map" id="map"></div>
+  <p class="small muted" style="margin-top:8px">Grundidee: Das Projekt wird als (realer oder simulierter) <b>Auftrag</b> gerahmt. Für jede Phase liefert die Matrix, <b>was die Lernenden tun</b>, <b>was sie lernen</b> und <b>womit sie arbeiten</b> – so bleibt Projektarbeit „zielgerichtetes Tun“ (Pahl, 2021, S. 392).</p>
+
+  <details class="more">
+    <summary>Selbst zuordnen – Übung</summary>
+    <div class="mapq" id="mapq"></div>
+    <button type="button" class="btn primary" id="mapq-check">Prüfen</button> <button type="button" class="btn" id="mapq-reset">Zurücksetzen</button> <span id="mapq-res" class="small" style="margin-left:6px"></span>
+  </details>
+
+  <h3>Beispiel: Berufliches Handlungsfeld „Druckluft-Kolbenmotor“</h3>
+  <div class="callout"><span class="ct">🛠️ Zum Beispiel</span>Pahl nennt das Projekt „Druckluft-Kolbenmotor“ (Zimdars, 1992) als Beispiel für ein lernortübergreifendes Projekt, beschreibt es aber nicht näher. Die Ausgestaltung hier ist <b>exemplarisch konstruiert</b> – angenommen werden <b>Industriemechaniker/innen im 1.–2. Ausbildungsjahr</b>. Bezüge zu Ordnungsmitteln vor dem Einsatz am Original prüfen.</div>
+  <div class="tablewrap"><table class="data stack" id="hf"></table></div>
+  <details class="more">
+    <summary>Spezifikationen und Trends des Handlungsfelds</summary>
+    <div class="tablewrap"><table class="data stack" id="hfspec"></table></div>
+  </details>
+
+  <div id="mx-screen">
+    <h3>Die Matrix für beide Verfahren</h3>
+    <div class="ctrl">
+      <div><div class="lab">Verfahren</div><div class="seg" id="mx-method">
+        <button type="button" data-m="t" class="t" aria-pressed="true">A · Technisches Projekt</button>
+        <button type="button" data-m="p" class="p" aria-pressed="false">B · Projekt</button>
+      </div></div>
+      <div><div class="lab">Zeilen</div><div class="chips" id="mx-rows"></div></div>
+      <div><div class="lab">Schnellauswahl</div><div class="chips" id="mx-presets">
+        <button type="button" class="chip" data-preset="all">Alle</button>
+        <button type="button" class="chip" data-preset="pa">Prozessablauf</button>
+        <button type="button" class="chip" data-preset="kp">Kompetenzprofil</button>
+        <button type="button" class="chip" data-preset="pahl">Pahl-Bezug</button>
+      </div></div>
+    </div>
+    <div id="mx-scenario"></div>
+    <p class="small muted noprint" id="mx-hint">Tipp: Klicken Sie auf einen Phasenkopf, um diese Spalte hervorzuheben.</p>
+    <div class="mx-tablewrap" id="mx-table"></div>
+    <div class="mx-cards" id="mx-cards"></div>
+  </div>
+  <div class="print-only" id="mx-print"></div>
+
+  <h3>Was die Matrix leistet – und wo sie an Grenzen stößt</h3>
+  <div class="grid2">
+    <div class="card">
+      <h4>Leistung</h4>
+      <ol>
+        <li><b>Inhaltliche Füllung:</b> Jede Phase erhält konkrete Handlungsschritte, Kompetenzziele (fachlich, methodisch, sozial) und Inhalte.</li>
+        <li><b>Arbeitsprozessbezug:</b> Das Projekt folgt der Logik eines realen Auftrags – eine <b>vollständige Handlung</b> von der Annahme bis zum Abschluss.</li>
+        <li><b>Gewichtung sichtbar:</b> Im Technischen Projekt dominieren die Spalte <i>Planung</i> (Projektieren nach VDI) und die Zeile <i>fachlich</i>; im Projekt gewinnen die Spalte <i>Annahme</i> (Projektinitiative), die Zeilen <i>sozial</i> und <i>methodisch</i> sowie die <i>Spezifikationen</i> (Umwelt, Wirtschaft, Recht).</li>
+        <li><b>Bewertung absichern:</b> Pahls Kriterienkatalog lässt sich aus dem <b>Kompetenzprofil</b> ableiten; Selbst- und Fremdbewertung entspricht dem <b>Kompetenzcheck</b> (Lernbaustein 9), der sich aus dem Kompetenzprofil speist.</li>
+        <li><b>Lernortkooperation planen:</b> Die Spalten lassen sich Lernorten zuordnen (Schule → Betrieb → Schule).</li>
+        <li><b>Brücke zu Lernbaustein 4:</b> Pahls „thematisch fixierter Einschub“ entspricht einer <b>themenorientierten</b>, die Projektphasen entsprechen <b>prozessorientierten</b> Teilaufgaben.</li>
+      </ol>
+    </div>
+    <div class="card">
+      <h4>Grenzen</h4>
+      <ul>
+        <li><b>Auftrag vs. Initiative:</b> Die Matrix folgt der Auftragslogik (ein Kunde gibt vor), das Projekt lebt von der Initiative der Lernenden. Zu eng genutzt, „verschult“ sie die Offenheit – entgegen Freys Warnung vor verfestigenden Schemata. Daher: Planungshilfe der Lehrkraft, die Lernende über die Spalte „Besonderheiten / Ergänzungen / Streichung / Reihenfolge“ <b>verändern dürfen</b>.</li>
+        <li><b>Abschlussvarianten:</b> „Auslaufen lassen“ hat im realen Kundenauftrag keine Entsprechung.</li>
+        <li><b>Gesellschaftliche Dimension:</b> Politische und gesellschaftliche Ansprüche des Projekts passen nur begrenzt in fachlich/methodisch/sozial – abbildbar über die Spezifikationen oder eine zusätzliche Zeile.</li>
+        <li><b>Phasengrenzen:</b> Die Zuordnung ist analytisch; reale Projekte verlaufen iterativ (Entwürfe werden verworfen, Korrekturen in der Ausführung).</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== QUELLEN ===================== -->
+<section class="panel" id="quellen" role="tabpanel" aria-labelledby="tab-quellen">
+  <h2>Quellen</h2>
+  <ul>
+    <li>Howe, F. & Knutzen, S. (2014). <i>Kompetenzwerkstatt – Praxisorientiert ausbilden! Interaktive Arbeitsmappe Lernbaustein 3: Beschreiben von Beruflichen Handlungsfeldern</i>. Christiani; Bundesinstitut für Berufsbildung.</li>
+    <li>Pahl, J.-P. (2021). Projekt. In J.-P. Pahl, <i>Ausbildungs- und Unterrichtsverfahren. Ein Kompendium für den Lernbereich Arbeit und Technik</i> (S. 387–392). wbv.</li>
+    <li>Pahl, J.-P. (2021). Technisches Projekt und technische Projektierung. In J.-P. Pahl, <i>Ausbildungs- und Unterrichtsverfahren. Ein Kompendium für den Lernbereich Arbeit und Technik</i> (S. 472–477). wbv.</li>
+    <li>Bei Pahl zitiert und hier aufgegriffen: Bönsch (1974), Bonz (1986), Frey (1982), Gudjons (1993), Heidegger & Rauner (1995), Klafki (1970), Ott (1997), Steiner (1993), VDI-Richtlinie 2222 Blatt 1 (1977), Zimdars (1992).</li>
+  </ul>
+  <div class="callout"><span class="ct">Hinweise</span>Die Inhalte der Kapitel sind paraphrasiert; wörtliche Zitate stehen in Anführungszeichen. Das Anwendungsbeispiel „Druckluft-Kolbenmotor“ ist exemplarisch konstruiert und nicht aus Zimdars (1992) übernommen. Die Punkte unter „Weiterführende eigene Einschätzung“ gehen über Pahl hinaus.</div>
+  <p><a class="btn" href="https://liascript.github.io/course/?https://raw.githubusercontent.com/OVGU-VET-TechEd/PSOBF_WiSe_2026_27/main/Pahl_Projekt/Pahl_Projekt_Musterloesung.md" target="_blank" rel="noopener">Musterlösung als LiaScript-Kurs öffnen</a></p>
+</section>
+</main>
+
+<footer><div class="wrap">
+  Musterlösung für PSOBF, Wintersemester 2026/27 · Otto-von-Guericke-Universität Magdeburg. Grundlage: Pahl (2021) und Howe/Knutzen (2014), Kompetenzwerkstatt, gefördert durch das BIBB.
+</div></footer>
+
+<script>
+/* ======================= DATEN ======================= */
+const TASKS = [
+  { no: 'Teilaufgabe 1', tab: 'kennzeichnung', q: 'Wie sind die beiden Verfahren gekennzeichnet (Beurteilungskriterien)?',
+    a: `Beide sind komplexe, handlungsorientierte Makroverfahren mit Produktorientierung. Das <b>Projekt</b> ist offen, methodenpluralistisch und fächerübergreifend und zielt auf einen <b>sinnvollen Gebrauchswert</b>. Das <b>Technische Projekt</b> stellt das <b>Projektieren eines realen technischen Objekts</b> in den Mittelpunkt.` },
+  { no: 'Teilaufgabe 2', tab: 'kritik', q: 'Welche kritischen Anmerkungen werden gemacht?',
+    a: `<b>Beide:</b> inflationärer Begriff, hoher Aufwand. <b>Projekt:</b> Kluft zwischen Anspruch und Praxis, Ein-Lernort-Projekte, starre Schemata. <b>Technisches Projekt:</b> Offenheit und Komplexität, begrenzte Steuerbarkeit, wenig Freiräume.` },
+  { no: 'Teilaufgabe 3', tab: 'vergleich', q: 'Welche Gemeinsamkeiten und Unterschiede gibt es?',
+    a: `Gleicher Kern, gleiche Grobstruktur, gleiche drei Abschlussvarianten. Unterschiede in Schwerpunkt (Gesellschaft vs. Technik), Herkunft, Lernzielen, Artikulation (5 vs. 4 Stufen) und Stellung der Planung. Die Grenzen sind <b>fließend</b>.` },
+  { no: 'Teilaufgabe 4', tab: 'matrix', q: 'Wie lassen sich die Verlaufsphasen mit der Arbeitsprozessmatrix ausgestalten?',
+    a: `Pahls Stufen werden den Phasen <b>Annahme → Planung → Durchführung → Abschluss</b> zugeordnet und mit Handlungsschritten, fachlichen, methodischen und sozialen Kompetenzen sowie Inhalten gefüllt – am Beispiel <b>Druckluft-Kolbenmotor</b>.` }
+];
+
+const CRIT = [
+  { k: 'kenn', n: 'Kennzeichnung und Kurzbeschreibung', q: 'Was macht das Verfahren aus?',
+    p: `<b>Methodenpluralistisches</b> Verfahren, das vielfältige Hilfsmittel zulässt. Es greift <b>berufliche und gesellschaftliche Entwicklungen</b> auf und ermöglicht, Arbeit und Sachgebiet zu gestalten bzw. gesellschaftliche Bedingungen in gewissem Maße <b>zu verändern</b> (z. B. Umgang mit umweltgefährdenden Betriebs- und Hilfsstoffen). Im Mittelpunkt: ein <b>sinnvoller Gebrauchswert</b> (Produkt, Objekt, Modell, Ausstellung) bzw. die Lösung eines Problems mit <b>weiter reichenden gesellschaftlichen Momenten</b>.`,
+    t: `Ein <b>technisches Problem</b>, eine Aufgabenstellung oder ein problemorientiertes Vorhaben aus dem <b>beruflichen Umfeld</b> wird ausgewählt und <b>gemeinsam schöpferisch</b> gelöst. Ein <b>reales technisches Objekt</b> wird konzipiert, erstellt und beurteilt – deshalb steht das <b>Projektieren und Konzipieren technischer Produkte</b> im Vordergrund. <b>Problemorientierter Aufgabencharakter.</b>` },
+  { k: 'ziele', n: 'Erreichbare Lernziele', q: 'Was können die Lernenden danach?',
+    p: `<p>Die Lernenden können …</p><ul><li>unter realitätsnahen Bedingungen ein Produkt, Objekt oder Verfahren <b>entwerfen</b> bzw. ein Konzept entwickeln und <b>umsetzen</b>,</li><li>ihre <b>kooperativen und kommunikativen</b> Fähigkeiten vertiefen,</li><li><b>Verantwortung</b> für eigene Entscheidungen übernehmen,</li><li><b>strategisch</b> denken und handeln.</li></ul><p class="small muted">4 überfachliche Ziele</p>`,
+    t: `<p>Die Lernenden können …</p><ul><li>Probleme bei Projektierung, Bau und Nutzung technischer Projekte <b>erkennen und analysieren</b>,</li><li><b>Hypothesen</b> aufstellen und Lösungsansätze entwickeln,</li><li>in der Gruppe über die technische Thematik kommunizieren und kooperieren,</li><li>Informationsmaterial, Fachliteratur und Arbeitsmittel nutzen,</li><li>das Vorgehen als <b>Lösungsalgorithmus</b> für technische Probleme erkennen und sich aneignen,</li><li>ihre <b>Entscheidungsfähigkeit</b> verbessern (technische Machbarkeit vs. soziale Verträglichkeit),</li><li>Urteils- und Begründungsfähigkeit weiterentwickeln,</li><li><b>Pflichtenhefte</b> erarbeiten,</li><li><b>Prinzipskizzen</b> erstellen und bewerten,</li><li>Bauteile und Baugruppen gestalten,</li><li><b>Entwurfszeichnungen, Stücklisten</b>, technische Texte und Modelle erstellen.</li></ul><p class="small muted">11 fachlich-technisch konkretisierte Ziele</p>` },
+  { k: 'bed', n: 'Didaktische Bedeutung', q: 'Warum lohnt sich das Verfahren?',
+    p: `Nähe zu <b>informellen</b> Formen (Offenheit, weitgehende Selbstbestimmung, Flexibilität). Überschreitet <b>Bereichs- und Fächergrenzen</b>, verbindet eventuell Lernorte. Komplexe Berufs- und Lebenszusammenhänge werden darstellbar, ein Problem wird in seiner <b>Ganzheitlichkeit</b> wahrnehmbar. Mindert die Trennung von geistiger und körperlicher Arbeit. Die Lernenden werden zu Planungs-, Kooperations- und Handlungsfähigkeit „gezwungen“.`,
+    t: `Kern ist der <b>Problemlösungsprozess</b> bei der Realisierung des gewählten Lösungsvorschlags – als <b>Lern- und Arbeitsstrategie</b>. Hohe Anforderungen an die <b>Kreativität</b>. Im Mittelpunkt steht der <b>Prozess der Projektierung</b>; daher sollen die Hinweise der <b>VDI-Richtlinie 2222 Blatt 1</b> „Konzipieren technischer Produkte“ einfließen. Vernetzung <b>technischer, ökonomischer, ökologischer, sozialer und politischer</b> Aspekte.` },
+  { k: 'stell', n: 'Stellung zu anderen Verfahren', q: 'Wie verhält es sich zu anderen Verfahren, welche lassen sich integrieren?',
+    p: `Offen und fächerübergreifend angelegt; bietet je nach Aufgabe und Phase Raum für <b>andere Verfahren</b>, z. B. <b>Planspiel</b> oder <b>Fallstudie</b>.`,
+    t: `Im Kern geht es um Technik und Arbeit (<b>Fachspezifisches</b>), doch das Verfahren eröffnet auch <b>fachlich übergreifende</b> Ausbildung. <b>Größte Problematik:</b> relative <b>Offenheit der Ausgangssituation</b> im Technikbereich und <b>Komplexität</b> der Aufgabe. Integration besonders in der <b>Durchführungsphase</b>: <b>Technisches Experiment</b> (Zweckmäßigkeit prüfen), <b>Fallstudie</b> (Entscheidung für eine Lösung).` },
+  { k: 'art', n: 'Artikulationsschema (Strukturierung)', q: 'In welchen Stufen läuft es ab?',
+    p: `<ol><li>Zielsetzung</li><li>Planung</li><li>Ausführung</li><li>Beurteilung</li><li>Abschluss</li></ol><p class="small muted">5 Stufen</p>`,
+    t: `<ol><li>Motivation / Themenfindung / Zielsetzung</li><li>Planung des technischen Projektes</li><li>Durchführung des technischen Projektes</li><li>Auswertung / Bewertung / Transfer</li></ol><p class="small muted">4 Stufen – Beurteilung und Abschluss zusammengefasst, Transfer ergänzt</p>` },
+  { k: 'lern', n: 'Anforderungen an die Lernenden', q: 'Was müssen die Lernenden mitbringen?',
+    p: `Ein gewisses <b>Methodenspektrum</b>; flexibel reagieren und <b>eigenständig planen</b>; Bereitschaft und Fähigkeit, in Gruppen und <b>teamorientiert</b> zu arbeiten.`,
+    t: `Problemstellung <b>weitestgehend selbstständig</b> erarbeiten, Lösung <b>selbstorganisierend</b> gestalten; hohe Anforderungen an <b>kreative</b> Fähigkeiten; entscheidend ist die <b>Kooperationsfähigkeit</b> in der Gruppe.` },
+  { k: 'lehr', n: 'Anforderungen an die Lehrkraft', q: 'Was muss die Lehrkraft leisten?',
+    p: `<b>Fächerübergreifende</b> Vorbereitung; <b>situativ</b> auf unvorhergesehene Probleme reagieren, ohne die Zielsetzung zu vernachlässigen; <b>Benachteiligungen, Randgruppen- und Vorzeigeeffekte</b> vermeiden; alle nach ihren Fähigkeiten fördern – Gruppenarbeit initiieren und zugleich <b>Individualität</b> fördern.`,
+    t: `Besonderes Augenmerk auf die <b>richtige Auswahl der Aufgabenstellung</b> – der Spielraum „steht und fällt mit der <b>Sinnfälligkeit</b> der Aufgabenstellung“. In hohem Maße <b>Lernorganisator und Moderator</b>. Artikulationsschema situativ <b>modifizierbar</b>.` },
+  { k: 'aufw', n: 'Art und Höhe des organisatorischen Aufwandes', q: 'Was kostet es an Zeit und Organisation?',
+    p: `Im Vergleich zu anderen Verfahren <b>sehr viel Zeit</b> in Vorbereitung und Durchführung; wenn möglich <b>Kooperation mit anderen Lernorten</b>.`,
+    t: `<b>Hoher</b> organisatorischer Aufwand und entsprechendes <b>Zeitbudget</b>.` }
+];
+
+const BANDS = ['Einstieg', 'Hauptteil', 'Schluss'];
+const AP = ['Auftragsannahme', 'Auftragsplanung', 'Auftragsdurchführung', 'Auftragsabschluss'];
+const PH = {
+  p: [
+    { n: 'Zielsetzung', b: 0, ap: 0, pg: '389',
+      ha: `Die Lehrkraft regt an. Die Lernenden erarbeiten gemeinsam <b>Projektidee und Zielsetzung</b> und skizzieren die Bearbeitungsrichtung (Brainstorming). Erste Bearbeitungsfelder, Zeitlimit und mögliche Ansprechpartner werden diskutiert. Die Projektidee wird <b>angenommen oder abgelehnt</b>; bei Zustimmung endet die Phase mit einer <b>Projektskizze</b> (Gesamtproblemstellung, Problemfelder).`,
+      dk: [`Aktivitäten auf die Lernenden verlagern – damit sie später selbst Projekte initiieren können.`, `Akzeptierte Ziele erzeugen einen hohen <b>Vollendungsdruck</b>; die Ausrichtung auf ein (im)materielles Produkt wirkt stimulierend.`, `Die Idee ist ein <b>Angebot</b> – der Lösungsweg steht noch nicht zur Diskussion.`, `Die Idee wird mit Informationen angereichert und präzisiert; jeder Gegenstand und Prozess kann <b>Projektinitiative</b> werden.`] },
+    { n: 'Planung', b: 0, ap: 1, pg: '390',
+      ha: `Die Lehrkraft <b>zieht sich zurück</b>. Die Lernenden planen weitgehend selbstständig (Skizzen, technische Zeichnungen, Flussdiagramme, Pflichtenhefte), besorgen Materialien und Werkzeuge und entscheiden, ob die Gruppenarbeit <b>arbeitsteilig oder arbeitsgleich</b> erfolgt.`,
+      dk: [`Alle spezialisieren sich; geklärt wird <b>wer – was – wie – warum</b>.`, `Planungsmodelle unter <b>technischen, ökonomischen, ökologischen und ästhetischen</b> Gesichtspunkten vergleichen; Einigung auf einen <b>arbeitsteiligen Projektplan</b>; ggf. <b>Planspiel</b>.`, `Die Lehrkraft bringt Sachverstand nur <b>beratend</b> ein und legt erst fest, „wenn es gar nicht mehr geht“.`, `Ziel: Die Idee wird zur <b>Initiative der Lernenden</b>.`] },
+    { n: 'Ausführung', b: 1, ap: 2, pg: '390',
+      ha: `Die Lernenden setzen den gemeinsam entwickelten arbeitsteiligen Projektplan um und <b>fertigen das Projektprodukt</b>. Jede Organisationsform (Einzelarbeit, kleine und große Gruppen) ist sinnvoll, wenn sie das Projekt voranbringt.`,
+      dk: [`Die Planungsarbeit ist wesentliches Element der Herstellung.`, `Fehlende Kenntnisse und Fertigkeiten durch <b>Eigeninitiative</b> oder einen <b>thematisch fixierten Einschub</b>.`, `<b>Korrekturen</b> sind normal; Gruppen bearbeiten nacheinander verschiedene Gebiete oder eines vertieft.`] },
+    { n: 'Beurteilung', b: 2, ap: 3, pg: '391',
+      ha: `Das Produkt wird nach <b>vorher definierten Kriterien</b> bewertet; die Lernenden reflektieren <b>Dynamik und Ablauf der Gruppenarbeit</b>. <b>Selbstbewertung</b> durch die Lernenden und <b>Fremdbeurteilung</b> durch die Lehrkraft; ggf. Test oder Lernerfolgskontrolle.`,
+      dk: [`Qualitative Bewertung des (im)materiellen Gegenstands.`, `Perspektiven: <b>technisch, arbeitstheoretisch, ökonomisch, gesellschaftlich, politisch</b>.`, `Auch das Verhalten der Teilnehmenden kann kritisch betrachtet werden.`] },
+    { n: 'Abschluss', b: 2, ap: 3, pg: '391',
+      ha: `Die Lehrkraft erläutert <b>drei Varianten</b>: Projekt <b>bewusst abschließen</b>, zur <b>Projektinitiative rückkoppeln</b> oder <b>auslaufen lassen</b>. Die Lernenden wählen nach einer klärenden Diskussion und gestalten den Abschluss; ggf. Veröffentlichung.`,
+      dk: [`Der Abschluss kann vorab skizziert, in Phase 1 gemeinsam bestimmt werden oder sich erst im Verlauf ergeben.`, `Eine Folie mit den drei Varianten unterstützt die Diskussion.`] }
+  ],
+  t: [
+    { n: 'Motivation / Themenfindung / Zielsetzung', b: 0, ap: 0, pg: '474',
+      ha: `Die Lernenden schlagen <b>Themen aus dem Technikbereich</b> vor (Brainstorming). Das <b>zentrale Problem</b> wird bestimmt und zur Aufgabenstellung erhoben. Zur Machbarkeit werden Gesamtproblemstellung und Problemfelder im <b>Plenum</b> diskutiert und erste Planungsansätze skizziert.`,
+      dk: [`Einzige Vorgabe: Es muss ein <b>technisches Problem</b> sein, möglichst eingebettet in umfassendere Berufs- und Lebensbereiche.`, `Die Lehrkraft greift nur <b>lenkend</b> ein; die Themenwahl wird auf die Lernenden verlagert.`, `Eine eingebrachte Idee wird nicht zwangsläufig Thema – die Lernenden können sie <b>bejahen oder ablehnen</b>.`] },
+    { n: 'Planung des technischen Projektes', b: 1, ap: 1, pg: '474f.',
+      ha: `In der ganzen Lerngruppe oder in Kleingruppen wird das Projekt <b>konzipiert</b>, die Anfertigung geplant, Entwurf oder Arbeitsplan ggf. <b>verworfen</b>. Detailaufgaben werden fixiert und verteilt, das Betätigungsfeld aller bestimmt. Hilfsmittel: <b>VDI 2222 Blatt 1</b>; Methode: Brainstorming.`,
+      dk: [`<b>Projektplan</b>: Gesamt- und Einzelteilzeichnungen, Zeitplan, Feinarbeitspläne, <b>Kriterienkatalog</b> für Arbeitsprozess und Produkt, <b>Stücklisten</b>; Maschinen, Messmittel und Werkzeuge analysieren und anfordern.`, `Alle Lernenden konkret einbeziehen.`, `Beim <b>Konzipieren</b> zählt die <b>Funktionserfüllung</b> (Bewertungsmaßstab), beim <b>Entwerfen</b> die <b>Einheit von Funktionalität und Ästhetik</b> (Design).`] },
+    { n: 'Durchführung des technischen Projektes', b: 1, ap: 2, pg: '475',
+      ha: `<b>Arbeitsgleiche oder arbeitsteilige</b> Gruppen setzen den Projektplan – im Sinne eines <b>Pflichtenheftes</b> – <b>schrittweise</b> um.`,
+      dk: [`<b>Zusammenkünfte aller</b> einplanen, um den Verlauf zu reflektieren und Probleme zu klären.`, `Zusätzliche Kenntnisse und Fertigkeiten (Materialien, Maschinen, Geräte) erwerben die Lernenden in <b>Eigeninitiative</b>.`] },
+    { n: 'Auswertung / Bewertung / Transfer', b: 2, ap: 3, pg: '475f.',
+      ha: `<b>Gruppensprecher</b> stellen die Ergebnisse im Plenum vor. Produkt <b>und</b> Projektarbeit werden <b>in Berichtsform</b> bewertet. Präsentation in einer <b>Ausstellung</b> oder Veranstaltung ist möglich.`,
+      dk: [`Beurteilung <b>fertigungstechnisch, arbeitsorganisatorisch, funktionstechnisch, gestalterisch, ökonomisch, instandhaltungstechnisch, umwelttechnisch</b>, teils gesellschaftlich und politisch.`, `Lern- und Arbeitsverhalten aller Beteiligten <b>einschließlich der Lehrkräfte</b>.`, `<b>V1 bewusster Abschluss:</b> öffentliche Präsentation mit Dokumentation der Entstehungsgeschichte; die „Macher“ stellen sich der Kritik.`, `<b>V2 Rückkopplung zur Projektinitiative:</b> Zielvorstellungen und entstandenes Objekt bewusst vergleichen.`, `<b>V3 auslaufen lassen:</b> technisch nicht überzeugend → Auswertung nur im kleinen Kreis, um die Teilnehmenden zu <b>schützen</b>.`] }
+  ]
+};
+
+const KCAT = [['all', 'Alle'], ['begriff', 'Begriff & Anspruch'], ['aufwand', 'Aufwand'], ['lehrkraft', 'Lehrkraft & Steuerung'], ['lernende', 'Lernende'], ['lernort', 'Lernorte'], ['struktur', 'Offenheit & Struktur']];
+const KRIT = [
+  { m: 'p', id: 'P1', c: 'begriff', pg: '387', s: `<b>Inflationärer Gebrauch</b> der Bezeichnung – die positiven Assoziationen verwässern den Begriff.` },
+  { m: 'p', id: 'P2', c: 'begriff', pg: '387', s: `<b>Diskrepanz</b> zwischen Wertschätzung und Forderung nach Projekten und den tatsächlich durchgeführten Projekten in Betrieb und Berufsschule.` },
+  { m: 'p', id: 'P3', c: 'lernort', pg: '387', s: `Konzeption und Durchführung werden nur <b>sehr zögerlich</b> angegangen – und wenn, dann häufig nur an <b>einem Lernort</b>.` },
+  { m: 'p', id: 'P4', c: 'lernort', pg: '388', s: `Eine <b>„tayloristische“ Zuweisung</b> an nur einen Lernort begrenzt didaktische und lernortkooperationsfördernde Möglichkeiten von vornherein.` },
+  { m: 'p', id: 'P5', c: 'aufwand', pg: '388', s: `<b>Sehr hoher Zeitbedarf</b> in Vorbereitung und Durchführung.` },
+  { m: 'p', id: 'P6', c: 'lehrkraft', pg: '388', s: `Hohe Anforderungen an die Lehrkraft: fächerübergreifende Vorbereitung, unvorhergesehene Probleme, Gefahr von <b>Benachteiligungen, Randgruppen- und Vorzeigeeffekten</b> in der Gruppenarbeit.` },
+  { m: 'p', id: 'P7', c: 'lernende', pg: '388', s: `Die <b>Voraussetzungen der Lernenden</b> (Methodenspektrum, Planungs- und Teamfähigkeit) sind nicht selbstverständlich gegeben.` },
+  { m: 'p', id: 'P8', c: 'lehrkraft', pg: '390', s: `Spannung zwischen <b>Steuerung und Selbstbestimmung</b>: Die Lehrkraft soll ihren größeren Sachverstand „mit größter Zurückhaltung“ einbringen und nur im Notfall festlegen.` },
+  { m: 'p', id: 'P9', c: 'struktur', pg: '389, 391', s: `<b>Schemata-Problem</b>: Pragmatiker wünschen Grundmuster, doch nach Frey (1982) sollte man „mit Schemata und verfestigenden Anleitungen sparsam umgehen“; starres Festhalten schmälert den Erfolg.` },
+  { m: 'p', id: 'P10', c: 'struktur', pg: '392', s: `Gefahr des <b>planlosen Ausprobierens</b>: Projektarbeit muss zielgerichtet und berufsdidaktisch organisiert sein – das erfordert „Mut und Engagement“ der Lehrkräfte.` },
+  { m: 't', id: 'T1', c: 'begriff', pg: '472', s: `<b>Inflationäre Verwendung</b> des Projektbegriffs: Auch „traditionelle“ Formen gelten als projektartig; Projektwochen sind oft nur eine Alternative zum normalen Lernalltag.` },
+  { m: 't', id: 'T2', c: 'begriff', pg: '472', s: `<b>Begriffliche Unschärfe</b>: Eine exakte Bestimmung des Projekts hat „schon immer Mühe gemacht“ (Bönsch, 1974).` },
+  { m: 't', id: 'T3', c: 'struktur', pg: '473', s: `<b>Größte Problematik</b>: relative <b>Offenheit der Ausgangssituation</b> im Technikbereich und <b>Komplexität</b> der Aufgabenstellung.` },
+  { m: 't', id: 'T4', c: 'lehrkraft', pg: '472f.', s: `Das Gelingen hängt an der <b>Aufgabenwahl</b>: Der Spielraum „steht und fällt mit der Sinnfälligkeit der Aufgabenstellung“.` },
+  { m: 't', id: 'T5', c: 'aufwand', pg: '473', s: `<b>Hoher organisatorischer Aufwand</b> und entsprechendes Zeitbudget.` },
+  { m: 't', id: 'T6', c: 'lernende', pg: '473', s: `Hohe Anforderungen an <b>Kreativität, Selbstständigkeit und Kooperationsfähigkeit</b> der Lernenden.` },
+  { m: 't', id: 'T7', c: 'lernort', pg: '476', s: `<b>Wenig Freiräume</b> an den Lernorten: in der Berufsschule begrenzt; im Betrieb steht die Arbeit für den Betrieb im Vordergrund.` },
+  { m: 't', id: 'T8', c: 'lehrkraft', pg: '476', s: `<b>Begrenzte Steuerbarkeit</b>: Projektieren ist offen und dynamisch und vermittelt Lehrkräften <b>Unsicherheit</b>; Vorausplanen ist nur eingeschränkt und ergänzend möglich.` },
+  { m: 't', id: 'T9', c: 'struktur', pg: '475f.', s: `<b>Risiko des Scheiterns</b>: Realisierbarkeit vorausschauend prüfen, Ausmaße überschaubar halten; bei technisch nicht überzeugenden Ergebnissen „auslaufen lassen“, um niemanden zu demoralisieren.` },
+  { m: 't', id: 'T10', c: 'begriff', pg: '473', s: `Implizit: Spannung zwischen <b>Fachspezifik</b> (Technik und Arbeit im Kern) und dem Anspruch <b>fachlich übergreifender</b> Ausbildung.` }
+];
+const OWN = [
+  `<b>Normativ statt empirisch:</b> Beide Kapitel beschreiben, wie Projekte sein <i>sollen</i>; Befunde zur Wirksamkeit werden kaum herangezogen.`,
+  `<b>Unscharfe Abgrenzung:</b> Der Unterschied ist eher eine Frage der <b>Gewichtung</b> (Technik vs. Gesellschaft) als eine kategoriale Grenze; die Kapitel verwenden in Teilen nahezu gleiche Formulierungen.`,
+  `<b>Bewertung von Gruppenprodukten:</b> Wie wird die individuelle Leistung fair beurteilt? Kriterien für Einzelleistungen fehlen.`,
+  `<b>Ingenieur- statt Facharbeiterlogik:</b> Projektieren nach VDI entspricht eher Konstruktionsarbeit als typischer Facharbeit, die meist von einem <b>Kundenauftrag</b> ausgeht – daher die Rückbindung über die Arbeitsprozessmatrix (Teilaufgabe 4).`,
+  `<b>Aktualität:</b> Pahl verweist auf die VDI 2222 Blatt 1 von 1977; die Konstruktionsmethodik ist inzwischen in der VDI 2221 (Neufassung 2019) gebündelt (Status vor Einsatz prüfen). Digitale Werkzeuge (CAD/CAM, additive Fertigung, KI) fehlen.`,
+  `<b>Rahmenbedingungen:</b> Knappe Lernfeldzeiten und betrieblicher Produktivitätsdruck stehen dem hohen Aufwand entgegen; ohne verbindliche Absprachen bleibt Lernortkooperation ein Ideal.`
+];
+
+const COMMON = [
+  [`Makroverfahren mit gemeinsamem Kern`, `praktische Tätigkeit · Lernende in Planung und Ausführung · materielle Mittel · erweiterter Erfahrungshorizont (S. 388); Grenzen fließend`],
+  [`Produktorientierung`, `materielles oder immaterielles Produkt – Gebrauchswert bzw. technisches Objekt`],
+  [`Gleiche Grobstruktur`, `Einstieg – Hauptteil – Schluss; Ziel finden → planen → ausführen → bewerten → abschließen`],
+  [`Themenfindung durch Lernende`, `Brainstorming; Projektidee kann angenommen oder abgelehnt werden`],
+  [`Gruppenarbeit`, `arbeitsteilig oder arbeitsgleich; Detailaufgaben und ein Betätigungsfeld für alle`],
+  [`Selbstständiger Wissenserwerb`, `fehlende Kenntnisse und Fertigkeiten in Eigeninitiative`],
+  [`Bewertung von Produkt und Prozess`, `mehrperspektivisch bis hin zu gesellschaftlichen und politischen Fragen; Verhalten der Beteiligten`],
+  [`Drei Abschlussvarianten`, `bewusst abschließen · zur Projektinitiative rückkoppeln · auslaufen lassen`],
+  [`Lernortkooperation als Ideal`, `Realitätsbezug zur Berufs- und Lebenswelt; Zusammenhänge von Arbeit und Technik (nahezu wortgleich)`],
+  [`Integration anderer Verfahren`, `Fallstudie in beiden Verfahren`],
+  [`Hoher Aufwand, zurückhaltende Lehrkraft`, `Zeit und Organisation; Begleitung und Moderation; flexibles Artikulationsschema`],
+  [`Kritik am Projektbegriff`, `inflationäre Verwendung in beiden Einordnungen`]
+];
+
+const DGROUP = [['all', 'Alle'], ['inhalt', 'Inhalt & Ziel'], ['ablauf', 'Struktur & Ablauf'], ['bewertung', 'Bewertung & Abschluss'], ['rahmen', 'Rollen & Rahmen']];
+const DIFF = [
+  ['inhalt', 'Schwerpunkt', `<b>Fächerübergreifend</b>; Gesellschaft, Wirtschaft, Ökologie stärker; Spezifik von Arbeit und Technik nicht unbedingt vorrangig`, `<b>Technik und die damit verbundene Arbeit</b> prägen die Aufgabe; der <b>technische Gehalt</b> ist zentral`],
+  ['inhalt', 'Gegenstand / Ziel', `<b>Sinnvoller Gebrauchswert</b> (Produkt, Objekt, Modell, Ausstellung) oder Problemlösung mit gesellschaftlichen Momenten; ggf. Bedingungen <b>verändern</b>`, `<b>Reales technisches Objekt</b> konzipieren, erstellen, beurteilen; Artefakt <b>und</b> Erarbeitungsprozess`],
+  ['inhalt', 'Herkunft', `<b>Reformpädagogik</b>, Anfang 20. Jh. (Dewey, Kilpatrick, Kerschensteiner u. a.)`, `<b>Frankreich, Anfang 18. Jh.</b> (Architektur); Ingenieurwesen der Industrialisierung`],
+  ['inhalt', 'Lernziele', `<b>Überfachlich</b> (4): entwerfen und umsetzen, Kooperation und Kommunikation, Verantwortung, strategisches Denken`, `<b>Fachlich-technisch</b> (11): Hypothesen, Lösungsalgorithmus, Pflichtenheft, Prinzipskizze, Bauteile, Entwurfszeichnung, Stückliste`],
+  ['ablauf', 'Methodische Leitidee', `<b>Offen, methodenpluralistisch</b>; Nähe zu informellen Lernformen`, `<b>Problemlösungsprozess</b> als Lern- und Arbeitsstrategie, orientiert an <b>VDI 2222</b>`],
+  ['ablauf', 'Artikulation', `<b>5 Stufen</b>: Zielsetzung, Planung, Ausführung, Beurteilung, Abschluss`, `<b>4 Stufen</b>: Motivation/Themenfindung/Zielsetzung, Planung, Durchführung, Auswertung/Bewertung/<b>Transfer</b>`],
+  ['ablauf', 'Stellung der Planung', `Planung gehört zum <b>Einstieg</b>`, `Planung (= Projektierung) gehört zum <b>Hauptteil</b>`],
+  ['ablauf', 'Umgang mit Schemata', `Skeptisch (Frey): Phasen sind <b>nur Anregungen</b>`, `Ablauf <b>themen- und gegenstandsunabhängig</b> beschreibbar, aber situativ modifizierbar`],
+  ['ablauf', 'Themenvorgabe', `Offen: jeder Gegenstand und Prozess kann Projektinitiative werden`, `Einzige Vorgabe: ein <b>technisches Problem</b>`],
+  ['ablauf', 'Planungsprodukte', `Skizzen, Zeichnungen, Flussdiagramme, Pflichtenhefte; Planungsmodelle <b>technisch, ökonomisch, ökologisch, ästhetisch</b> vergleichen; wer–was–wie–warum`, `Gesamt- und Einzelteilzeichnungen, Zeitplan, Feinarbeitspläne, <b>Kriterienkatalog</b>, <b>Stücklisten</b>; Funktionserfüllung, später Funktionalität + Ästhetik`],
+  ['ablauf', 'Durchführung', `Jede Organisationsform ist recht; Korrekturen; <b>thematisch fixierter Einschub</b>`, `Schrittweise Umsetzung <b>im Sinne eines Pflichtenheftes</b>; <b>Zusammenkünfte aller</b>`],
+  ['ablauf', 'Integrierbare Verfahren', `<b>Planspiel</b>, Fallstudie`, `<b>Technisches Experiment</b>, Fallstudie`],
+  ['bewertung', 'Bewertung', `<b>Selbstbewertung + Fremdbeurteilung</b>, ggf. Test; technisch, arbeitstheoretisch, ökonomisch, gesellschaftlich, politisch`, `<b>Gruppensprecher</b> im Plenum, <b>Berichtsform</b>, Ausstellung; fertigungs-, funktions-, instandhaltungs-, umwelttechnisch u. a.; Verhalten <b>inkl. Lehrkräfte</b>`],
+  ['bewertung', 'Abschluss', `Eigene Stufe 5; Lehrkraft erläutert die Varianten, Lernende wählen`, `In Stufe 4 integriert; Varianten <b>ausdifferenziert</b> (öffentliche Präsentation · Soll-Ist-Vergleich · Schutz vor Demoralisierung)`],
+  ['rahmen', 'Rolle der Lehrkraft', `Fächerübergreifend vorbereiten, situativ reagieren, <b>Benachteiligung vermeiden</b>, Individualität fördern`, `<b>Aufgabe richtig auswählen</b>, Lernorganisator und Moderator, Realisierbarkeit prüfen, Umfang begrenzen`],
+  ['rahmen', 'Anforderungen an Lernende', `Methodenspektrum, Flexibilität, Teamorientierung`, `Selbstständigkeit, Selbstorganisation, <b>Kreativität</b>, Kooperationsfähigkeit`],
+  ['rahmen', 'Hauptproblem', `Kluft zwischen Anspruch und Praxis; Aufwand; Gefahr starrer Schemata`, `<b>Offenheit und Komplexität</b>; begrenzte Steuerbarkeit, Unsicherheit`],
+  ['rahmen', 'Lernortkooperation', `Gegen tayloristische Zuweisung; gemeinsame Projekte Betrieb–Schule (Zimdars)`, `<b>Konkrete Aufteilung</b>: Projektierung Schule → Durchführung Betrieb → Kontrolle und Abschluss Schule; auch ÜBS`]
+];
+
+const SPEC = {
+  p: [`Anspruch, <b>gesellschaftliche Bedingungen</b> in gewissem Maße zu verändern`, `<b>Sinnvoller Gebrauchswert</b>, auch als Ausstellung`, `Klärung <b>wer – was – wie – warum</b>`, `Identifikation: aus der Idee wird eine <b>Initiative der Lernenden</b>; Vollendungsdruck`, `<b>Selbst- und Fremdbewertung</b>, ggf. Test`, `Vermeidung von <b>Randgruppen- und Vorzeigeeffekten</b>`, `<b>Planspiel</b> in der Planungsphase`, `Schemata-Skepsis (Frey)`],
+  t: [`Orientierung an der <b>VDI-Richtlinie 2222</b> (Konzipieren technischer Produkte)`, `<b>Konzipieren</b> (Funktionserfüllung) vs. <b>Entwerfen</b> (Funktionalität + Ästhetik, Design)`, `Vorgehen als <b>Lösungsalgorithmus</b>; <b>Transfer</b> als Stufe`, `Technische Dokumente als Lernziel: <b>Pflichtenheft, Prinzipskizze, Stückliste, Entwurfszeichnung</b>`, `Bewertung in <b>Berichtsform</b>, Vorstellung durch <b>Gruppensprecher</b>`, `Zielkonflikt <b>technische Machbarkeit vs. soziale Verträglichkeit</b>`, `<b>Technisches Experiment</b> zur Prüfung der Lösung`, `Ingenieurtradition; Lernorte nach <b>didaktischer Differenzierung/Integration</b>`]
+};
+
+const QUIZ = [
+  [`Im Mittelpunkt steht ein sinnvoller Gebrauchswert mit gesellschaftlichen Momenten.`, 'p', `Kurzbeschreibung des Projekts (S. 387).`],
+  [`Die VDI-Richtlinie 2222 dient als Hilfsmittel der Planung.`, 't', `Didaktische Bedeutung und Planungsphase des Technischen Projekts (S. 473, 475).`],
+  [`Abschluss: bewusst abschließen, rückkoppeln oder auslaufen lassen.`, 'b', `Beide Kapitel nennen dieselben drei Varianten (S. 391 bzw. 475f.).`],
+  [`Die Wurzeln liegen im Frankreich des 18. Jahrhunderts (Architektur).`, 't', `Einordnung des Technischen Projekts nach Steiner (S. 472).`],
+  [`Die Wurzeln liegen in der Reformpädagogik (Dewey, Kilpatrick, Kerschensteiner).`, 'p', `Einordnung des Projekts (S. 387).`],
+  [`Die Lernenden bewerten sich selbst, die Lehrkraft beurteilt fremd.`, 'p', `Phase Beurteilung des Projekts (S. 391).`],
+  [`Gruppensprecher stellen die Ergebnisse vor; bewertet wird in Berichtsform.`, 't', `Phase Auswertung/Bewertung/Transfer (S. 475).`],
+  [`Lernortkooperation gilt als Idealfall.`, 'b', `Beide Kapitel – beim Technischen Projekt mit konkreter Aufteilung der Phasen auf Lernorte.`],
+  [`Ein Planspiel kann die Planungsphase gestalten.`, 'p', `Planungsphase und Stellung des Projekts (S. 388, 390).`],
+  [`Ein Technisches Experiment prüft die Zweckmäßigkeit der Lösung.`, 't', `Stellung des Technischen Projekts zu anderen Verfahren (S. 473).`],
+  [`Die Projektidee wird per Brainstorming gefunden und kann abgelehnt werden.`, 'b', `In beiden Einstiegsphasen (S. 389 bzw. 474).`],
+  [`Die Planung gehört zum Hauptteil der Lerneinheit.`, 't', `Beim Projekt gehört die Planung zum Einstieg, beim Technischen Projekt zum Hauptteil.`]
+];
+const QLAB = { p: 'Projekt', t: 'Technisches Projekt', b: 'beide' };
+
+const GEN = {
+  steps: [`1 Anfrage aufnehmen · 2 beraten, Alternativen anbieten · 3 Produktauswahl treffen · 4 Angebot erstellen, Auftrag entgegennehmen`, `1 Berechnungen · 2 Skizzen/Zeichnungen · 3 Zeit- und Arbeitsplan · 4 Material, Geräte, Werkzeuge besorgen`, `1 Arbeitsstätte einrichten · 2 fachgerecht durchführen · 3 kontrollieren, Fehler beheben · 4 dokumentieren`, `1 Übergabe, Einweisung · 2 Reklamationen bearbeiten · 3 Rechnung erstellen`],
+  fach: [`Anfrage fachlich analysieren; beraten; Kosten überschlägig kalkulieren`, `technische Berechnungen; Zeichnungen/Skizzen; Material, Geräte, Werkzeuge festlegen`, `Gegebenheiten am Arbeitsort analysieren; Unterlagen umsetzen; Vorschriften beachten; Fehler beheben`, `Übergabe adressatengerecht; Reklamationen fachlich und rechtlich analysieren und beheben`],
+  methode: [`nach Alternativen und Vorschriften recherchieren; Angebot systematisch erstellen`, `Zeit- und Arbeitsplan systematisch erstellen; Planungstools einsetzen`, `Plan umsetzen und anpassen; Fehler systematisch analysieren; Arbeiten dokumentieren`, `Übergabe strukturiert vorbereiten; Rechnung systematisch erstellen`],
+  sozial: [`serviceorientiert auftreten`, `mit Auftraggeber abstimmen; mit Kollegen kooperieren`, `serviceorientiert; abstimmen; mit Kollegen kooperieren`, `serviceorientiert; mit Auftraggeber abstimmen`]
+};
+
+const HF = [
+  ['Berufliches Handlungsfeld', `Herstellen, Montieren und Inbetriebnehmen von Baugruppen (Einzel- und Kleinserienfertigung)`],
+  ['Curricula (exemplarisch)', `Rahmenlehrplan Industriemechaniker/in, z. B. LF 3 „Herstellen von einfachen Baugruppen“, LF 5 „Fertigen von Einzelteilen mit Werkzeugmaschinen“, LF 6 „Installieren und Inbetriebnehmen steuerungstechnischer Systeme“, LF 7 „Montieren von technischen Teilsystemen“; Ausbildungsrahmenplan: Positionen zu Arbeitsplanung, Prüfen, Spanen, Fügen und Montieren <span class="muted">(am aktuellen Ordnungsmittel prüfen)</span>`],
+  ['Typische Aufträge', `Einzelteile und Baugruppen nach Zeichnung für interne oder externe Kunden fertigen · Funktions- oder Demonstrationsmodell bauen (Messe, Ausbildung, Schule) · pneumatisch angetriebene Baugruppe montieren und in Betrieb nehmen`]
+];
+const HFSPEC = [
+  ['Technik, Arbeitsgegenstände, Produkte', `Druckluft-Kolbenmotor, z. B. als <b>oszillierender Einzylinder</b>: Grundplatte, Lagerbock mit Ein- und Auslassbohrung, schwingender Zylinder, Kolben, Kurbelwelle mit Kurbelzapfen, Schwungrad, Andruckfeder, Lager, Druckluftanschluss; <b>Wartungseinheit</b> (Filter, Druckregler mit Manometer, ggf. Öler); Kurbeltrieb (Hub = 2 × Kurbelradius); Kolbenkraft F = p · A (z. B. 2 bar, Kolben-Ø 12 mm → ca. 23 N)`],
+  ['Gesetze, Vorschriften, Normen', `ISO-Passungen (ISO 286) und Allgemeintoleranzen (ISO 2768); Normen für technische Zeichnungen; Schaltzeichen der Fluidtechnik (ISO 1219); VDI 2222 Blatt 1 bzw. VDI 2221; Arbeitsschutz: ArbSchG, BetrSichV, DGUV-Regelwerk, Betriebsanweisungen für Werkzeugmaschinen und Druckluft; Umgang mit <b>Kühlschmierstoffen</b> und <b>ölhaltigem Kondensat</b>`],
+  ['Werkzeuge, Materialien', `Dreh-, Fräs- und Ständerbohrmaschine; Reibahle, Gewindebohrer, Feilen; Messschieber, Bügelmessschraube, Grenzlehrdorn, Manometer, Drehzahlmesser; Automatenstahl, Aluminium, Messing (gleitgünstige Paarung Kolben/Zylinder); CAD, Stückliste, Arbeitsplan`],
+  ['Trends', `Energieeffizienz von Druckluftsystemen (Leckagen, Druckniveau) · CAD/CAM und CNC auch in der Einzelfertigung · additive Fertigung für Prototypen · Sensorik und Datenerfassung (Drehzahl, Druck)`]
+];
+
+const ROWS = [
+  ['steps', 'Handlungsschritte', 'Was tun die Lernenden?'],
+  ['fach', 'fachlich', 'Kompetenzprofil'],
+  ['methode', 'methodisch', 'Kompetenzprofil'],
+  ['sozial', 'sozial', 'Kompetenzprofil'],
+  ['inhalte', 'Inhalte', 'Technik, Normen, Werkzeuge'],
+  ['rolle', 'Lehrkraft & Verfahren', 'nach Pahl'],
+  ['ort', 'Lernort', ''],
+  ['bes', 'Besonderheiten', 'ggü. generischem Ablauf']
+];
+const PRESETS = { all: ROWS.map(r => r[0]), pa: ['steps', 'bes'], kp: ['fach', 'methode', 'sozial', 'inhalte'], pahl: ['steps', 'rolle', 'ort'] };
+
+const MX = {
+  t: {
+    title: 'A · Technisches Projekt „Wir projektieren und bauen einen Druckluft-Kolbenmotor“',
+    sc: `<b>Auftrag:</b> Die Ausbildungsleitung braucht für den Tag der offenen Tür ein <b>funktionsfähiges Demonstrationsmodell</b>, das zeigt, wie aus Druckluft eine Drehbewegung entsteht. Rahmen: Fertigung mit Werkstattmitteln, Kosten- und Terminrahmen, sicherer Betrieb mit begrenztem Druck. <b>Lernortkooperation</b> nach Pahl (S. 476): Projektierung in der Berufsschule → Fertigung und Erprobung in der Ausbildungswerkstatt → Bewertung und Abschluss in der Berufsschule.`,
+    ph: [
+      { pahl: '1 · Motivation / Themenfindung / Zielsetzung', band: 'Einstieg',
+        steps: [`Anfrage der Ausbildungsleitung aufnehmen und klären`, `Brainstorming zu möglichen technischen Lösungen`, `<b>zentrales technisches Problem</b> bestimmen: Druckenergie → Drehbewegung (Kurbeltrieb)`, `Machbarkeit im Plenum prüfen (Dichtheit, Reibung, Fertigungsgenauigkeit; Maschinen, Zeit, Budget)`, `erste Planungsansätze skizzieren`, `Projektidee <b>annehmen oder ablehnen</b>, grobe Anforderungen festhalten`],
+        fach: [`Funktionsprinzip Kolbenmaschine und Kurbeltrieb erklären`, `Kundenwunsch technisch analysieren`, `Machbarkeit mit den Fertigungsmöglichkeiten abgleichen`],
+        methode: [`Brainstorming durchführen`, `in Fachbuch, Tabellenbuch und Internet recherchieren`, `Problem strukturieren, Entscheidung begründen`],
+        sozial: [`Ideen einbringen und zuhören`, `sich mit dem „Auftraggeber“ abstimmen`, `eine gemeinsame Entscheidung tragen`],
+        inhalte: `Druck, Kraft, Fläche (F = p · A); Energieumwandlung; Bauarten von Druckluftmotoren (Kolben-, Lamellenmotor); Fertigungsmöglichkeiten der Werkstatt`,
+        rolle: `Lehrkraft greift nur <b>lenkend</b> ein; einzige Vorgabe: technisches Problem. Realisierbarkeit vorausschauend prüfen, Umfang <b>überschaubar</b> halten. Methode: Brainstorming.`,
+        ort: `Berufsschule (Ausbilder/in als Auftraggeber)`,
+        bes: `Kein Angebot, keine Preisverhandlung – an ihre Stelle treten <b>Annahme/Ablehnung der Projektidee</b> und eine <b>Vorstufe der Anforderungsliste</b>.` },
+      { pahl: '2 · Planung des technischen Projektes', band: 'Hauptteil',
+        steps: [`<b>Anforderungsliste/Pflichtenheft</b> erstellen (Anlaufdruck, Abmessungen, Sicherheit, Aussehen)`, `<b>Konzipieren:</b> Lösungsprinzipien vergleichen (oszillierender Zylinder vs. Schieber- oder Ventilsteuerung), bewerten, Konzept wählen, <b>Prinzipskizzen</b>`, `<b>Entwerfen:</b> Bauteile gestalten, Funktion und Design abwägen; Kolbenkraft, Hub, Passungen berechnen`, `<b>Ausarbeiten:</b> Gesamt- und Einzelteilzeichnungen, <b>Stückliste</b>, Feinarbeitspläne, Zeitplan`, `<b>Kriterienkatalog</b> für Produkt und Arbeitsprozess festlegen`, `Halbzeuge, Werkzeuge, Maschinen, Messmittel ermitteln und anfordern`, `Detailaufgaben verteilen; ggf. Entwurf <b>verwerfen</b>`],
+        fach: [`Passungen und Toleranzen festlegen (z. B. H7/g6 für Kolben/Zylinder)`, `normgerechte Zeichnungen und Stücklisten erstellen`, `Werkstoffe, Halbzeuge, Fertigungsverfahren und Schnittdaten bestimmen`, `Kolbenkraft und Drehmoment überschlägig berechnen`],
+        methode: [`VDI-Vorgehen als <b>Lösungsalgorithmus</b> anwenden`, `Varianten mit einer <b>Bewertungsmatrix</b> vergleichen`, `Arbeits- und Zeitpläne systematisch erstellen`, `CAD und Planungstools nutzen`],
+        sozial: [`Entwürfe begründen, Kritik annehmen`, `Aufgaben fair verteilen, Verantwortung übernehmen`, `Zwischenstände mit dem Auftraggeber abstimmen`],
+        inhalte: `VDI 2222 (Anforderungsliste, Funktionsstruktur, morphologischer Kasten, Bewertung); ISO 286, ISO 2768; Zeichnungsnormen; Kurbeltrieb; Werkstoffpaarung Messing/Stahl`,
+        rolle: `<b>Lernorganisator und Moderator</b>; beim Konzipieren auf Funktionserfüllung, beim Entwerfen auf Funktionalität + Ästhetik achten; alle einbeziehen. Integriert: <b>Fallstudie</b> (Lösungsentscheidung), <b>themenorientierte Teilaufgabe</b> (ISO-Passungssystem).`,
+        ort: `Berufsschule (Projektierung)`,
+        bes: `Die Planung ist hier <b>Hauptteil</b>: Projektieren nach VDI (Anforderungsliste → Konzipieren → Entwerfen → Ausarbeiten) erweitert die generischen Schritte „Berechnungen, Skizzen, Zeitplan“.` },
+      { pahl: '3 · Durchführung des technischen Projektes', band: 'Hauptteil',
+        steps: [`Arbeitsplatz und Maschinen einrichten, Arbeitsschutz sicherstellen`, `Einzelteile nach Feinarbeitsplan fertigen (Drehen, Fräsen, Bohren, Reiben, Gewinde)`, `Maße und Passungen prüfen, Prüfprotokolle führen, Fehler beheben`, `Baugruppe montieren`, `<b>Inbetriebnahme:</b> über Wartungseinheit anschließen, Druck schrittweise erhöhen, Funktion und Dichtheit prüfen`, `<b>Technisches Experiment:</b> Drehzahl über Druck messen, Reibung und Dichtheit optimieren`, `<b>Zusammenkünfte aller</b>; Arbeiten dokumentieren`],
+        fach: [`Werkzeugmaschinen fachgerecht und sicher bedienen`, `Passungen fertigen und prüfen`, `Baugruppe montieren und in Betrieb nehmen`, `Fehler (Undichtheit, Klemmen, Unwucht) analysieren`],
+        methode: [`Arbeitsplan umsetzen und anpassen`, `Prüf- und Messergebnisse dokumentieren`, `Messreihe planen, durchführen, auswerten`, `fehlende Kenntnisse selbst erschließen`],
+        sozial: [`Schnittstellen zwischen Gruppen abstimmen (Teile müssen passen!)`, `Hilfe anbieten und annehmen`, `Sicherheitsregeln gegenseitig einfordern`],
+        inhalte: `Spanende Fertigungsverfahren und Schnittdaten; Prüfmittel; Montagereihenfolge; Druckluftaufbereitung; Betriebsanweisungen, BetrSichV/DGUV; Kühlschmierstoffe`,
+        rolle: `Ausbilder/in begleitet, sichert den Arbeitsschutz und hält die <b>Unsicherheit</b> offener Prozesse aus – Vorausplanung nur ergänzend. Integriert: <b>Technisches Experiment</b>.`,
+        ort: `Ausbildungswerkstatt / Betrieb (Fertigung, Machbarkeit)`,
+        bes: `Umsetzung <b>im Sinne eines Pflichtenheftes</b>; ergänzt um Inbetriebnahme, Technisches Experiment und Zusammenkünfte aller.` },
+      { pahl: '4 · Auswertung / Bewertung / Transfer', band: 'Schluss',
+        steps: [`Ergebnisse durch <b>Gruppensprecher</b> im Plenum präsentieren`, `Motor nach <b>Kriterienkatalog</b> bewerten, <b>Bericht</b> verfassen`, `Projektarbeit und Lern-/Arbeitsverhalten (inkl. Lehrkräfte) reflektieren`, `Dokumentation übergeben, Auftraggeber <b>einweisen</b> (Bedienung, Betriebsdruck, Wartung)`, `<b>Nachkalkulation</b>: Material- und Zeitaufwand`, `<b>Abschlussvariante</b> wählen`, `<b>Transfer:</b> Vorgehen auf ein anderes technisches Problem übertragen`],
+        fach: [`Funktions- und Qualitätsmerkmale technisch beurteilen`, `<b>Soll-Ist-Vergleich</b> mit der Anforderungsliste`, `Kosten nachkalkulieren`],
+        methode: [`Präsentation und Bericht strukturieren`, `kriteriengeleitet bewerten und begründen`, `Vorgehen als Lösungsalgorithmus reflektieren und übertragen`],
+        sozial: [`adressatengerecht präsentieren und einweisen`, `Kritik an den „Machern“ annehmen`, `Gruppenprozess reflektieren, Feedback geben`],
+        inhalte: `Bewertungsperspektiven nach Pahl (fertigungs-, funktions-, instandhaltungs-, umwelttechnisch, arbeitsorganisatorisch, gestalterisch, ökonomisch); technische Dokumentation; Kalkulation`,
+        rolle: `Moderiert die Bewertung (auch des eigenen Verhaltens); schützt bei V3 vor Demoralisierung.`,
+        ort: `Berufsschule (Kontrolle, Abschluss), Öffentlichkeit`,
+        bes: `„Rechnung“ → <b>Nachkalkulation</b>; „Reklamation“ → <b>Soll-Ist-Vergleich</b> (V2). <b>V1:</b> Präsentation am Tag der offenen Tür · <b>V3:</b> Auswertung im kleinen Kreis.` }
+    ]
+  },
+  p: {
+    title: 'B · Projekt „Druckluft – teure Energie? Ein Motor macht Energieeffizienz sichtbar“',
+    sc: `<b>Projektinitiative:</b> In der Werkstatt zischen ständig Leckagen, der Betrieb plant eine Energiesparwoche. Die Lernenden entwickeln mit der Lehrkraft die Idee, einen selbst gebauten <b>Druckluft-Kolbenmotor als Demonstrator</b> in eine <b>Ausstellung</b> einzubetten: „Was kostet Druckluft – und wie sparen wir?“ Dazu kommt der <b>Umgang mit umweltgefährdenden Betriebs- und Hilfsstoffen</b> (ölhaltiges Kondensat, Kühlschmierstoffe). <b>Fächerübergreifend</b> (Technik, Wirtschaft, Umwelt, Kommunikation, Politik) und mit <b>Gebrauchswert</b> für den Betrieb.`,
+    ph: [
+      { pahl: '1 · Zielsetzung', band: 'Einstieg',
+        steps: [`<b>Projektinitiative</b> aufnehmen (Energiekosten, Leckagen, Umweltwoche), Brainstorming`, `Idee anreichern: Motor + Ausstellung; Bearbeitungsfelder, <b>Zeitlimit</b>, <b>Ansprechpartner</b> (Energiebeauftragte/r, Instandhaltung, Fachkraft für Arbeitssicherheit)`, `über <b>Annahme oder Ablehnung</b> entscheiden`, `<b>Projektskizze</b> erstellen (Gesamtproblemstellung, Problemfelder)`, `ggf. Abschlussform festlegen`],
+        fach: [`Druckluftsystem des Betriebs grob beschreiben (Erzeugung, Aufbereitung, Verteilung, Verbraucher)`, `Energie- und Kostenfragen erkennen`, `Problemfelder benennen (Leckage, Kondensat, Lärm)`],
+        methode: [`Brainstorming und Clustern`, `Informationen beschaffen`, `Projektskizze erstellen`],
+        sozial: [`Interessen einbringen und aushandeln`, `Kontakt zu betrieblichen Ansprechpartnern aufnehmen`, `gemeinsame Ziele vereinbaren (Vollendungsdruck)`],
+        inhalte: `Druckluftversorgung im Betrieb; Energieeffizienz und Klimaschutz; Betriebs- und Hilfsstoffe`,
+        rolle: `Regt an und verlagert die Aktivitäten auf die Lernenden; ist fächerübergreifend vorbereitet. Methode: Brainstorming, ggf. Betriebserkundung.`,
+        ort: `Schule und Betrieb (Erkundung)`,
+        bes: `Statt einer Kundenanfrage steht die <b>Projektinitiative der Lernenden</b> am Anfang; die Idee ist ein <b>Angebot</b>, der Lösungsweg offen; statt eines Angebots entsteht eine Projektskizze.` },
+      { pahl: '2 · Planung', band: 'Einstieg',
+        steps: [`Teilprojekte bilden: <b>A</b> Motorbau · <b>B</b> Verbrauchs- und Leckagemessung, Kostenrechnung · <b>C</b> Kondensat und Kühlschmierstoffe · <b>D</b> Ausstellung`, `arbeitsteilig oder arbeitsgleich? <b>wer – was – wie – warum</b> klären`, `Planungsmodelle <b>technisch, ökonomisch, ökologisch, ästhetisch</b> vergleichen; ggf. <b>Planspiel</b>`, `Skizzen, Zeichnungen, Flussdiagramme, Pflichtenheft; Materialien besorgen`, `<b>arbeitsteiligen Projektplan</b> mit Zeitplan vereinbaren`],
+        fach: [`Motorentwurf in Skizzen und Zeichnungen darstellen`, `Kostenrechnung für Druckluft vorbereiten`, `Entsorgungswege für Betriebsstoffe recherchieren`],
+        methode: [`Projektplan, Flussdiagramm, Pflichtenheft erstellen`, `Planungsvarianten mehrperspektivisch bewerten`, `Planspiel nutzen`],
+        sozial: [`Aufgaben gerecht verteilen, alle spezialisieren sich`, `sich auf einen gemeinsamen Plan einigen`, `Konflikte konstruktiv lösen`],
+        inhalte: `Projektplanung (Meilensteine, Zeitplan); Kostenrechnung; Abfall- und Wasserrecht; Gestaltung von Ausstellungen`,
+        rolle: `<b>Zieht sich zurück</b>, berät „mit größter Zurückhaltung“, legt nur im Notfall fest; sichert ein Betätigungsfeld für alle, vermeidet <b>Randgruppen- und Vorzeigeeffekte</b>. Integriert: <b>Planspiel</b>.`,
+        ort: `Schule`,
+        bes: `Planung in Teilprojekten über das Fach hinaus; Planungsmodelle werden mehrperspektivisch verglichen.` },
+      { pahl: '3 · Ausführung', band: 'Hauptteil',
+        steps: [`Motor fertigen, montieren und in Betrieb nehmen`, `Luftverbrauch messen; Leckagen im Betrieb mit der Instandhaltung suchen und dokumentieren`, `Energiekosten berechnen, Einsparpotenziale ableiten`, `Umgang mit Kondensat und Kühlschmierstoffen erkunden, Betriebsanweisungen auswerten`, `Ausstellungsmaterial erstellen (Infotafeln, Rechenbeispiele, Live-Demo)`, `Korrekturen; ggf. <b>thematisch fixierte Einschübe</b> (Kostenrechnung, Leckageortung)`],
+        fach: [`Bauteile fertigen und montieren`, `Mess- und Rechenwerte fachlich interpretieren`, `Vorschriften zu Betriebs- und Hilfsstoffen anwenden`],
+        methode: [`Projektplan umsetzen und anpassen`, `Daten erheben, auswerten, visualisieren`, `Erkundungen durchführen`],
+        sozial: [`mit Fachkräften kommunizieren`, `in wechselnden Gruppen kooperieren`, `Verantwortung für das Teilergebnis übernehmen`],
+        inhalte: `Spanende Fertigung und Montage; Volumenstrom und Druck; Energie- und Kostenrechnung; Kondensataufbereitung, Kühlschmierstoffe; Visualisierung`,
+        rolle: `Reagiert <b>situativ</b> auf Unvorhergesehenes, ohne die Zielsetzung zu vernachlässigen; fördert alle nach ihren Fähigkeiten.`,
+        ort: `Betrieb (Fertigung, Messung), Schule (Ausstellung)`,
+        bes: `<b>Jede Organisationsform</b> ist recht; Erkundung und Messung im Betrieb ergänzen die Fertigung; Korrekturen sind eingeplant.` },
+      { pahl: '4 · Beurteilung + 5 · Abschluss', band: 'Schluss',
+        steps: [`Motor und Ausstellung nach <b>vorher definierten Kriterien</b> bewerten – <b>Selbst- und Fremdbewertung</b>`, `Gruppenarbeit reflektieren; ggf. Lernerfolgskontrolle`, `Ausstellung präsentieren, Ergebnisse <b>veröffentlichen</b> (Betriebsversammlung, Schulfest, Website)`, `Empfehlungen an den Betrieb übergeben (Leckageliste, Sparvorschläge)`, `<b>Abschlussvariante</b> wählen`],
+        fach: [`technische, ökonomische und ökologische Ergebnisse beurteilen`, `Sparvorschläge fachlich begründen`],
+        methode: [`kriteriengeleitet (selbst) bewerten`, `präsentieren und visualisieren`, `Gruppenprozess reflektieren`],
+        sozial: [`Belegschaft und Öffentlichkeit adressatengerecht informieren`, `Feedback geben und annehmen`, `<b>gesellschaftliche Verantwortung</b> wahrnehmen`],
+        inhalte: `Bewertung unter technischen, arbeitstheoretischen, ökonomischen, gesellschaftlichen und politischen Fragen; Präsentationstechnik`,
+        rolle: `Erläutert die <b>drei Varianten</b> (Folie), beurteilt fremd, moderiert die Reflexion.`,
+        ort: `Schule, Betrieb, Öffentlichkeit`,
+        bes: `„Übergabe“ → <b>Veröffentlichung</b>; „Reklamation“ → <b>Rückkopplung zur Projektinitiative</b> (z. B. Folgeprojekt Leckage-Monitoring); „auslaufen lassen“ hat im realen Auftrag keine Entsprechung.` }
+    ]
+  }
+};
+
+const MAPQ = [
+  ['Zielsetzung (Projekt)', 0], ['Planung (Projekt)', 1], ['Ausführung (Projekt)', 2], ['Beurteilung (Projekt)', 3], ['Abschluss (Projekt)', 3],
+  ['Motivation / Themenfindung / Zielsetzung', 0], ['Planung des technischen Projektes', 1], ['Durchführung des technischen Projektes', 2], ['Auswertung / Bewertung / Transfer', 3]
+];
+
+/* ======================= ZUSTAND ======================= */
+const TAB_IDS = ['start', 'kennzeichnung', 'phasen', 'kritik', 'vergleich', 'matrix', 'quellen'];
+const ST = { crit: 'all', view: 'both', ph: { m: 'p', i: 0 }, kcat: 'all', dg: 'all', mx: 't', rows: new Set(PRESETS.all), focus: -1, quiz: {} };
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const ML = { p: 'Projekt', t: 'Technisches Projekt' };
+
+/* ======================= TABS ======================= */
+function showTab(id, push) {
+  if (!TAB_IDS.includes(id)) id = 'start';
+  $$('.tab').forEach(b => { const on = b.dataset.tab === id; b.setAttribute('aria-selected', on); b.tabIndex = on ? 0 : -1; });
+  $$('.panel').forEach(p => p.classList.toggle('active', p.id === id));
+  if (push) { history.replaceState(null, '', '#' + id); window.scrollTo({ top: 0 }); }
+}
+$('#tabs').addEventListener('click', e => { const b = e.target.closest('.tab'); if (b) showTab(b.dataset.tab, true); });
+$('#tabs').addEventListener('keydown', e => {
+  if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+  const tabs = $$('.tab'), i = tabs.indexOf(document.activeElement);
+  if (i < 0) return;
+  const n = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+  n.focus(); showTab(n.dataset.tab, true);
+});
+window.addEventListener('hashchange', () => showTab(location.hash.slice(1)));
+
+/* ======================= ÜBERBLICK ======================= */
+function renderTasks() {
+  $('#tasks').innerHTML = TASKS.map(t => `<div class="card task"><div class="no">${t.no}</div><div class="q">${t.q}</div><div class="a">${t.a}</div><button type="button" class="btn" data-go="${t.tab}">Zur Antwort →</button></div>`).join('');
+}
+document.addEventListener('click', e => { const g = e.target.closest('[data-go]'); if (g) showTab(g.dataset.go, true); });
+
+/* ======================= KENNZEICHNUNG ======================= */
+function renderCritChips() {
+  $('#crit-chips').innerHTML = `<button type="button" class="chip" data-crit="all" aria-pressed="${ST.crit === 'all'}">Alle</button>` +
+    CRIT.map((c, i) => `<button type="button" class="chip" data-crit="${c.k}" aria-pressed="${ST.crit === c.k}" title="${c.n}">${i + 1} · ${c.n.split(' ')[0].replace(/[,:]$/, '')}</button>`).join('');
+}
+function renderCrit() {
+  renderCritChips();
+  const cls = ST.view === 'both' ? '' : ' only-' + ST.view;
+  $('#crit-list').innerHTML = CRIT.map((c, i) => (ST.crit === 'all' || ST.crit === c.k) ? `
+    <div class="crit"><div class="crit-h"><span class="nr">${i + 1}</span><span class="nm">${c.n}</span><span class="lq">${c.q}</span></div>
+      <div class="crit-b${cls}">
+        <div class="cp"><div class="mh"><span class="badge p">Projekt</span><span class="pg">S. 387f.</span></div>${c.p}</div>
+        <div class="ct"><div class="mh"><span class="badge t">Technisches Projekt</span><span class="pg">S. 472f.</span></div>${c.t}</div>
+      </div></div>` : '').join('');
+}
+$('#crit-chips').addEventListener('click', e => { const b = e.target.closest('[data-crit]'); if (b) { ST.crit = b.dataset.crit; renderCrit(); } });
+$('#crit-view').addEventListener('click', e => {
+  const b = e.target.closest('[data-view]'); if (!b) return;
+  ST.view = b.dataset.view; $$('#crit-view button').forEach(x => x.setAttribute('aria-pressed', x === b)); renderCrit();
+});
+
+/* ======================= VERLAUFSPHASEN ======================= */
+function renderPhases() {
+  let h = `<div class="pg-corner"></div>${BANDS.map(b => `<div class="pg-band">${b}</div>`).join('')}`;
+  ['p', 't'].forEach(m => {
+    h += `<div class="pg-label ${m}">${ML[m]}<br>(${PH[m].length} Stufen)</div>`;
+    BANDS.forEach((b, bi) => {
+      h += `<div class="pg-cell"><span class="cap">${b}</span>` + PH[m].map((s, i) => s.b === bi ? `<button type="button" class="step ${m}" data-pm="${m}" data-pi="${i}" aria-pressed="${ST.ph.m === m && ST.ph.i === i}"><span class="sn">Stufe ${i + 1}</span>${s.n}</button>` : '').join('') + `</div>`;
+    });
+  });
+  $('#pgrid').innerHTML = h;
+  const m = ST.ph.m, s = PH[m][ST.ph.i];
+  $('#pdetail').innerHTML = `<div class="pdetail ${m}">
+    <div class="pd-head"><span class="badge ${m}">${ML[m]}</span><h3>${ST.ph.i + 1} · ${s.n}</h3><span class="tag">${BANDS[s.b]}</span><span class="tag">→ ${AP[s.ap]}</span><span class="pg">S. ${s.pg}</span></div>
+    <div class="grid2"><div><h4>Handlungsablauf</h4><p>${s.ha}</p></div><div><h4>Didaktischer Kommentar</h4><ul>${s.dk.map(x => `<li>${x}</li>`).join('')}</ul></div></div>
+    <button type="button" class="btn" data-tomx="${m}" data-col="${s.ap}">In der Arbeitsprozessmatrix ansehen →</button></div>`;
+}
+$('#pgrid').addEventListener('click', e => { const b = e.target.closest('.step'); if (b) { ST.ph = { m: b.dataset.pm, i: +b.dataset.pi }; renderPhases(); } });
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-tomx]'); if (!b) return;
+  ST.mx = b.dataset.tomx; ST.focus = +b.dataset.col; renderMatrix(); showTab('matrix', true);
+  setTimeout(() => $('#mx-screen').scrollIntoView({ behavior: 'smooth', block: 'start' }), 30);
+});
+
+/* ======================= KRITIK ======================= */
+function renderKritik() {
+  $('#k-chips').innerHTML = KCAT.map(([k, l]) => `<button type="button" class="chip" data-k="${k}" aria-pressed="${ST.kcat === k}">${l}</button>`).join('');
+  ['p', 't'].forEach(m => {
+    const list = KRIT.filter(x => x.m === m && (ST.kcat === 'all' || x.c === ST.kcat));
+    $('#k-' + m).innerHTML = list.length ? list.map(x => `<div class="kcard ${m}"><span class="kid">${x.id}</span><div>${x.s}</div><div class="kmeta"><span class="tag">${KCAT.find(c => c[0] === x.c)[1]}</span><span class="pg">S. ${x.pg}</span></div></div>`).join('') : `<p class="empty">Zu diesem Thema keine ausdrückliche Kritik im Text.</p>`;
+    $('#k-count-' + m).textContent = `${list.length} von ${KRIT.filter(x => x.m === m).length}`;
+  });
+  $('#own').innerHTML = OWN.map(x => `<li>${x}</li>`).join('');
+}
+$('#k-chips').addEventListener('click', e => { const b = e.target.closest('[data-k]'); if (b) { ST.kcat = b.dataset.k; renderKritik(); } });
+
+/* ======================= VERGLEICH ======================= */
+function renderVergleich() {
+  $('#common').innerHTML = COMMON.map(([t, d], i) => `<div class="card"><b>${i + 1}. ${t}</b><span class="small">${d}</span></div>`).join('');
+  $('#spec-p').innerHTML = SPEC.p.map(x => `<li>${x}</li>`).join('');
+  $('#spec-t').innerHTML = SPEC.t.map(x => `<li>${x}</li>`).join('');
+  renderDiff(); renderQuiz();
+}
+function renderDiff() {
+  $('#d-chips').innerHTML = DGROUP.map(([k, l]) => `<button type="button" class="chip" data-d="${k}" aria-pressed="${ST.dg === k}">${l}</button>`).join('');
+  const rows = DIFF.filter(r => ST.dg === 'all' || r[0] === ST.dg);
+  $('#diff').innerHTML = `<thead><tr><th>Dimension</th><th class="p">Projekt</th><th class="t">Technisches Projekt</th></tr></thead><tbody>` +
+    rows.map(r => `<tr><th>${r[1]}</th><td data-l="Projekt">${r[2]}</td><td data-l="Technisches Projekt">${r[3]}</td></tr>`).join('') + `</tbody>`;
+}
+$('#d-chips').addEventListener('click', e => { const b = e.target.closest('[data-d]'); if (b) { ST.dg = b.dataset.d; renderDiff(); } });
+function renderQuiz() {
+  const done = Object.keys(ST.quiz).length, right = Object.entries(ST.quiz).filter(([i, a]) => QUIZ[i][1] === a).length;
+  $('#quiz').innerHTML = `<div class="qhead"><span>Ordnen Sie jede Aussage zu – Sie erhalten sofort eine Rückmeldung.</span><span><span class="qscore">${right} / ${done} richtig</span> <button type="button" class="btn" id="q-reset">Zurücksetzen</button></span></div>` +
+    QUIZ.map(([s, a, e], i) => {
+      const ans = ST.quiz[i];
+      const opts = ['p', 't', 'b'].map(o => {
+        let c = '';
+        if (ans) { if (o === a) c = ' right'; else if (o === ans) c = ' wrong'; }
+        return `<button type="button" class="qopt${c}" data-q="${i}" data-a="${o}"${ans ? ' disabled' : ''}>${QLAB[o]}</button>`;
+      }).join('');
+      const fb = ans ? `<div class="qfb ${ans === a ? 'ok' : 'no'}">${ans === a ? '✓ Richtig' : '✗ Richtig ist: ' + QLAB[a]} – ${e}</div>` : '';
+      return `<div class="qitem"><div class="qrow"><span>${i + 1}. ${s}</span><span class="qopts">${opts}</span></div>${fb}</div>`;
+    }).join('');
+}
+$('#quiz').addEventListener('click', e => {
+  if (e.target.id === 'q-reset') { ST.quiz = {}; renderQuiz(); return; }
+  const b = e.target.closest('.qopt'); if (!b || b.disabled) return;
+  ST.quiz[b.dataset.q] = b.dataset.a; renderQuiz();
+});
+
+/* ======================= MATRIX ======================= */
+const list = (arr, ordered) => `<${ordered ? 'ol' : 'ul'}>${arr.map(x => `<li>${x}</li>`).join('')}</${ordered ? 'ol' : 'ul'}>`;
+const cell = (ph, k) => Array.isArray(ph[k]) ? list(ph[k], k === 'steps') : ph[k];
+function chev(i, m) { return `<span class="chev ${m}${i === 0 ? ' first' : ''}">${AP[i]}</span>`; }
+
+function renderStatic() {
+  $('#gen').innerHTML = `<thead><tr><th>Matrixzeile</th>${AP.map(a => `<th>${a}</th>`).join('')}</tr></thead><tbody>` +
+    [['steps', 'Handlungsschritte'], ['fach', 'fachlich'], ['methode', 'methodisch'], ['sozial', 'sozial']].map(([k, l]) => `<tr><th>${l}</th>${GEN[k].map((x, i) => `<td data-l="${AP[i]}">${x}</td>`).join('')}</tr>`).join('') + `</tbody>`;
+  let mh = `<div class="mcorner"></div>${AP.map((a, i) => `<div class="mhead">${chev(i, '')}</div>`).join('')}`;
+  ['p', 't'].forEach(m => {
+    mh += `<div class="ml ${m}">${ML[m]}</div>`;
+    AP.forEach((a, i) => {
+      const steps = PH[m].map((s, si) => ({ s, si })).filter(x => x.s.ap === i);
+      mh += `<div class="mc ${m}"><span class="mcap">${a}</span>${steps.map(x => `<div><b>${x.si + 1} · ${x.s.n}</b><br><span class="tag">${BANDS[x.s.b]}</span></div>`).join('')}</div>`;
+    });
+  });
+  $('#map').innerHTML = mh;
+  $('#mapq').innerHTML = MAPQ.map(([n], i) => `<label>${n}<select data-mq="${i}"><option value="">– wählen –</option>${AP.map((a, j) => `<option value="${j}">${a.replace('Auftrags', '')}</option>`).join('')}</select></label>`).join('');
+  $('#hf').innerHTML = `<tbody>${HF.map(([k, v]) => `<tr><th>${k}</th><td data-l="${k}">${v}</td></tr>`).join('')}</tbody>`;
+  $('#hfspec').innerHTML = `<tbody>${HFSPEC.map(([k, v]) => `<tr><th>${k}</th><td data-l="${k}">${v}</td></tr>`).join('')}</tbody>`;
+}
+$('#mapq-check').addEventListener('click', () => {
+  let ok = 0;
+  $$('#mapq select').forEach(s => { const r = String(MAPQ[+s.dataset.mq][1]) === s.value; if (r) ok++; s.parentElement.classList.toggle('ok', r); s.parentElement.classList.toggle('no', !r); });
+  $('#mapq-res').textContent = `${ok} von ${MAPQ.length} richtig` + (ok === MAPQ.length ? ' – sehr gut!' : ' – rot markierte Zuordnungen noch einmal prüfen.');
+});
+$('#mapq-reset').addEventListener('click', () => { $$('#mapq select').forEach(s => { s.value = ''; s.parentElement.classList.remove('ok', 'no'); }); $('#mapq-res').textContent = ''; });
+
+function matrixTable(m, rows, focus) {
+  const d = MX[m];
+  let h = `<table class="mx m-${m}"><thead><tr><th><span class="small muted">Arbeitsprozessphase →<br>Pahl-Stufe ↓</span></th>` +
+    d.ph.map((ph, i) => `<th class="colh${focus === i ? ' fc' : ''}${focus >= 0 && focus !== i ? ' dim' : ''}" data-col="${i}" tabindex="0" aria-pressed="${focus === i}" title="Spalte hervorheben">${chev(i, m)}<span class="pahl">${ph.pahl}</span><span class="tag band">${ph.band}</span></th>`).join('') + `</tr></thead><tbody>`;
+  ROWS.filter(r => rows.has(r[0])).forEach(([k, l, sub]) => {
+    h += `<tr class="r-${k}"><th>${l}${sub ? `<small>${sub}</small>` : ''}</th>` + d.ph.map((ph, i) => `<td class="${focus >= 0 && focus !== i ? 'dim' : ''}${focus === i ? ' fc' : ''}">${cell(ph, k)}</td>`).join('') + `</tr>`;
+  });
+  return h + `</tbody></table>`;
+}
+function renderMatrix() {
+  const m = ST.mx, d = MX[m];
+  $$('#mx-method button').forEach(b => b.setAttribute('aria-pressed', b.dataset.m === m));
+  $('#mx-rows').innerHTML = ROWS.map(([k, l]) => `<button type="button" class="chip" data-row="${k}" aria-pressed="${ST.rows.has(k)}">${l}</button>`).join('');
+  $('#mx-scenario').innerHTML = `<div class="scenario ${m}"><h4>${d.title}</h4><p style="margin:0">${d.sc}</p></div>`;
+  $('#mx-table').innerHTML = ST.rows.size ? matrixTable(m, ST.rows, ST.focus) : `<p class="empty">Keine Zeile ausgewählt.</p>`;
+  $('#mx-cards').innerHTML = d.ph.map((ph, i) => `<div class="mxcard"${ST.focus >= 0 && ST.focus !== i ? ' style="opacity:.55"' : ''}><div class="mxh">${chev(i, m)}<span class="pahl">${ph.pahl}</span><span class="tag">${ph.band}</span></div>` +
+    ROWS.filter(r => ST.rows.has(r[0])).map(([k, l]) => `<div class="mxr"><div class="rl">${l}</div>${cell(ph, k)}</div>`).join('') + `</div>`).join('');
+}
+$('#mx-method').addEventListener('click', e => { const b = e.target.closest('[data-m]'); if (b) { ST.mx = b.dataset.m; ST.focus = -1; renderMatrix(); } });
+$('#mx-rows').addEventListener('click', e => {
+  const b = e.target.closest('[data-row]'); if (!b) return;
+  const k = b.dataset.row; ST.rows.has(k) ? ST.rows.delete(k) : ST.rows.add(k); renderMatrix();
+});
+$('#mx-presets').addEventListener('click', e => { const b = e.target.closest('[data-preset]'); if (b) { ST.rows = new Set(PRESETS[b.dataset.preset]); renderMatrix(); } });
+function toggleFocus(th) { const i = +th.dataset.col; ST.focus = ST.focus === i ? -1 : i; renderMatrix(); const n = $(`#mx-table th[data-col="${i}"]`); if (n) n.focus(); }
+$('#mx-table').addEventListener('click', e => { const th = e.target.closest('th[data-col]'); if (th) toggleFocus(th); });
+$('#mx-table').addEventListener('keydown', e => { const th = e.target.closest('th[data-col]'); if (th && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); toggleFocus(th); } });
+
+/* ======================= DRUCKEN ======================= */
+$('#b-print').addEventListener('click', () => {
+  const all = new Set(PRESETS.all);
+  $('#mx-print').innerHTML = ['t', 'p'].map(m => `<h3>${MX[m].title}</h3><div class="scenario ${m}"><p style="margin:0">${MX[m].sc}</p></div>${matrixTable(m, all, -1)}`).join('');
+  const prev = { crit: ST.crit, view: ST.view, kcat: ST.kcat, dg: ST.dg };
+  Object.assign(ST, { crit: 'all', view: 'both', kcat: 'all', dg: 'all' });
+  renderCrit(); renderKritik(); renderDiff();
+  $$('details.more').forEach(d => { d.dataset.wasOpen = d.open; d.open = true; });
+  document.body.classList.add('printall');
+  const done = () => {
+    document.body.classList.remove('printall');
+    $$('details.more').forEach(d => { d.open = d.dataset.wasOpen === 'true'; });
+    Object.assign(ST, prev); renderCrit(); renderKritik(); renderDiff();
+    window.removeEventListener('afterprint', done);
+  };
+  window.addEventListener('afterprint', done);
+  window.print();
+});
+
+/* ======================= START ======================= */
+renderTasks(); renderCrit(); renderPhases(); renderKritik(); renderVergleich(); renderStatic(); renderMatrix();
+showTab(location.hash.slice(1) || 'start');
+</script>
+</body>
+</html>

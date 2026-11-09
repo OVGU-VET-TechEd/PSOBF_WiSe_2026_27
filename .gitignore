@@ -1,1 +1,6 @@
 .DS_Store
+
+# Pahl-Kapitel (urheberrechtlich geschützt) nicht veröffentlichen
+Pahl_Projekt/Kapitel Pahl 2021/
+Pahl_Projekt/*.zip
+Pahl_Projekt/**/*.pdf
