@@ -1,0 +1,994 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Interaktive Arbeitsmappe · PSOBF</title>
+<meta name="description" content="Interaktive Arbeitsmappe zu den Lernbausteinen 2, 3 und 4 der Kompetenzwerkstatt (Howe/Knutzen): Arbeitsprozesse analysieren, Berufliche Handlungsfelder beschreiben, Lern- und Arbeitsaufgaben entwickeln.">
+<link rel="icon" href="../assets/ovgu_logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Semi+Condensed:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: light;
+  --main: #7a003f; --main-dark: #5c002f; --second: #bc7f9f; --third: #f5ebf0;
+  --grey-1: #3e3f40; --grey-2: #686a6c; --grey-3: #96999c; --grey-4: #cfd3d6; --grey-5: #e7e9ea; --grey-6: #f8f8f8;
+  --blue: #1565c0; --blue-bg: #f3f7fc; --ok: #2e7d32;
+  --content-width: 1240px;
+  --lab-w: 210px;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; font-family: "Barlow", "Helvetica Neue", Arial, sans-serif; font-size: 16px; line-height: 1.45; color: #000; background: #fff; overflow-wrap: anywhere; }
+a { color: var(--main); }
+button { font: inherit; }
+.wrap { max-width: var(--content-width); margin: 0 auto; padding: 0 16px; }
+.cond { font-family: "Barlow Semi Condensed", "Barlow", sans-serif; }
+
+/* header */
+.topbar { background: var(--grey-5); font-size: 14px; color: var(--grey-1); }
+.topbar .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding-top: 6px; padding-bottom: 6px; }
+.topbar a { color: var(--grey-1); text-decoration: none; }
+.topbar a:hover { color: var(--main); }
+.hero { background: var(--main); color: #fff; }
+.hero .wrap { padding-top: 22px; padding-bottom: 22px; display: flex; gap: 12px 32px; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; }
+.hero .kicker { font-family: "Barlow Semi Condensed", sans-serif; text-transform: uppercase; letter-spacing: .08em; font-size: 14px; opacity: .85; }
+.hero h1 { font-family: "Barlow Semi Condensed", sans-serif; font-weight: 600; font-size: clamp(26px, 3.6vw, 38px); line-height: 1.12; margin: 4px 0 0; }
+.hero .src { font-size: 14px; opacity: .9; max-width: 420px; }
+
+/* toolbar */
+.toolbar { position: sticky; top: 0; z-index: 20; background: #fff; border-bottom: 1px solid var(--grey-4); }
+.toolbar .wrap { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; justify-content: space-between; padding-top: 8px; padding-bottom: 8px; }
+.lbtabs { display: flex; gap: 6px; flex-wrap: wrap; }
+.lbtab { border: 1px solid var(--grey-4); background: var(--grey-6); color: var(--grey-1); border-radius: 4px; padding: 6px 12px; cursor: pointer; text-align: left; line-height: 1.2; }
+.lbtab b { display: block; font-family: "Barlow Semi Condensed", sans-serif; font-size: 13px; text-transform: uppercase; letter-spacing: .05em; }
+.lbtab span { font-size: 14px; }
+.lbtab[aria-selected="true"] { background: var(--main); border-color: var(--main); color: #fff; }
+.lbtab:hover:not([aria-selected="true"]) { border-color: var(--main); color: var(--main); }
+.actions { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.btn { border: 1px solid var(--grey-4); background: #fff; color: var(--grey-1); border-radius: 4px; padding: 5px 10px; cursor: pointer; font-size: 14px; }
+.btn:hover { border-color: var(--main); color: var(--main); }
+.btn.primary { background: var(--main); border-color: var(--main); color: #fff; }
+.btn.primary:hover { background: var(--main-dark); color: #fff; }
+.status { font-size: 13px; color: var(--grey-2); min-width: 10ch; }
+.status.warn { color: #b3261e; }
+
+/* layout: sheet nav + sheet */
+.lbhead { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 16px; margin: 22px 0 10px; }
+.lbhead h2 { font-family: "Barlow Semi Condensed", sans-serif; font-weight: 600; color: var(--main); font-size: 26px; margin: 0; line-height: 1.15; }
+.lbhead .authors { color: var(--grey-2); font-size: 14px; }
+.sheetnav { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; padding: 0; list-style: none; }
+.sheetnav button { border: 1px solid var(--grey-4); background: #fff; border-radius: 999px; padding: 4px 12px; cursor: pointer; font-size: 14px; color: var(--grey-1); }
+.sheetnav button:hover { border-color: var(--main); color: var(--main); }
+.sheetnav button[aria-current="true"] { background: var(--third); border-color: var(--second); color: var(--main); font-weight: 600; }
+.legend { font-size: 14px; color: var(--grey-2); margin: 0 0 14px; display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.legend .qi { display: inline-grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; background: var(--main); color: #fff; font-weight: 600; font-size: 12px; vertical-align: -3px; }
+.legend .bl { color: var(--blue); font-weight: 600; }
+
+.sheet { display: none; margin-bottom: 28px; }
+.sheet.active { display: block; }
+.sheethead { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 16px; border-bottom: 3px solid var(--main); padding-bottom: 6px; margin-bottom: 12px; }
+.sheethead h3 { font-family: "Barlow Semi Condensed", sans-serif; font-weight: 600; font-size: 22px; margin: 0; color: #000; }
+.modes { display: inline-flex; border: 1px solid var(--grey-4); border-radius: 4px; overflow: hidden; }
+.modes button { border: 0; background: #fff; padding: 5px 12px; cursor: pointer; font-size: 14px; color: var(--grey-1); }
+.modes button + button { border-left: 1px solid var(--grey-4); }
+.modes button[aria-pressed="true"] { background: var(--grey-1); color: #fff; }
+.exbanner { background: var(--grey-6); border-left: 4px solid var(--grey-3); padding: 8px 12px; font-size: 14px; color: var(--grey-1); margin-bottom: 12px; }
+.pager { display: flex; justify-content: space-between; gap: 8px; margin-top: 14px; }
+
+/* boxes & rows (label column + content) */
+.box { border: 1px solid var(--grey-4); border-radius: 6px; overflow: hidden; margin-bottom: 14px; }
+.row { display: grid; grid-template-columns: var(--lab-w) 1fr; }
+.row + .row { border-top: 1px solid var(--grey-4); }
+.row.three { grid-template-columns: var(--lab-w) 250px 1fr; }
+.lab { background: var(--third); padding: 10px 12px; font-weight: 600; color: var(--main); line-height: 1.25; }
+.lab small { display: block; font-weight: 400; color: var(--grey-1); margin-top: 4px; font-size: 13px; }
+.guide { padding: 10px 12px; color: var(--blue); font-size: 14px; white-space: pre-wrap; border-left: 1px solid var(--grey-4); background: var(--blue-bg); }
+.cell { padding: 6px; min-width: 0; }
+.row > .cell + .cell, .row > .guide + .cell { border-left: 1px solid var(--grey-4); }
+.sub3 { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+
+/* phase banner (arrow) */
+.phase { display: grid; grid-template-columns: var(--lab-w) 1fr; background: var(--grey-5); border-top: 1px solid var(--grey-4); border-bottom: 1px solid var(--grey-4); }
+.phase .lab { background: var(--main); color: #fff; }
+.phase .arrow { margin: 6px 12px; justify-self: start; background: var(--main); color: #fff; font-family: "Barlow Semi Condensed", sans-serif; font-weight: 600; padding: 4px 30px 4px 12px; clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 50%, calc(100% - 16px) 100%, 0 100%); }
+.colhead { background: var(--grey-5); font-family: "Barlow Semi Condensed", sans-serif; font-weight: 600; color: var(--main); padding: 6px 10px; }
+.colhead small { display: block; font-family: "Barlow", sans-serif; font-weight: 400; font-size: 12px; color: var(--grey-2); }
+
+/* fields */
+.fld { position: relative; }
+.fld textarea { display: block; width: 100%; min-height: 2.4em; resize: vertical; border: 1px solid var(--grey-5); border-radius: 4px; padding: 6px 30px 6px 8px; font: inherit; font-size: 15px; line-height: 1.4; color: #000; background: #fff; overflow: hidden; }
+.fld textarea:hover { border-color: var(--grey-4); }
+.fld textarea:focus { outline: 2px solid var(--second); outline-offset: 0; border-color: var(--second); }
+.fld textarea::placeholder { color: var(--grey-3); font-style: italic; }
+.fld.blue textarea { color: var(--blue); background: var(--blue-bg); }
+.fld .cap { display: none; font-size: 12px; font-weight: 600; color: var(--main); margin: 2px 0 2px 2px; }
+.q { position: absolute; top: 5px; right: 5px; width: 22px; height: 22px; border-radius: 50%; border: 0; background: var(--main); color: #fff; font-weight: 600; font-size: 13px; line-height: 22px; padding: 0; cursor: pointer; z-index: 2; }
+.fld .cap ~ .q { top: 25px; }
+.q:hover, .q[aria-expanded="true"] { background: var(--main-dark); box-shadow: 0 0 0 3px var(--third); }
+.q:focus-visible { outline: 2px solid var(--main); outline-offset: 2px; }
+.take { margin-top: 4px; border: 1px dashed var(--blue); background: #fff; color: var(--blue); border-radius: 4px; font-size: 12px; padding: 2px 8px; cursor: pointer; }
+.take:hover { background: var(--blue-bg); }
+.exv { white-space: pre-wrap; font-size: 14px; line-height: 1.4; padding: 6px 8px; min-height: 2.4em; }
+.fld.exmode .exv { border: 1px dashed var(--grey-4); border-radius: 4px; background: var(--grey-6); }
+.fld.blue.exmode .exv { color: var(--blue); }
+.exv .empty { color: var(--grey-3); }
+
+/* check groups */
+.checks { display: grid; gap: 6px; padding: 8px 34px 8px 10px; position: relative; background: #fffaf2; }
+.checks label { display: flex; gap: 10px; align-items: center; cursor: pointer; font-weight: 500; color: var(--main); }
+.checks input { width: 18px; height: 18px; accent-color: var(--main); }
+.ticks { position: relative; display: flex; flex-wrap: wrap; gap: 0; padding: 6px 28px 6px 4px; }
+.ticks label { display: grid; justify-items: center; gap: 1px; font-size: 13px; font-weight: 600; width: 20px; cursor: pointer; }
+.lab, .mx .rl, .mx .corner, .colhead, .mx .dim { overflow-wrap: normal; word-break: normal; -webkit-hyphens: auto; hyphens: auto; }
+.ticks input { margin: 0; width: 16px; height: 16px; accent-color: var(--main); }
+.tk { display: inline-grid; place-items: center; width: 16px; height: 16px; border: 1px solid var(--grey-3); border-radius: 3px; font-size: 13px; line-height: 1; color: #fff; }
+.tk.on { background: var(--main); border-color: var(--main); }
+.checks .tk { width: 18px; height: 18px; }
+.radio { display: grid; grid-template-columns: 1fr 1fr; position: relative; background: #fffaf2; }
+.radio label { display: flex; gap: 10px; align-items: center; padding: 10px 14px; color: var(--main); font-weight: 500; cursor: pointer; }
+.radio label + label { border-left: 1px solid var(--grey-4); }
+.radio input { width: 18px; height: 18px; accent-color: var(--main); }
+.radio .q, .checks .q, .ticks .q { top: 6px; }
+
+/* matrices */
+.mx { display: grid; border: 1px solid var(--grey-4); border-radius: 6px; overflow: hidden; margin-bottom: 14px; }
+.mx > * { border-right: 1px solid var(--grey-4); border-bottom: 1px solid var(--grey-4); min-width: 0; }
+.mx .rl { background: var(--third); color: var(--main); font-weight: 600; padding: 8px 10px; line-height: 1.2; }
+.mx .rl small { display: block; font-weight: 400; color: var(--grey-1); font-size: 12px; margin-top: 4px; }
+.mx .corner { background: var(--main); color: #fff; font-weight: 600; padding: 8px 10px; }
+.mx .ph { background: var(--grey-5); padding: 6px; display: flex; align-items: center; }
+.mx .ph .arrow { margin: 0; background: var(--main); color: #fff; font-family: "Barlow Semi Condensed", sans-serif; font-weight: 600; padding: 3px 24px 3px 10px; clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%); font-size: 15px; }
+.mx .title { grid-column: 1 / -1; background: var(--grey-5); padding: 8px 10px; font-weight: 600; color: var(--main); }
+.mx .title span { font-weight: 400; color: #000; }
+.mx .phband { grid-column: 1 / -1; background: var(--main); color: #fff; font-family: "Barlow Semi Condensed", sans-serif; font-weight: 600; padding: 4px 10px; display: none; }
+.mx .c { padding: 5px; }
+.mx .c.tint { background: #fffaf2; }
+.mx.kp { grid-template-columns: 40px repeat(4, 1fr); }
+.mx.kp .dim { writing-mode: vertical-rl; transform: rotate(180deg); text-align: center; background: var(--third); color: var(--main); font-weight: 600; padding: 8px 4px; }
+.mx.en { grid-template-columns: 170px repeat(4, 1fr); }
+.mx.zu { grid-template-columns: 170px repeat(4, 1fr); }
+.mx.zu .corner { font-size: 14px; display: flex; align-items: center; }
+.mx.zp { grid-template-columns: 96px repeat(5, 1fr); }
+.mx .slot { display: grid; gap: 4px; padding: 6px; }
+.mx .slot .fld textarea { font-size: 14px; }
+.mx .times { background: var(--third); padding: 6px; display: grid; gap: 4px; align-content: start; }
+.mx .times span { font-size: 12px; font-weight: 600; color: var(--main); }
+.mx .slotlab { font-size: 12px; color: var(--blue); font-weight: 600; margin: 2px 0 0 2px; }
+.mx .alt { background: #fffaf2; }
+.tblgrid { display: grid; grid-template-columns: 1fr 1.4fr .8fr; }
+.tblgrid > * { border-left: 1px solid var(--grey-4); border-bottom: 1px solid var(--grey-4); }
+.tblgrid > *:nth-child(3n+1) { border-left: 0; }
+.tblgrid .th { background: #fffaf2; color: var(--main); font-weight: 600; padding: 6px 10px; text-align: center; line-height: 1.2; }
+.tblgrid .td { padding: 4px; }
+.ta-block { margin-bottom: 18px; }
+.ta-block h4 { display: flex; justify-content: space-between; align-items: center; margin: 0 0 6px; font-family: "Barlow Semi Condensed", sans-serif; font-size: 18px; color: var(--main); }
+
+/* popover */
+#pop { position: fixed; z-index: 50; width: min(460px, calc(100vw - 24px)); max-height: min(70vh, 560px); overflow: auto; background: #fff; border: 1px solid var(--grey-4); border-top: 4px solid var(--main); border-radius: 6px; box-shadow: 0 10px 30px rgba(0,0,0,.18); padding: 12px 14px 14px; display: none; }
+#pop.open { display: block; }
+#pop h4 { margin: 0 0 4px; font-family: "Barlow Semi Condensed", sans-serif; font-size: 15px; text-transform: uppercase; letter-spacing: .05em; color: var(--main); }
+#pop h4 + p, #pop .exv { margin: 0 0 10px; }
+#pop .hint { font-size: 14px; color: var(--grey-1); font-style: italic; }
+#pop .exv { background: var(--grey-6); border-radius: 4px; }
+#pop .close { position: absolute; top: 6px; right: 8px; border: 0; background: none; font-size: 20px; line-height: 1; cursor: pointer; color: var(--grey-2); }
+
+footer { border-top: 1px solid var(--grey-4); margin-top: 30px; padding: 16px 0 30px; font-size: 13px; color: var(--grey-2); }
+.lb { display: none; }
+.lb.active { display: block; }
+.row.half { grid-template-columns: 1fr 1.25fr; }
+.phase.solo { grid-template-columns: 1fr; }
+.sublab { font-size: 13px; font-weight: 600; color: var(--main); margin: 4px 2px 2px; }
+.tcap { display: none; font-size: 12px; font-weight: 600; color: var(--main); margin: 0 0 2px 2px; }
+.slot { position: relative; }
+.slot > .q, .times > .q { top: 4px; right: 4px; }
+.slot .fld textarea, .times .fld textarea { padding-right: 8px; }
+.slot { padding-right: 30px !important; }
+.zp-day .fld textarea { font-weight: 600; text-align: center; }
+
+/* narrow screens: stack every grid */
+@media screen and (max-width: 860px) {
+  :root { --lab-w: 1fr; }
+  .toolbar { position: static; }
+  .row, .row.three, .phase { grid-template-columns: 1fr; }
+  .row > .cell + .cell, .row > .guide + .cell { border-left: 0; }
+  .guide { border-left: 0; }
+  .mx.kp, .mx.en, .mx.zu, .mx.zp { grid-template-columns: 1fr; }
+  .hide-narrow, .mx .hide-narrow { display: none !important; }
+  .row.half { grid-template-columns: 1fr; }
+  .tcap { display: block; }
+  .mx.en > * { order: var(--o, 0); }
+  .mx .phband { display: block; }
+  .mx.kp .dim { writing-mode: horizontal-tb; transform: none; text-align: left; }
+  .fld .cap { display: block; }
+  .tblgrid { grid-template-columns: 1fr; }
+  .tblgrid .th { display: none; }
+  .tblgrid > * { border-left: 0; }
+  .sub3, .radio { grid-template-columns: 1fr; }
+  .radio label + label { border-left: 0; border-top: 1px solid var(--grey-4); }
+}
+
+/* print */
+@page { size: A4; margin: 12mm; }
+@media print {
+  body { font-size: 11px; }
+  .topbar, .toolbar, .sheetnav, .legend, .pager, .modes, .q, .take, .ta-remove, .ta-add, #pop, footer .noprint { display: none !important; }
+  .hero { background: none; color: #000; border-bottom: 2px solid var(--main); }
+  .hero .wrap { padding: 0 0 6px; }
+  .wrap { max-width: none; padding: 0; }
+  .lb:not(.active) { display: none !important; }
+  body:not(.print-all) .sheet:not(.active) { display: none !important; }
+  body.print-all .sheet { display: block !important; }
+  .sheet { break-after: page; }
+  .box, .mx { break-inside: auto; }
+  .row, .mx > * { break-inside: avoid; }
+  .fld textarea { border: 0; padding: 2px 4px; resize: none; font-size: 11px; }
+  .fld textarea::placeholder { color: transparent; }
+  .row.three { grid-template-columns: 150px 170px 1fr; }
+  .row { grid-template-columns: 150px 1fr; }
+  .fld.blue textarea, .guide, .mx .alt, .mx .c.tint, .checks, .radio { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .mx.en { grid-template-columns: 90px repeat(4, 1fr); }
+  .mx.zp { grid-template-columns: 60px repeat(5, 1fr); }
+}
+body.print-all .sheet { display: block; }
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap">
+  <span><a href="https://www.ovgu.de" target="_blank" rel="noopener">Otto-von-Guericke-Universität Magdeburg</a> · Prozesse, Systeme und Organisation betrieblicher Facharbeit (PSOBF)</span>
+  <a href="../index.html">← Kurswebseite</a>
+</div></div>
+<div class="hero"><div class="wrap">
+  <div>
+    <div class="kicker">Interaktive Arbeitsmappe · Themenbox „Praxisorientiert ausbilden!“</div>
+    <h1>Arbeitsprozesse · Berufliche Handlungsfelder · Lern- und Arbeitsaufgaben</h1>
+  </div>
+  <div class="src">Nach: Falk Howe, Sönke Knutzen – Kompetenzwerkstatt, Lernbausteine 2, 3 und 4 (Teil B: Arbeitsblätter, Teil C: Beispiele)</div>
+</div></div>
+
+<div class="toolbar"><div class="wrap">
+  <div class="lbtabs" role="tablist" aria-label="Lernbausteine" id="lbtabs"></div>
+  <div class="actions">
+    <span class="status" id="status" role="status" aria-live="polite"></span>
+    <button type="button" class="btn" id="b-export" title="Alle Eingaben als JSON-Datei sichern">Exportieren</button>
+    <button type="button" class="btn" id="b-import" title="Eingaben aus einer JSON-Datei laden">Importieren</button>
+    <button type="button" class="btn" id="b-print-sheet" title="Aktuelles Arbeitsblatt drucken oder als PDF speichern">Blatt drucken</button>
+    <button type="button" class="btn primary" id="b-print-lb" title="Alle Arbeitsblätter dieses Lernbausteins drucken oder als PDF speichern">Lernbaustein drucken</button>
+    <button type="button" class="btn" id="b-reset" title="Eingaben dieses Lernbausteins zurücksetzen">Zurücksetzen</button>
+  </div>
+</div></div>
+
+<main class="wrap" id="app"></main>
+
+<div id="pop" role="dialog" aria-label="Hinweis und Beispiel"></div>
+<input type="file" id="imp" accept="application/json,.json" hidden>
+
+<footer><div class="wrap">
+  Grundlage: Falk Howe, Sönke Knutzen: Kompetenzwerkstatt – Praxisorientiert ausbilden! Interaktive Arbeitsmappen zu Lernbaustein 2 „Analysieren und Beschreiben von Arbeitsprozessen“, Lernbaustein 3 „Beschreiben von Beruflichen Handlungsfeldern“ und Lernbaustein 4 „Entwickeln von Lern- und Arbeitsaufgaben“. Gefördert durch das Bundesinstitut für Berufsbildung (BIBB). © 2014 by Dr.-Ing. Paul Christiani GmbH &amp; Co. KG / Bundesinstitut für Berufsbildung.
+  <span class="noprint"><br>Ihre Eingaben werden nur lokal in diesem Browser gespeichert. Für einen Gerätewechsel oder zur Weitergabe: „Exportieren“ und „Importieren“.</span>
+</div></footer>
+
+<script>
+const EX = {
+"lb2.bb.betrieb": "Elektrotechnik Karl Kurz\nSchluss Str. 410\n26123 Funkenstedt\n\ne-Mail: karlkurz@info.de\nTel.: 04321 / 12345",
+"lb2.bb.experte": "Karl Kurz\nBetriebsinhaber\nElektroinstallateur, Meister seit 2003",
+"lb2.bb.termin": "25.06.2014\n10.00 Uhr bis 12:30 Uhr\nInterview im Besprechungsraum (Betrieb)\nanschließend kurze Betriebsbegehung",
+"lb2.bb.dauer": "2,5 Stunden",
+"lb2.bb.prozess": "Arbeitsprozess:\nNeuinstallation eines Badezimmers in einem Altbau eines Privatkunden\n\nSzenario:\nEin Privatkunde plant das Dachgeschoss seines Wohnhauses (Baujahr: 1990) zu vermieten.\nZu diesem Zweck soll ein schon in der Vergangenheit dafür vorgesehener Raum zum Badezimmer ausgebaut werden. Neben der Standardinstallation ist ein separater Waschmaschinenanschluss vorzusehen. Die Installationsarbeiten müssen innerhalb der nächsten zwei Wochen erfolgen, da die ersten Mieter bereits zum Monatsende einziehen werden.",
+"lb2.bb.dokumente": "- Leistungsverzeichnis\n- Installations- und Raumplan\n- Aufmaß\n- Stundenzettel",
+"lb2.bb.bemerkungen": "- Herr Kurz zeigt großes Interesse an der Analyse und nahm sich ausreichend Zeit.\n- Herr Kurz wünschte sich engeren und regelmäßigeren Kontakt zur Berufsschule (z.B. auch zur Besprechung solcher Arbeitsprozesse und der daraus erwachsenden Qualifikationsanforderungen an die Handwerker\n- Im Juli soll noch eine Baustellenbegehung folgen, bei der sich ein dem Szenario vergleichbarer Arbeitsprozess beobachten lässt.",
+"lb2.bb.doku.0": true,
+"lb2.bb.doku.2": true,
+"lb2.bb.doku": "✓ Arbeitsblätter „Arbeitsprozessanalyse“\n✓ Arbeitsblatt „Arbeitsprozess - Zuständigkeit“",
+"lb2.annahme.gesetze": "- Bürgerliches Gesetzbuch (Werkvertragsrecht: BGB §§ 631 bis 651)\n- Allgemeine Geschäftsbedingungen (z.B.: Gewährleistung und Haftung)",
+"lb2.annahme.rahmen": "Der Betrieb vereinbart, dass der Auftrag nach Stunden abgerechnet wird (kein Festpreis).\nDer Betrieb legt fest, dass das Angebot auf der Basis einer Kalkulationshilfe (Standard-Kalkulation) erstellt wird.\nAuf eine Freizeichnungsklausel (z.B.: freibleibend, unverbindlich) im Angebot wird verzichtet.",
+"lb2.annahme.anf": "Der Kunde ist Vermieter und will deshalb nur eine Standardausstattung. Dies betrifft Schalterprogramme und Leuchtenauswahl. Die Beratung und Baubesichtigung soll ein Meister durchführen.\nDer Kunde wünscht eine Schalter-Steckdosenkombination an der Tür, eine Doppel-Steckdose am Waschbecken,\neine Einfach-Steckdose mit separatem Stromkreis (für die Waschmaschine) und Downlights als Beleuchtung.\nDer Kunde erwartet, dass der Auftrag innerhalb von zwei Wochen erledigt ist.",
+"lb2.annahme.ablauf": "1: telefonisch.\n2: Branchensoftware \"Powerbird\" (für den gesamten weiteren Auftragsablauf).\n3: Bauliche Gegebenheiten, Ausführung und Lage der Verteilung.\n4: Schalterprogramme, Leuchtentypen, Beleuchtungsart.\n5: Zeitrahmen, Mitarbeiter, Firmenwagen, Sondermaschinen (z.B.: Mauernutfräse).\n6: Eingabe der Kundenwünsche in die Branchensoftware (Musterleistungen, Kalkulationshilfe).\n7: Generiert sich unmittelbar aus dem Leistungsverzeichnis mithilfe der Software.\n8: telefonisch.",
+"lb2.annahme.gegen": "- Produktkatalog (Leuchten, Schalterprogramme)\n- Leistungsverzeichnis, Kalkulationshilfe, Branchensoftware, PC, Laptop, Telefon",
+"lb2.annahme.steps": "1. Anfrage des Kunden aufnehmen\n2. Kundendaten abgleichen\n3. \"Vor-Ort-Begutachtung\" durchführen\n4. Auftraggeber beraten und Alternativen anbieten\n5. Betriebliche Voraussetzungen prüfen\n6. Leistungsverzeichnis erstellen\n7. Angebot erstellen\n8. Auftrag annehmen",
+"lb2.planung.gesetze": "- Allgemeine Geschäftsbedingungen (Großhandel: z.B. Preise und Zahlungsbedingungen)\n- Handelsgesetzbuch, HGB § 377: Wareneingangskontrolle\n- DIN VDE 0100 Teil 410: Schutz gegen elektrischen Schlag\n   Teil 701: Räume mit Badewanne oder Dusche\n- DIN VDE 0298 Teil 4: Verwendung von Kabeln und isolierten Leitungen",
+"lb2.planung.rahmen": "Der zuständige Meister betraut einen Gesellen mit der Planung und Durchführung der Elektroinstallation.\nDer Geselle richtet sich nach den Leistungspositionen des Angebots und den Vorgaben des Meisters.\nDie Bürokraft ist für die Auftragsverwaltung (Lieferscheine, Stundenzettel usw.) verantwortlich.\nEine Kooperation mit den anderen Gewerken hat, falls notwendig, zu erfolgen.",
+"lb2.planung.anf": "Der Kunde erwartet, dass er bei möglichen Mehrkosten oder Planungsänderungen rechtzeitig informiert wird\nDer Kunde erwartet, dass sich die einzelnen Gewerke untereinander koordinieren und er damit nichts zu tun hat.",
+"lb2.planung.ablauf": "1: Leitungsberechnung (Querschnitt, Länge, Absicherung, Verlegeart, Spannungsfall usw.)\n   Beleuchtungsberechnung mit der Branchensoftware Dialux (Beleuchtungsstärke, Anzahl der Leuchten, Montageort usw.).\n   Hinweis: Dieser Handlungsschritt wird i.d.R. bereits bei der Erstellung des Leistungsverzeichnisses durchgeführt und beruht, bei einfachen Projekten, auf Erfahrungswerten.\n2: Als Grundlage dienen die Berechnungen, Kundenwünsche, Raumpläne und Vorschriften.\n3: Terminabsprache: Sanitär & Heizung, Fliesenleger, Estrich- und Putzarbeiten.\n   Beschaffung des Raum- bzw. Installationsplans (SHK)\n4: Einweisung des Gesellen durch den Meister. Berücksichtigt die einzelnen Bauphasen und Terminabsprachen.\n5: Mit der Branchensoftware Powerbird (Leuchten, Schalter, Steckdosen, Leitungen, Schutzmaßnahmen).\n6: Mehrkosten mindern bei einem verbindlichen Angebot den Gewinn.\n7: Materialbestellung beim Großhandel. Sondermaschinen und Geräte wie Mauernutfräse oder Messgeräte.",
+"lb2.planung.gegen": "- Branchensoftware: - Powerbird (Kalkulation, Abwicklung, Verwaltung, Materiallisten)\n   - Dialux (Beleuchtungsplanung)\n- Leistungsverzeichnis\n- PC, Laptop, Telefon\n- Raumplan, Installationsplan",
+"lb2.planung.steps": "1. Berechnungen vornehmen\n2. Installationsplan erstellen\n3. Mit anderen Gewerken abstimmen\n4. Zeit- und Arbeitsplan erstellen\n5. Materialliste erstellen\n6. Kostenabgleich mit dem Angebot vornehmen\n7. Material, Geräte, Werkzeuge usw. zusammenstellen",
+"lb2.durchfuehrung.gesetze": "- Bürgerliches Gesetzbuch BGB § 946: Verbindung mit einem Grundstück\n- Unfallverhütungsvorschriften BGV A3: Elektrische Anlagen und Betriebsmittel\n- DIN VDE 0100 Teil 410: Schutz gegen elektrischen Schlag, DIN VDE 0100 Teil 600: Erstprüfung elektrischer Anlagen, Teil 701: Räume mit Badewanne oder Dusche\n- DIN VDE 0298 Teil 4: Verwendung von Kabeln und isolierten Leitungen",
+"lb2.durchfuehrung.rahmen": "Der Betrieb legt fest, dass der Geselle durch einen Auszubildenden bei den Installationsarbeiten unterstützt werden soll.\nBei zusätzlichen Kundenwünschen oder Änderungen wird ein Nachtragsangebot erstellt.",
+"lb2.durchfuehrung.anf": "Der Kunde legt besonderen Wert auf Sauberkeit am Arbeitsplatz.\nDer Kunde fordert ein professionelles Auftreten.\nDer Kunde erwartet, dass sich ein gutes Preis-Leistungsverhältnis ergibt.",
+"lb2.durchfuehrung.ablauf": "1: Material, Maschinen (Dosensenker, Mauernutfräse), Werkzeug, Messgeräte (Metrawatt M5010)\n2: Material, Werkzeug und Maschinen werden möglichst zugänglich positioniert.\n3: Ist der Plan korrekt, gibt es Änderungen (SHK, Kunde).\n4: - Anzeichnen (Position der Steckdosen, Schalter und Leuchten)\n   - Fräs- und Senkarbeiten durchführen (Installationszonen beachten).\n   - Schalterdosen eingipsen, Leitungen verlegen, Potentialausgleich durchführen (Heizung, Rohre).\n   - Leuchten und Steckdosen montieren.\n   - Unterverteilung bestücken und verdrahten (Leitungen, Fehlerstromschutzschalter, Leitungsschutzschalter).\n5: Ist Berührungsschutz gegeben d.h. sind alle Abdeckungen montiert? Schutzmaßnahmen.\n6: Erstprüfung der elektrischen Installation: Spannungsprüfung, Schutzleiter vorhanden, Isolationsmessung, Auslösestrom und Zeit des Fehlerstromschutzschalters (Erproben), Kurzschlussstrom usw. Anfertigung eines Messprotokolls (Unterschreiben!), Beschriftung der Verteilung.\n8: tatsächlich erbrachte Leistung.",
+"lb2.durchfuehrung.gegen": "- Laptop\n- Raumplan, Installationsplan\n- Dosensenker, Mauernutfräse, Abisolierzange, Seitenschneider, Schraubendreher\n- Leitungen, Schalter, Steckdosen, FI-Schutzschalter, LS-Schalter, Schalterdosen,\n- Leuchten (Downlights), Verdrahtungsmaterial, Verbindungsdosen, Erdungsbandschellen\n- Messgerät (Metrawatt M5010)",
+"lb2.durchfuehrung.steps": "1. Firmenwagen einräumen\n2. Baustelle einrichten\n3. Installationsplan abstimmen\n4. Installationsarbeiten durchführen\n5. Besichtigen\n6. Messen, Erproben und Dokumentieren\n7. Inbetriebnahme\n8. Aufmaß vornehmen",
+"lb2.abschluss.gesetze": "- Allgemeine Geschäftsbedingungen (z.B. Abnahme und Abnahmeverzug)\n- Bürgerliches Gesetzbuch BGB § 437: Rechte des Käufers bei Mängeln\n- DIN VDE 0100 Teil 600: Übergabe: Messprotokoll\n- DIN VDE 0105 Teil 100: Schaltpläne und Unterlagen",
+"lb2.abschluss.rahmen": "Der Betrieb legt fest, dass eine Nachkalkulation durchgeführt wird.",
+"lb2.abschluss.anf": "Der Kunde erwartet eine fehlerfreie und funktionstüchtige Elektroinstallation.\nDer Kunde fordert eine prüfbare und leicht nachvollziehbare Rechnung.\nDer Kunde erwartet eine schnelle Nachbesserung bei Mängeln.",
+"lb2.abschluss.ablauf": "1: Messprotokoll, Installationsplan, aktueller Verteilungsplan, Aufmaß\n2: Besichtigung und Erprobung der Installation durch den Kunden.\n3: Bei Mängeln erfolgt i.d.R. eine für den Kunden kostenneutrale Nachbesserung.\n4: Die Rechnung sollte vom Kunden leicht geprüft werden können.\n   Als Grundlage dienen Aufmaß und Stundenzettel.\n5: Abweichungen vom Angebot ermitteln (Mehrkosten, tatsächlicher Gewinn).\n   Betriebliche Leistungen können so überprüft werden (Arbeitszeiten, Materialeinsatz).\n6: Vollständiger Betrag (ggf. Zahlungserinnerung, 2. Mahnung)",
+"lb2.abschluss.gegen": "- Dokumentation (Messprotokoll, Verteilungsplan, Installationsplan, Aufmaß)\n- Branchensoftware \"Powerbird\" (Nachkalkulation, Rechnungserstellung)\n- PC / Laptop",
+"lb2.abschluss.steps": "1. Arbeiten dokumentieren\n2. Übergabe durchführen und Kunden einweisen.\n3. Ggf. Mängel serviceorientiert und fachgerecht beseitigen.\n4. Rechnung erstellen und übergeben.\n5. Nachkalkulation durchführen.\n6. Zahlungseingang überprüfen.",
+"lb2.zust.role.0": "Bürokraft",
+"lb2.zust.0.annahme": "Bürokraft: ✓ 1, 2, 5, 8",
+"lb2.zust.0.annahme.1": true,
+"lb2.zust.0.annahme.2": true,
+"lb2.zust.0.annahme.5": true,
+"lb2.zust.0.annahme.8": true,
+"lb2.zust.0.abschluss": "Bürokraft: ✓ 4, 5, 6",
+"lb2.zust.0.abschluss.4": true,
+"lb2.zust.0.abschluss.5": true,
+"lb2.zust.0.abschluss.6": true,
+"lb2.zust.role.1": "Meister",
+"lb2.zust.1.annahme": "Meister: ✓ 3, 4, 5, 6, 7",
+"lb2.zust.1.annahme.3": true,
+"lb2.zust.1.annahme.4": true,
+"lb2.zust.1.annahme.5": true,
+"lb2.zust.1.annahme.6": true,
+"lb2.zust.1.annahme.7": true,
+"lb2.zust.1.planung": "Meister: ✓ 1",
+"lb2.zust.1.planung.1": true,
+"lb2.zust.role.2": "Geselle",
+"lb2.zust.2.planung": "Geselle: ✓ 1, 2, 3, 4, 5, 6, 7, 8",
+"lb2.zust.2.planung.1": true,
+"lb2.zust.2.planung.2": true,
+"lb2.zust.2.planung.3": true,
+"lb2.zust.2.planung.4": true,
+"lb2.zust.2.planung.5": true,
+"lb2.zust.2.planung.6": true,
+"lb2.zust.2.planung.7": true,
+"lb2.zust.2.planung.8": true,
+"lb2.zust.2.durchfuehrung": "Geselle: ✓ 3, 4, 5, 6, 7, 8",
+"lb2.zust.2.durchfuehrung.3": true,
+"lb2.zust.2.durchfuehrung.4": true,
+"lb2.zust.2.durchfuehrung.5": true,
+"lb2.zust.2.durchfuehrung.6": true,
+"lb2.zust.2.durchfuehrung.7": true,
+"lb2.zust.2.durchfuehrung.8": true,
+"lb2.zust.2.abschluss": "Geselle: ✓ 1, 2, 3",
+"lb2.zust.2.abschluss.1": true,
+"lb2.zust.2.abschluss.2": true,
+"lb2.zust.2.abschluss.3": true,
+"lb2.zust.role.3": "Auszubildender",
+"lb2.zust.3.durchfuehrung": "Auszubildender: ✓ 1, 2, 4",
+"lb2.zust.3.durchfuehrung.1": true,
+"lb2.zust.3.durchfuehrung.2": true,
+"lb2.zust.3.durchfuehrung.4": true,
+"lb3.pa.feld": "Installieren und Inbetriebnehmen von Standard-Elektroanlagen",
+"lb3.pa.curricula": "Ausbildungsrahmenplan: 4, 9, 12 . Unterweisungsplan: G-ETEM1/03, ET1/04. Rahmenlehrplan: Lernfeld",
+"lb3.pa.auftraege": "- Neuinstallation eines Badezimmers (Küche usw.) bei einem Privatkunden.\n- Neuinstallation der Elektroanlage in einem Einfamilienhaus.\n- Sanierung der Elektroinstallation in einer Altbauwohnung.",
+"lb3.pa.annahme.bes": "1: I.d.R. per Telefon. Manchmal durch Beteiligung an einer Ausschreibung oder als Unterauftrag.\n2: Bei Kleinaufträgen i.d.R. nicht nötig. Zu klären: klassische Nullung, FI-Schalter, neue Erdung, neue Verteilung, Schutzart (IP).\n3: Alternativen: Schalterprogramm, Leuchtentyp (Lichtverteilung).\n4: Aufträge sind i.d.R. Standard, passen deshalb immer in das betriebliche Leistungsprofil.\n5: Typische Produkte: Steckdosen, Schalter, Leuchten.\n7: I.d.R. mit Branchensoftware.\n8: Angebot schriftlich per Post.\n9: I.d.R. per Telefon.",
+"lb3.pa.annahme.steps": "1. Anfrage des Auftraggebers aufnehmen\n2. „Vor-Ort-Begutachtung“ durchführen\n3. Auftraggeber beraten, Alternativen anbieten\n4. Betriebliche Voraussetzungen prüfen (Kompetenz, Kapazitäten)\n5. Produkt- und Systemauswahl treffen\n6. Betriebliche Ressourcen berücksichtigen (Personal, Material, Termine)\n7. Kosten kalkulieren\n8. Angebot erstellen und übergeben\n9. Auftragserteilung einholen bzw. entgegennehmen",
+"lb3.pa.planung.bes": "1: I.d.R. mit der Branchensoftware (s. Annahme)\n2: Leitungsquerschnitte, Absicherungen.\n3: Bei Kleinaufträgen nur Skizzen, bei Großaufträgen EDV-gestützt.\n5: I.d.R. EDV-gestützt (elektronischer Jahresplaner).\n6: Kleinaufträge gut für die Einbindung von Auszubildenden geeignet.\n7: Material ist i.d.R. vorrätig im Lager. Werkzeug/Maschinen sind i.d.R. standardmäßig im Wagen.",
+"lb3.pa.planung.steps": "1. Leistungsverzeichnisse bearbeiten (Pflichtenheft)\n2. Berechnungen vornehmen\n3. Skizzen erstellen\n4. Mit anderen Gewerken abstimmen\n5. Zeit- und Arbeitsplan erstellen\n6. Personal und Kapazitäten planen\n7. Materialien, Werkzeuge, Maschinen, Geräte zusammenstellen",
+"lb3.pa.durchfuehrung.bes": "3: I.d.R. unproblematisch, weil Material und Produkte i.d.R. Standard sind.\n5: Wichtigste Teilschritte: Standorte der Betriebsmittel und Leitungsführung anzeichnen, Unterputzdosen senken und eingipsen, Leitungswege schlitzen, Leitungen verlegen, Verteiler installieren, Betriebsmittel montieren.\n6: Vorgeschriebene Messungen: Isolationsmessung, Schleifenimpedanz.\n7: Sicht- und Funktionsprüfung.\n9: I.d.R. Standard-Formblatt (Montagezettel/-bericht).",
+"lb3.pa.durchfuehrung.steps": "1. Materialien, Werkzeuge, Maschinen, Geräte zum Arbeitsort transportieren\n2. Zeit- und Arbeitsplan und technische Unterlagen abstimmen (Kunde, Kollegen)\n3. Geänderte Wünsche des Auftraggebers berücksichtigen\n4. Örtliche Gegebenheiten berücksichtigen\n5. Auftrag fachgerecht unter Berücksichtigung rechtlicher Vorgaben ausführen\n6. Fachgerechte Ausführung des Auftrags kontrollieren\n7. Inbetriebnahme durchführen\n8. Fehler analysieren und fachgerecht beheben\n9. Aufmaß vornehmen",
+"lb3.pa.abschluss.bes": "1: Dokumentationen: Abnahmeprotokoll, Messprotokoll und Verteilungsplan.\n3: i.d.R. erfolgt eine Nachbesserung.\n4: I.d.R. mit der Branchensoftware (s. Annahme, Planung)\n5: BWA: Betriebswirtschaftlicher Abgleich.\n   Mahnverfahren bei Kleinaufträgen i.d.R. erst nach Telefonat\n8: Angebote: Steigerung der Energieeffizienz, Komfortlösungen.",
+"lb3.pa.abschluss.steps": "1. Arbeiten dokumentieren\n2. Übergabe durchführen und Auftraggeber einweisen\n3. Mängel serviceorientiert und fachgerecht beheben.\n4. Rechnung erstellen und versenden\n5. Zahlungseingang verfolgen und ggf. Mahnverfahren einleiten\n6. Nachkalkulation durchführen\n7. Datenbank aktualisieren\n8. Kontakt zum Auftraggeber halten (Produkt- und Dienstleistungsangebote)",
+"lb3.kp.fach.annahme": "- Anfragen eines potenziellen Kunden fachlich zu analysieren.\n- einen potenziellen Kunden fachlich zu beraten.\n- die Voraussetzungen für die Durchführbarkeit eines Auftrags zu analysieren.\n- technische/fachliche Vorplanungen durchzuführen.\n- Kosten überschlägig zu kalkulieren",
+"lb3.kp.fach.planung": "- fachgerecht technische Berechnungen durchzuführen.\n- fachgerecht technische Zeichnungen anzufertigen.\n- Gesetze/Vorschriften zu berücksichtigen.\n- erforderliche(s) Material, Geräte, Werkzeuge, Maschinen festzulegen.\n- erforderliche Ressourcen festzulegen.",
+"lb3.kp.fach.durchfuehrung": "- die Gegebenheiten am Arbeitsort zu analysieren.\n- technische Unterlagen zu verstehen und fachgerecht umzusetzen.\n- Zeit-und Arbeitspläne fachgerecht umzusetzen.\n- Gesetze und Vorschriften zu beachten.\n- Funktionsfähigkeit und Sicherheit der Arbeiten zu gewährleisten.\n- Fehler fachlich zu analysieren.",
+"lb3.kp.fach.abschluss": "- die Übergabe an den Kunden durchzuführen.\n- Reklamationen des Kunden fachlich und rechtlich zu analysieren.\n- Reklamationen des Kunden fachgerecht zu beseitigen.\n- passende Produkt- und Dienstleistungsangebote für den Kunden zu bestimmen.",
+"lb3.kp.methode.annahme": "- nach Alternativen zu recherchieren.\n- nach zu beachtenden Gesetzen/ Vorschriften zu recherchieren.\n- ein Beratungsgespräch zu führen.\n- betriebliche Ressourcen zu recherchieren.\n- Softwaretools gezielt einzusetzen.\n- ein Angebot zu erstellen.",
+"lb3.kp.methode.planung": "- nach Alternativen zu recherchieren.\n- nach zu beachtenden Gesetzen/ Vorschriften zu recherchieren.\n- ein Beratungsgespräch zu führen.\n- betriebliche Ressourcen zu recherchieren.\n- Softwaretools gezielt einzusetzen.\n- ein Angebot zu erstellen.",
+"lb3.kp.methode.durchfuehrung": "- die Arbeit einzuteilen.\n- den Zeit- und Arbeitsplan umzusetzen und ggf. anzupassen.\n- die Ausführung eines Auftrags zu kontrollieren.\n- Fehler systematisch zu analysieren\n- Fehler systematisch zu beheben.\n- die durchgeführten Arbeiten zu dokumentieren.",
+"lb3.kp.methode.abschluss": "- eine Rechnung zu erstellen.\n- eine Nachkalkulation durchzuführen.\n- Informationen zum Kunden zu archivieren.\n- Softwaretools gezielt einzusetzen.\n- Kontakt mit dem Kunden zu halten.",
+"lb3.kp.sozial.annahme": "- einem Kunden gegenüber serviceorientiert aufzutreten.\n- Wünsche und Bedürfnisse eines potenziellen Kunden zu verstehen.\n- sich einem potenziellen Kunden gegenüber verständlich auszudrücken.\n- geschickt zu verhandeln.\n- einem potenziellen Kunden ein Angebot zu unterbreiten\n- eine Auftragserteilung einzuholen.",
+"lb3.kp.sozial.planung": "- dem Kunden gegenüber serviceorientiert aufzutreten.\n- sich mit dem Kunden abzustimmen.\n- mit anderen Gewerken/Abteilungen zu kommunizieren und zu kooperieren.\n- Mitarbeiter einzuweisen bzw. sich mit Mitarbeitern abzustimmen.",
+"lb3.kp.sozial.durchfuehrung": "- dem Kunden gegenüber serviceorientiert aufzutreten.\n- sich mit dem Kunden abzustimmen.\n- mit anderen Gewerken/Abteilungen zu kommunizieren und zu kooperieren.\n- Mitarbeiter einzuweisen bzw. sich mit Mitarbeitern abzustimmen.\n- auf der Einhaltung von Arbeitsschutz-/ Sicherheitsbestimmungen zu bestehen.",
+"lb3.kp.sozial.abschluss": "- dem Kunden gegenüber serviceorientiert aufzutreten.\n- sich mit dem Kunden abzustimmen.\n- sich dem Kunden gegenüber verständlich auszudrücken.\n- dem Kunden weitergehende Serviceangebote zu unterbreiten.",
+"lb3.kp.spez.technik": "- Elektroinstallation: Neuinstallation, Erweiterung, Änderung, Sanierung, Fehlersuche, Erst- und Wiederholungsprüfung.\n- Arbeitsgegenstände: Zählerschrank, Kleinverteiler, Verbindungsdosen, Schalter, Steckdosen, Schmelzsicherungen, Leitungsschutzschalter, Fehlerstromschutzschalter (FI).\n- sonstige Arbeitsgegenstände: PC, Handy, Telefon, Servicewagen.\n- Trends: Gebäudeautomation und Energie-Management (KNX Standard, Home Server, Smart Metering), Video- und Sprechanlagentechnik (Voice over IP, Funksysteme), Gefahrenmeldeanlagen (z.B.: Rauch- oder Bewegungsmelder).",
+"lb3.kp.spez.gesetze": "- Allgemeine Geschäftsbedingungen (AGB)\n- Bürgerliches Gesetzbuch (BGB): §§ 631 bis 651: Werkvertragsrecht, § 437: Rechte des Käufers bei Mängeln, § 946: Verbindung mit einem Grundstück\n- Vergabe- und Vertragsordnung für Bauleistungen (VOB)\n- DIN VDE 0100 xxx : Errichten von Niederspannungsanlagen, Gruppe 4xx : Schutzmaßnahmen z.B.: 410 Schutz gegen elektrischen Schlag, 5xx : Auswahl und Errichtung elektrischer Betriebsmittel z.B.: Erdungsanlagen, Schutzpotentialausgleich, 600: Erstprüfung elektrischer Anlagen (Besichtigen, Erproben und Messen)\n- DIN VDE 0298-4: Verwendung von Kabeln und isolierten Leitungen\n- Berufsgenossenschaftliche Vorschriften z.B. BGV A3) \"Elektrische Anlagen und Betriebsmittel\"",
+"lb3.kp.spez.werkzeuge": "- Werkzeug: Abmantelmesser, Abisolierzange, Aderendhülsenzange, Schraubendreher, Seitenschneider, Hammer, Meißel.\n- Maschinen: Bohrmaschine, Dosensenker, Mauernutfräse.\n- Messgeräte: Duspol, Multimeter, Prüfgerät (VDE).\n- Installationsmaterial: Leitungen, Kabel, Schalterdosen, Verbindungsdosen, Kabelkanäle, Leuchten, Steckdosen, Schalter.\n- Dokumente: Stromlaufplan, Installationsplan, Messprotokoll, Verteilungsplan, Aufmaß, Stundenzettel, Lieferscheine, Kataloge (Leuchten, Schalterprogramme), Preislisten.\n- Branchensoftware: Auftragsabwicklung, Beleuchtungsplanung, CAD-Programm (Elektroinstallation)",
+"lb4.vr.lehrgang": "ET1/04: Installieren und Prüfen elektrischer Systeme",
+"lb4.vr.jahr": "2",
+"lb4.vr.anzahl": "12",
+"lb4.vr.vorerf": "- Grundfertigkeiten des Installierens, Montierens und Inbetriebnehmens von elektrischen Betriebsmitteln\n- Messen von elektrischen Größen\n- Grundbegriffe und Grundschaltungen der Elektrotechnik\n- Berufsbezogene Arbeitsschutz- und Unfallverhütungsvorschriften\n- Phasen eines Kundenauftrags\n- Grundlagen des Projektmanagements",
+"lb4.vr.koll.0.a": "G. Müller\n(hauptverantwortlich)",
+"lb4.vr.koll.0.b": "Installationstechnik, Messtechnik, Gebäudetechnik",
+"lb4.vr.koll.0.c": "Mo.-Fr.: 8 - 16",
+"lb4.vr.koll.1.a": "H. Meyer",
+"lb4.vr.koll.1.b": "Betriebliche / technische Kommunikation, Projektmanagement",
+"lb4.vr.koll.1.c": "Mo.: 12 - 14;\nMi.: 12 - 16",
+"lb4.vr.koll.2.a": "W. Schulz",
+"lb4.vr.koll.2.b": "Vorschriften und Gesetze\n(DIN VDE 0100/0105, UVV)",
+"lb4.vr.koll.2.c": "Di.: 8 - 10\nDo.: 8 - 10",
+"lb4.vr.zeitrahmen": "1 Arbeitswoche (Mo.-Fr.)",
+"lb4.vr.orga": "Vollzeit (Block)",
+"lb4.vr.raum.0.a": "Schulungsraum\n(Raumnr.: 120)",
+"lb4.vr.raum.0.b": "Präsentationsausstattung, Moderationsausstattung, WLAN",
+"lb4.vr.raum.0.c": "Mo.-Fr.: 8 - 16",
+"lb4.vr.raum.1.a": "Computerraum\n(Raumnr.: 240)",
+"lb4.vr.raum.1.b": "16 PCs mit Internetanschluss, Präsentationsausstattung, Drucker, Scanner",
+"lb4.vr.raum.1.c": "Absprache mit GETEM1-03",
+"lb4.vr.raum.2.a": "Werkstatt\n(Raumnr.: 020)",
+"lb4.vr.raum.2.b": "3x 6er-Arbeitstische (mit Werkzeug ausgestattet), 9 Montagewände",
+"lb4.vr.raum.2.c": "Mo.: 14 - 16\nDi.-Do.: 8 - 12",
+"lb4.en.annahme.methode.k": "- gezielt nach Alternativen zu recherchieren.\n- ein Beratungsgespräch zu führen.\n- ein Angebot systematisch zu erstellen.",
+"lb4.en.annahme.methode.i": "- Internetrecherche\n- Datenblätter, Kataloge, Produktdatenbanken\n- Ablauf / Elemente eines Kundengesprächs\n- Arten von Angeboten\n- Aufbau / Bestandteile von Angeboten\n- Dokumentation(svorlagen)",
+"lb4.en.annahme.sozial.k": "- einem potentiellen Kunden gegenüber serviceorientiert aufzutreten.\n- Wünsche und Bedürfnisse eines potentiellen Kunden zu verstehen.",
+"lb4.en.annahme.sozial.i": "- Kundentypen (Schwerpunkt: preis-leistungsbewusste Kunden)\n- Kundenorientierung (Schwerpunkt: Umgang mit schwierigen Kunden)\n- Phasen eines Kundenauftrags\n- Mündliches Angebot\n- Kundenkartei",
+"lb4.en.annahme.steps.k": "1. Anfrage des Kunden aufnehmen.\n2. Kunden beraten, Alternativen anbieten.\n3. Produkt- und Systemauswahl treffen.\n4. Ein Angebot erstellen.",
+"lb4.en.annahme.steps.i": "1: I.d.R. per Telefon. Für die Aufgabe nachgestellt als Rollenspiel.\n2: Beratungsschwerpunkt: Schalterprogramm.\n3: Begründete Entscheidungen für Steckdosen, Schalter, Leuchten.\n4: Unter Verwendung der realen Vorlage des eigenen Ausbildungsbetriebs.",
+"lb4.en.annahme.fach.k": "- Anfragen eines potentiellen Kunden fachlich zu analysieren.\n- einen potentiellen Auftraggeber fachlich zu beraten.",
+"lb4.en.annahme.fach.i": "- Struktur und Komponenten einer Elektroinstallation\n- Grundbegriffe der Elektrotechnik (Schwerpunkt: elektrische Spannung, elektrischer Strom, Stromkreise)\n- Grundschaltungen der Elektrotechnik (Schwerpunkt: Serienschaltung, Wechselschaltung, Kreuzschaltung)\n- Elektrische Betriebsmittel (Schwerpunkt: Verhalten und Kennwerte)\n- DIN VDE 0100",
+"lb4.en.planung.methode.k": "- einen Zeit- und Arbeitsplan systematisch zu erstellen.\n- gezielt Planungstool einzusetzen.",
+"lb4.en.planung.methode.i": "- Projektmanagement\n- Qualitätsmanagement\n- Teamarbeit\n- Arbeitsorganisation\n- Lagerhaltung\n- Logistik\n- Software-Planungstools",
+"lb4.en.planung.sozial.k": "- sich mit dem Kunden abzustimmen.",
+"lb4.en.planung.sozial.i": "- Grundlagen der Kommunikation\n- Gesetze: AGB\n- Kaufvertrag\n- Kundenorientierung (Schwerpunkt: Änderungswünsche)",
+"lb4.en.planung.steps.k": "1. Berechnungen vornehmen\n2. Skizzen/Zeichnungen anfertigen\n3. Zeit- und Arbeitsplan erstellen",
+"lb4.en.planung.steps.i": "1: Leitungsberechnung (Querschnitt, Länge, Absicherung)\n2: Auf der Basis der bei der Auftragsannahme (Handlungsschritte 1, 2) aufgenommenen Kundenanforderungen\n3: Terminabsprache nachgestellt mit den Gewerken Sanitär & Heizung, Fliesenleger, Estrich- und Putzarbeiten.",
+"lb4.en.planung.fach.k": "- fachgerecht technische Berechnungen durchzuführen.\n- fachgerecht Zeichnungen/Skizzen anzufertigen.",
+"lb4.en.planung.fach.i": "- Grundlagen des technischen Zeichnens (Schwerpunkt: Schaltpläne, Schaltzeichen und Symbole)\n- Grundlagen der Mathematik (Schwerpunkt: Bruchrechnung, Umrechnungsfaktoren)",
+"lb4.en.durchfuehrung.methode.k": "- den Zeit- und Arbeitsplan situationsgerecht umzusetzen und ggf. anzupassen.\n- Fehler/Probleme systematisch zu analysieren.\n- die durchgeführten Arbeiten ordnungsgemäß zu dokumentieren.",
+"lb4.en.durchfuehrung.methode.i": "- DIN VDE 0100 Teil 600: Erstprüfung elektrischer Anlagen\n- Messprotokoll",
+"lb4.en.durchfuehrung.sozial.k": "- dem Auftraggeber gegenüber serviceorientiert aufzutreten.\n- sich mit dem Auftraggeber abzustimmen.\n- mit Kollegen zu kommunizieren und zu kooperieren.",
+"lb4.en.durchfuehrung.sozial.i": "- Grundlagen der Kommunikation\n- Kundenorientierung (Schwerpunkt: Verhalten beim Kunden vor Ort)\n- Kundentypen (Schwerpunkt: preis-leistungsbewusste Kunden)",
+"lb4.en.durchfuehrung.steps.k": "1. Installationsarbeiten durchführen\n2. Messen, Erproben und Dokumentieren\n3. Inbetriebnahme durchführen",
+"lb4.en.durchfuehrung.steps.i": "1: Anzeichnen (Position der Steckdosen, Schalter und Leuchten), Fräs- und Senkarbeiten durchführen (Installationszonen beachten), Schalterdosen eingipsen, Leitungen verlegen, Leuchten und Steckdosen montieren, Unterverteilung bestücken und verdrahten (Leitungen, Fehlerstromschutzschalter, Leitungsschutzschalter).\n2: Spannungsprüfung, Schutzleiter, Isolationsmessung, Auslösestrom und Zeit des Fehlerstromschutzschalters (Erproben), Kurzschlussstrom\nDokumentation: Anfertigung eines Messprotokolls, Beschriftung der Verteilung.",
+"lb4.en.durchfuehrung.fach.k": "- technische Unterlagen zu verstehen und fachgerecht umzusetzen",
+"lb4.en.durchfuehrung.fach.i": "- Elektroinstallation: Neuinstallation\n- Stromlaufplan, Installationsplan\n- Messprotokoll\n- Schutzmaßnahmen\n- Verlegearten\n- DIN VDE 0100\n- Unfallverhütungsvorschriften BGV A3: Elektrische Anlagen und Betriebsmittel",
+"lb4.en.abschluss.methode.k": "- systematisch Dokumentationen anzufertigen.\n- Dokumentationen zu archivieren.",
+"lb4.en.abschluss.methode.i": "- Dokumentationen: Messprotokoll, Installationsplan, Verteilungsplan, Aufmaß.\n- Branchensoftware \"Powerbird\"",
+"lb4.en.abschluss.sozial.k": "- sich einem Kunden gegenüber verständlich auszudrücken.",
+"lb4.en.abschluss.sozial.i": "- Grundlagen der Kommunikation\n- Gesetze: AGB\n- Kundenorientierung (Schwerpunkt: Verhalten bei Reklamationen)",
+"lb4.en.abschluss.steps.k": "1. Arbeiten dokumentieren\n2. Übergabe durchführen und Kunden einweisen.\n3. Mängel serviceorientiert und fachgerecht beseitigen.",
+"lb4.en.abschluss.steps.i": "1: Messprotokoll, Installationsplan, aktueller Verteilungsplan, Aufmaß\n2/3: Besichtigung und Erprobung durch den Kunden als Rollenspiel. Mangel (fehlerhafte Wechselschaltung) wird serviceorientiert beseitigt.",
+"lb4.en.abschluss.fach.k": "- eine Übergabe an einen Kunden durchzuführen.\n- Reklamationen eines Kunden fachlich zu analysieren.",
+"lb4.en.abschluss.fach.i": "- Dokumentationen: Messprotokoll, Installationsplan, aktueller Verteilungsplan, Aufmaß.\n- Kundenorientierung (Schwerpunkt: Verhalten bei Reklamationen)\n- Gesetze: Rechte des Käufers bei Mängeln",
+"lb4.ta.titel": "Kundenberatung",
+"lb4.ta.schritte": "Aus der Auftragsannahme:\n- Anfrage des Kunden aufnehmen\n- Kunden beraten, Alternativen anbieten",
+"lb4.ta.ziele": "Die Auszubildenden sollen lernen,\n- nach technischen Alternativen zu recherchieren.\n- ein Beratungsgespräch zu führen.\n- einem Kunden gegenüber serviceorientiert aufzutreten.\n- Wünsche und Bedürfnisse eines potentiellen Kunden zu verstehen.\n- Anfragen eines potentiellen Kunden zu verstehen.\n- Anfragen eines potentiellen Kunden fachlich zu analysieren.\n- einen potentiellen Kunden fachlich zu beraten.",
+"lb4.ta.inhalte": "- Internetrecherche\n- Datenblätter, Kataloge, Produktbanken\n- Ablauf / Elemente eines Kundengesprächs\n- Kundentypen (Schwerpunkt: preis-leistungsbewusste Kunden)\n- Kundenorientierung (Schwerpunkt: Umgang mit schwierigen Kunden)\n- Phasen eines Kundenauftrags\n- Mindestausstattung eines Bürogebäudes (Ausstattungswerte)\n- Struktur und Komponenten einer Elektroinstallation\n- Berufsgenossenschaftliche Vorschriften",
+"lb4.ta.raeume": "- Schulungsraum (Raumnr.: 120): Präsentationsausstattung, Moderationsausstattung, Lernecken für Gruppenarbeit.\n- Computerraum (Raumnr.: 240): PCs für Internetrecherche",
+"lb4.ta.medien": "- Datenblätter, Kataloge, Ausstattungswerte, Vorschriften\n- Kommentierte Linklisten und Produktdaten für die Internetrecherche\n- Betriebsmittel\n- Handout \"Kundentypen\"\n- Requisiten für ein Rollenspiel \"Kundengespräch\"",
+"lb4.ta.kollegen": "- G. Müller: Einführung in die Installationstechnik und Gebäudetechnik\n- H. Meyer: Grundlagen der Kommunikation, Kundentypen / Kundengespräche",
+"lb4.ta.zeit": "2 Doppelblöcke",
+"lb4.ta.typus": "Prozessorientiert",
+"lb4.zp.day.0": "Montag",
+"lb4.zp.day.1": "Dienstag",
+"lb4.zp.day.2": "Mittwoch",
+"lb4.zp.day.3": "Donnerstag",
+"lb4.zp.day.4": "Freitag",
+"lb4.zp.von.0": "8:00",
+"lb4.zp.bis.0": "10:00",
+"lb4.zp.zeit.0": "von 8:00 bis 10:00",
+"lb4.zp.0.0.ta": "Einstieg",
+"lb4.zp.0.0.koll": "G. Müller",
+"lb4.zp.0.0.raum": "Schulungsraum (Nr.: 120)",
+"lb4.zp.0.0": "Montag, 8:00–10:00 Uhr\nTeilaufgabe: Einstieg\nKollege: G. Müller\nRaum: Schulungsraum (Nr.: 120)",
+"lb4.zp.0.1.ta": "Grundschaltungen (Grundlagen)",
+"lb4.zp.0.1.koll": "G. Müller",
+"lb4.zp.0.1.raum": "Schulungsraum (Nr.: 120)",
+"lb4.zp.0.1": "Dienstag, 8:00–10:00 Uhr\nTeilaufgabe: Grundschaltungen (Grundlagen)\nKollege: G. Müller\nRaum: Schulungsraum (Nr.: 120)",
+"lb4.zp.0.2.ta": "Installieren von elektrischen Betriebsmitteln (DIN VDE 0100)",
+"lb4.zp.0.2.koll": "W. Schulz",
+"lb4.zp.0.2.raum": "Schulungsraum (Nr. 120)",
+"lb4.zp.0.2": "Mittwoch, 8:00–10:00 Uhr\nTeilaufgabe: Installieren von elektrischen Betriebsmitteln (DIN VDE 0100)\nKollege: W. Schulz\nRaum: Schulungsraum (Nr. 120)",
+"lb4.zp.0.3.ta": "Inbetriebnahme von elektrischen Betriebsmitteln",
+"lb4.zp.0.3.koll": "G. Müller",
+"lb4.zp.0.3.raum": "Werkstatt (Nr. 020)",
+"lb4.zp.0.3": "Donnerstag, 8:00–10:00 Uhr\nTeilaufgabe: Inbetriebnahme von elektrischen Betriebsmitteln\nKollege: G. Müller\nRaum: Werkstatt (Nr. 020)",
+"lb4.zp.0.4.ta": "Grundschaltungen (Simulation)",
+"lb4.zp.0.4.koll": "G. Müller",
+"lb4.zp.0.4.raum": "Computerraum (Nr. 240)",
+"lb4.zp.0.4": "Freitag, 8:00–10:00 Uhr\nTeilaufgabe: Grundschaltungen (Simulation)\nKollege: G. Müller\nRaum: Computerraum (Nr. 240)",
+"lb4.zp.von.1": "10:00",
+"lb4.zp.bis.1": "12:00",
+"lb4.zp.zeit.1": "von 10:00 bis 12:00",
+"lb4.zp.1.0.ta": "Kundenberatung (Kundentypen)",
+"lb4.zp.1.0.koll": "H. Meyer",
+"lb4.zp.1.0.raum": "Schulungsraum (Nr. 120)",
+"lb4.zp.1.0": "Montag, 10:00–12:00 Uhr\nTeilaufgabe: Kundenberatung (Kundentypen)\nKollege: H. Meyer\nRaum: Schulungsraum (Nr. 120)",
+"lb4.zp.1.1.ta": "Grundschaltungen (Simulation)",
+"lb4.zp.1.1.koll": "G. Müller",
+"lb4.zp.1.1.raum": "Computerraum (Nr. 240)",
+"lb4.zp.1.1": "Dienstag, 10:00–12:00 Uhr\nTeilaufgabe: Grundschaltungen (Simulation)\nKollege: G. Müller\nRaum: Computerraum (Nr. 240)",
+"lb4.zp.1.2.ta": "Installieren von elektrischen Betriebsmitteln (Übungen an Installationswänden)",
+"lb4.zp.1.2.koll": "G. Müller",
+"lb4.zp.1.2.raum": "Werkstatt (Nr. 020)",
+"lb4.zp.1.2": "Mittwoch, 10:00–12:00 Uhr\nTeilaufgabe: Installieren von elektrischen Betriebsmitteln (Übungen an Installationswänden)\nKollege: G. Müller\nRaum: Werkstatt (Nr. 020)",
+"lb4.zp.1.3.ta": "Inbetriebnahme von elektrischen Betriebsmitteln",
+"lb4.zp.1.3.koll": "G. Müller",
+"lb4.zp.1.3.raum": "Werkstatt (Nr. 020)",
+"lb4.zp.1.3": "Donnerstag, 10:00–12:00 Uhr\nTeilaufgabe: Inbetriebnahme von elektrischen Betriebsmitteln\nKollege: G. Müller\nRaum: Werkstatt (Nr. 020)",
+"lb4.zp.1.4.ta": "Inbetriebnahme von elektrischen Betriebsmitteln",
+"lb4.zp.1.4.koll": "G. Müller",
+"lb4.zp.1.4.raum": "Werkstatt (Nr. 020)",
+"lb4.zp.1.4": "Freitag, 10:00–12:00 Uhr\nTeilaufgabe: Inbetriebnahme von elektrischen Betriebsmitteln\nKollege: G. Müller\nRaum: Werkstatt (Nr. 020)",
+"lb4.zp.von.2": "12:00",
+"lb4.zp.bis.2": "14:00",
+"lb4.zp.zeit.2": "von 12:00 bis 14:00",
+"lb4.zp.2.0.ta": "Inbetriebnahme von elektrischen Betriebsmitteln",
+"lb4.zp.2.0.koll": "G. Müller",
+"lb4.zp.2.0.raum": "Computerraum (Nr. 240)",
+"lb4.zp.2.0": "Montag, 12:00–14:00 Uhr\nTeilaufgabe: Inbetriebnahme von elektrischen Betriebsmitteln\nKollege: G. Müller\nRaum: Computerraum (Nr. 240)",
+"lb4.zp.2.1.ta": "Grundschaltungen (Grundlagen)",
+"lb4.zp.2.1.koll": "G. Müller",
+"lb4.zp.2.1.raum": "Computerraum (Nr. 240)",
+"lb4.zp.2.1": "Dienstag, 12:00–14:00 Uhr\nTeilaufgabe: Grundschaltungen (Grundlagen)\nKollege: G. Müller\nRaum: Computerraum (Nr. 240)",
+"lb4.zp.2.2.ta": "Inbetriebnahme von elektrischen Betriebsmitteln",
+"lb4.zp.2.2.koll": "G. Müller",
+"lb4.zp.2.2.raum": "Werkstatt (Nr. 020)",
+"lb4.zp.2.2": "Mittwoch, 12:00–14:00 Uhr\nTeilaufgabe: Inbetriebnahme von elektrischen Betriebsmitteln\nKollege: G. Müller\nRaum: Werkstatt (Nr. 020)",
+"lb4.zp.2.3.ta": "Inbetriebnahme von elektrischen Betriebsmitteln",
+"lb4.zp.2.3.koll": "G. Müller",
+"lb4.zp.2.3.raum": "Werkstatt (Nr. 020)",
+"lb4.zp.2.3": "Donnerstag, 12:00–14:00 Uhr\nTeilaufgabe: Inbetriebnahme von elektrischen Betriebsmitteln\nKollege: G. Müller\nRaum: Werkstatt (Nr. 020)",
+"lb4.zp.2.4.ta": "Installieren von elektrischen Betriebsmitteln (DIN VDE 0100)",
+"lb4.zp.2.4.koll": "W. Schulz",
+"lb4.zp.2.4.raum": "Schulungsraum (Nr. 120)",
+"lb4.zp.2.4": "Freitag, 12:00–14:00 Uhr\nTeilaufgabe: Installieren von elektrischen Betriebsmitteln (DIN VDE 0100)\nKollege: W. Schulz\nRaum: Schulungsraum (Nr. 120)",
+"lb4.zp.von.3": "14:00",
+"lb4.zp.bis.3": "16:00",
+"lb4.zp.zeit.3": "von 14:00 bis 16:00",
+"lb4.zp.3.0.ta": "Grundschaltungen (Simulation)",
+"lb4.zp.3.0.koll": "G. Müller",
+"lb4.zp.3.0.raum": "Computerraum (Nr. 240)",
+"lb4.zp.3.0": "Montag, 14:00–16:00 Uhr\nTeilaufgabe: Grundschaltungen (Simulation)\nKollege: G. Müller\nRaum: Computerraum (Nr. 240)",
+"lb4.zp.3.1.ta": "Inbetriebnahme von elektrischen Betriebsmitteln",
+"lb4.zp.3.1.koll": "G. Müller",
+"lb4.zp.3.1.raum": "Werkstatt (Nr. 020)",
+"lb4.zp.3.1": "Dienstag, 14:00–16:00 Uhr\nTeilaufgabe: Inbetriebnahme von elektrischen Betriebsmitteln\nKollege: G. Müller\nRaum: Werkstatt (Nr. 020)",
+"lb4.zp.3.2.ta": "Installieren von elektrischen Betriebsmitteln (DIN VDE 0100)",
+"lb4.zp.3.2.koll": "W. Schulz",
+"lb4.zp.3.2.raum": "Schulungsraum (Nr. 120)",
+"lb4.zp.3.2": "Mittwoch, 14:00–16:00 Uhr\nTeilaufgabe: Installieren von elektrischen Betriebsmitteln (DIN VDE 0100)\nKollege: W. Schulz\nRaum: Schulungsraum (Nr. 120)",
+"lb4.zp.3.3.ta": "Installieren von elektrischen Betriebsmitteln (Übungen an Installationswänden)",
+"lb4.zp.3.3.koll": "G. Müller",
+"lb4.zp.3.3.raum": "Werkstatt (Nr. 020)",
+"lb4.zp.3.3": "Donnerstag, 14:00–16:00 Uhr\nTeilaufgabe: Installieren von elektrischen Betriebsmitteln (Übungen an Installationswänden)\nKollege: G. Müller\nRaum: Werkstatt (Nr. 020)",
+"lb4.zp.3.4.ta": "Grundschaltungen (Simulation)",
+"lb4.zp.3.4.koll": "G. Müller",
+"lb4.zp.3.4.raum": "Computerraum (Nr. 240)",
+"lb4.zp.3.4": "Freitag, 14:00–16:00 Uhr\nTeilaufgabe: Grundschaltungen (Simulation)\nKollege: G. Müller\nRaum: Computerraum (Nr. 240)"
+};
+const DEF = {
+"lb2.annahme.steps": "1. Anfrage des Auftraggebers aufnehmen\n2. Auftraggeber beraten und Alternativen anbieten\n3. Produktauswahl treffen\n4. Angebot erstellen und Auftrag entgegennehmen",
+"lb2.planung.steps": "1. Berechnungen vornehmen\n2. Skizzen/Zeichnungen anfertigen\n3. Zeit- und Arbeitsplan erstellen\n4. Material, Geräte, Werkzeuge usw. besorgen und zusammenstellen",
+"lb2.durchfuehrung.steps": "1. Arbeitsstätte einrichten\n2. Auftrag fachgerecht durchführen\n3. Ausführung kontrollieren und ggf. Fehler beheben\n4. Arbeiten dokumentieren",
+"lb2.abschluss.steps": "1. Übergabe durchführen und Auftraggeber einweisen\n2. Reklamationen ggf. serviceorientiert bearbeiten\n3. Rechnung erstellen",
+"lb3.pa.annahme.steps": "1. Anfrage des Auftraggebers aufnehmen\n2. Auftraggeber beraten und Alternativen anbieten\n3. Produktauswahl treffen\n4. Angebot erstellen und Auftrag entgegennehmen",
+"lb3.pa.planung.steps": "1. Berechnungen vornehmen\n2. Skizzen/Zeichnungen anfertigen\n3. Zeit- und Arbeitsplan erstellen\n4. Material, Geräte, Werkzeuge usw. besorgen und zusammenstellen",
+"lb3.pa.durchfuehrung.steps": "1. Arbeitsstätte einrichten\n2. Auftrag fachgerecht durchführen\n3. Ausführung kontrollieren und ggf. Fehler beheben\n4. Arbeiten dokumentieren",
+"lb3.pa.abschluss.steps": "1. Übergabe durchführen und Auftraggeber einweisen\n2. Reklamationen ggf. serviceorientiert bearbeiten\n3. Rechnung erstellen",
+"lb3.kp.fach.annahme": "- Anfrage eines potenziellen Auftraggebers fachlich zu analysieren.\n- einen potenziellen Auftraggeber fachlich zu beraten.\n- Kosten überschlägig zu kalkulieren.",
+"lb3.kp.fach.planung": "- fachgerecht technische Berechnungen durchzuführen.\n- fachgerecht Zeichnungen/Skizzen anzufertigen.\n- erforderliche(s) Material, Geräte, Werkzeuge usw. festzulegen.",
+"lb3.kp.fach.durchfuehrung": "- die Gegebenheiten am Arbeitsort zu analysieren.\n- fachliche Unterlagen zu verstehen und fachgerecht umzusetzen.\n- Gesetze und Vorschriften zu beachten.\n- Fehler/ Probleme fachgerecht zu beheben.",
+"lb3.kp.fach.abschluss": "- die Übergabe an den Auftraggeber adressatengerecht durchzuführen.\n- Reklamationen des Auftraggebers fachlich und rechtlich zu analysieren.\n- Reklamationen des Auftraggebers zu beheben.",
+"lb3.kp.methode.annahme": "- gezielt nach Alternativen zu recherchieren.\n- gezielt nach zu beachtenden Gesetzen/Vorschriften zu recherchieren.\n- ein Angebot systematisch zu erstellen.",
+"lb3.kp.methode.planung": "- einen Zeit- und Arbeitsplan systematisch zu erstellen.\n- gezielt Planungstools einzusetzen.",
+"lb3.kp.methode.durchfuehrung": "- den Zeit- und Arbeitsplan situationsgerecht umzusetzen und ggf. anzupassen.\n- Fehler/Probleme systematisch zu analysieren.\n- die durchgeführten Arbeiten ordnungsgemäß zu dokumentieren.",
+"lb3.kp.methode.abschluss": "- die Übergabe an den Auftraggeber strukturiert vorzubereiten.\n- eine Rechnung systematisch zu erstellen.",
+"lb3.kp.sozial.annahme": "- einem potenziellen Auftraggeber gegenüber serviceorientiert aufzutreten.",
+"lb3.kp.sozial.planung": "- sich mit dem Auftraggeber abzustimmen.\n- mit Kollegen zu kommunizieren und zu kooperieren.",
+"lb3.kp.sozial.durchfuehrung": "- dem Auftraggeber gegenüber serviceorientiert aufzutreten.\n- sich mit dem Auftraggeber abzustimmen.\n- mit Kollegen zu kommunizieren und zu kooperieren.",
+"lb3.kp.sozial.abschluss": "- dem Auftraggeber gegenüber serviceorientiert aufzutreten.\n- sich mit dem Auftraggeber abzustimmen.",
+"lb4.en.annahme.methode.k": "- gezielt nach Alternativen zu recherchieren.\n- gezielt nach zu beachtenden Gesetzen/Vorschriften zu recherchieren.\n- ein Angebot systematisch zu erstellen.",
+"lb4.en.annahme.sozial.k": "- einem potentiellen Auftraggeber gegenüber serviceorientiert aufzutreten.",
+"lb4.en.annahme.steps.k": "1. Anfrage des Auftraggebers aufnehmen\n2. Auftraggeber beraten und Alternativen anbieten\n3. Produktauswahl treffen\n4. Angebot erstellen und Auftrag entgegennehmen",
+"lb4.en.annahme.fach.k": "- Anfragen eines potenziellen Auftraggebers fachlich zu analysieren.\n- einen potentiellen Auftraggeber fachlich zu beraten.\n- Kosten überschlägig zu kalkulieren.",
+"lb4.en.planung.methode.k": "- einen Zeit- und Arbeitsplan systematisch zu erstellen.\n- gezielt Planungstool einzusetzen.",
+"lb4.en.planung.sozial.k": "- sich mit dem Auftraggeber abzustimmen.\n- mit Kollegen zu kommunizieren und zu kooperieren.",
+"lb4.en.planung.steps.k": "1. Berechnungen vornehmen\n2. Skizzen/Zeichnungen anfertigen\n3. Zeit- und Arbeitsplan erstellen\n4. Material, Geräte, Werkzeuge usw. besorgen und zusammenstellen",
+"lb4.en.planung.fach.k": "- fachgerecht technische Berechnungen durchzuführen.\n- fachgerecht Zeichnungen/Skizzen anzufertigen\n- erforderliche(s) Material, Geräte, Werkzeuge usw. festzulegen",
+"lb4.en.durchfuehrung.methode.k": "- den Zeit- und Arbeitsplan situationsgerecht umzusetzen und ggf. anzupassen.\n- Fehler/Probleme systematisch zu analysieren.\n- die durchgeführten Arbeiten ordnungsgemäß zu dokumentieren.",
+"lb4.en.durchfuehrung.sozial.k": "- dem Auftraggeber gegenüber serviceorientiert aufzutreten.\n- sich mit dem Auftraggeber abzustimmen.\n- mit Kollegen zu kommunizieren und zu kooperieren.",
+"lb4.en.durchfuehrung.steps.k": "1. Arbeitsstätte einrichten\n2. Auftrag fachgerecht durchführen\n3. Ausführung kontrollieren und ggf. Fehler beheben\n4. Arbeiten dokumentieren",
+"lb4.en.durchfuehrung.fach.k": "- die Gegebenheiten am Arbeitsort zu analysieren.\n- fachliche Unterlagen zu verstehen und fachgerecht umzusetzen.\n- Gesetze und Vorschriften zu beachten.\n- Fehler/Probleme fachgerecht zu beheben.",
+"lb4.en.abschluss.methode.k": "- die Übergabe an den Auftraggeber strukturiert vorzubereiten.\n- eine Rechnung systematisch zu erstellen.",
+"lb4.en.abschluss.sozial.k": "- dem Auftraggeber gegenüber serviceorientiert aufzutreten.\n- sich mit dem Auftraggeber abzustimmen.",
+"lb4.en.abschluss.steps.k": "1. Übergabe durchführen und Auftraggeber einweisen\n2. Reklamationen ggf. serviceorientiert bearbeiten\n3. Rechnung erstellen",
+"lb4.en.abschluss.fach.k": "- die Übergabe an den Auftraggeber adressatengerecht durchzuführen.\n- Reklamationen des Auftraggebers fachlich und rechtlich zu analysieren.\n- Reklamationen des Auftraggebers fachgerecht zu beheben."
+};
+
+/* ---------- Phasen ---------- */
+const PH = [
+  { k: 'annahme', n: 'Auftragsannahme', dat: 'in der Auftragsannahme', bei: 'bei der Auftragsannahme', acc: 'in die Auftragsannahme', nom: 'die Auftragsannahme' },
+  { k: 'planung', n: 'Auftragsplanung', dat: 'in der Auftragsplanung', bei: 'bei der Auftragsplanung', acc: 'in die Auftragsplanung', nom: 'die Auftragsplanung' },
+  { k: 'durchfuehrung', n: 'Auftragsdurchführung', dat: 'in der Auftragsdurchführung', bei: 'bei der Auftragsdurchführung', acc: 'in die Auftragsdurchführung', nom: 'die Auftragsdurchführung' },
+  { k: 'abschluss', n: 'Auftragsabschluss', dat: 'im Auftragsabschluss', bei: 'beim Auftragsabschluss', acc: 'in den Auftragsabschluss', nom: 'der Auftragsabschluss' }
+];
+
+/* ---------- Zustand ---------- */
+const KEY = 'psobf-arbeitsmappe-v1';
+let S = { v: {}, ta: 1 };
+let MODE = 'edit';
+const MODES = {};
+const NAV = { lb: 'lb2', sheet: { lb2: 'bb', lb3: 'pa', lb4: 'vr' } };
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const has = (o, k) => Object.prototype.hasOwnProperty.call(o, k);
+function clean(v) { const o = {}; for (const [k, x] of Object.entries(v || {})) if (typeof x === 'string' || typeof x === 'boolean') o[k] = x; return o; }
+function clampTa(n) { return Math.max(1, Math.min(20, parseInt(n, 10) || 1)); }
+function load() {
+  try {
+    const r = localStorage.getItem(KEY);
+    if (r) { const o = JSON.parse(r); if (o && typeof o.v === 'object') S = { v: clean(o.v), ta: clampTa(o.ta) }; }
+    return true;
+  } catch (e) { return false; }
+}
+let saveT;
+function save() {
+  clearTimeout(saveT);
+  saveT = setTimeout(() => {
+    try { localStorage.setItem(KEY, JSON.stringify(S)); status('Im Browser gespeichert ✓'); }
+    catch (e) { status('Speichern im Browser nicht möglich – bitte „Exportieren“ nutzen', true); }
+  }, 300);
+}
+function status(msg, warn) { const el = document.getElementById('status'); el.textContent = msg; el.classList.toggle('warn', !!warn); }
+function val(k) { return has(S.v, k) ? S.v[k] : (has(DEF, k) ? DEF[k] : ''); }
+
+/* ---------- Bausteine ---------- */
+function qb(exk, hint) {
+  const ex = EX[exk];
+  if (ex === undefined || ex === '' || ex === false) return '';
+  return `<button type="button" class="q" data-q="${esc(exk)}" data-hint="${esc(hint || '')}" aria-label="Hinweis und Beispiel anzeigen" aria-expanded="false" title="Beispiel anzeigen">?</button>`;
+}
+/* Textfeld. o: exk, hint, rows, blue, cap, take{from,label}, noq */
+function F(k, o = {}) {
+  const exk = o.exk || k, hint = o.hint || '';
+  const cls = 'fld' + (o.blue ? ' blue' : '');
+  const cap = o.cap ? `<span class="cap">${esc(o.cap)}</span>` : '';
+  if (MODE === 'ex') {
+    const ex = EX[exk];
+    return `<div class="${cls} exmode">${cap}<div class="exv">${ex ? esc(ex) : '<span class="empty">–</span>'}</div></div>`;
+  }
+  const take = o.take ? `<button type="button" class="take" data-take="${esc(k)}" data-from="${esc(o.take.from)}">${esc(o.take.label)}</button>` : '';
+  const aria = o.aria || o.cap || hint || k;
+  return `<div class="${cls}">${cap}<textarea data-k="${esc(k)}" rows="${o.rows || 3}" placeholder="${esc(hint)}" title="${esc(hint)}" aria-label="${esc(aria)}">${esc(val(k))}</textarea>${o.noq ? '' : qb(exk, hint)}${take}</div>`;
+}
+function CB(k, label, o = {}) {
+  const on = MODE === 'ex' ? EX[k] === true : val(k) === true;
+  const inp = MODE === 'ex'
+    ? `<span class="tk${on ? ' on' : ''}" role="img" aria-label="${esc((o.aria || label) + (on ? ': angekreuzt' : ': nicht angekreuzt'))}">${on ? '✓' : ''}</span>`
+    : `<input type="checkbox" data-c="${esc(k)}"${on ? ' checked' : ''} aria-label="${esc(o.aria || label)}">`;
+  return o.above ? `<label><span>${esc(label)}</span>${inp}</label>` : `<label>${inp}<span>${esc(label)}</span></label>`;
+}
+const row2 = (lab, inner, sub) => `<div class="row"><div class="lab">${lab}${sub ? `<small>${sub}</small>` : ''}</div><div class="cell">${inner}</div></div>`;
+const row3 = (lab, guide, inner) => `<div class="row three"><div class="lab">${lab}</div><div class="guide">${esc(guide)}</div><div class="cell">${inner}</div></div>`;
+const arrow = n => `<span class="arrow">${esc(n)}</span>`;
+
+/* ---------- LB 2 ---------- */
+const BB = [
+  ['betrieb', 'Name / Kontaktdaten des Betriebs:', 'Name, Anschrift, Tel-Nr. und E-Mail-Adresse des Betriebs?', 4],
+  ['experte', 'Ansprechpartner / Arbeitsprozess-Experte(n):', 'Name des Ansprechpartners im Betrieb? Name des (der) Experten, der (die) befragt werden soll(en)?', 3],
+  ['termin', 'Termin und Ort der Analyse:', 'Wann (Tag, Uhrzeit) und wo soll die Arbeitsanalyse durchgeführt werden?', 3],
+  ['dauer', 'Dauer:', 'Wie lange hat die Arbeitsprozessanalyse gedauert?', 1],
+  ['prozess', 'Analysierter Arbeitsprozess (einschl. Szenario):', 'Welcher Arbeitsprozess ist analysiert worden? Welches Produkt / welche Dienstleistung soll bei diesem Arbeitsprozess erbracht werden? In welche Rahmenbedingungen (Kunde, Kollegen, Arbeitsblätter usw.) ist der Arbeitsprozess eingebettet?', 7],
+  ['#doku'],
+  ['dokumente', 'Überlassene Dokumente:', 'Welche Dokumente und Unterlagen wurden vom Betrieb zur Verfügung gestellt?', 4],
+  ['bemerkungen', 'Bemerkungen:', 'Wie war die Gesprächsatmosphäre? Welche Besonderheiten zeigten sich beim Betrieb / beim Gesprächspartner? Sind weitere Punkte zu klären?', 5, 'Gesprächsatmosphäre, Besonderheiten des Betriebes, offene / kritische Punkte, weiterer Klärungsbedarf, usw.']
+];
+const DOKU = ['Arbeitsblätter „Arbeitsprozessanalyse“?', 'Arbeitsblatt „Arbeitsprozess - Varianten“?', 'Arbeitsblatt „Arbeitsprozess - Zuständigkeit“?'];
+function rBB() {
+  return `<div class="box">${BB.map(([k, lab, hint, rows, sub]) => {
+    if (k === '#doku') return row2('Eigene Dokumentation:', `<div class="checks">${DOKU.map((d, i) => CB(`lb2.bb.doku.${i}`, d)).join('')}${MODE === 'ex' ? '' : qb('lb2.bb.doku', '')}</div>`);
+    return row2(lab, F(`lb2.bb.${k}`, { hint, rows }), sub);
+  }).join('')}</div>`;
+}
+const G_GES = '- Gesetze, Verordnungen, Normen, Vorschriften (technisch / fachlich, kaufmännisch, Sicherheit, Gesundheitsschutz)\n- Ökologische Aspekte\n- Soziale Normen';
+const G_RAH = '- Personal\n- Ressourcen';
+const G_ANF = '- Service\n- Qualität\n- Kosten';
+const G_GEG = '- Technik (Produkte, Geräte, Werkzeug, Material)\n- PC und Software\n- Dokumentation\n- Hilfsmittel (Manuals, Kataloge, Listen usw.)';
+function rAP(p) {
+  const b = `lb2.${p.k}.`;
+  return `<div class="box">
+    ${row3('Gesetze, Vorschriften, Normen:', G_GES, F(b + 'gesetze', { rows: 3, hint: `Welche Gesetze, Vorschriften und Normen sind ${p.bei} zu beachten?` }))}
+    ${row3('Betriebliche Rahmenbedingungen:', G_RAH, F(b + 'rahmen', { rows: 3, hint: `Welches Personal ist wie ${p.acc} eingebunden? Welche (zeitlichen, finanziellen, personellen, materiellen) Ressourcen sind ${p.bei} besonders zu berücksichtigen?` }))}
+    ${row3('Anforderungen des Auftraggebers:', G_ANF, F(b + 'anf', { rows: 3, hint: `Was erwartet der Auftraggeber ${p.dat} hinsichtlich Service, Qualität und Kosten?` }))}
+    <div class="phase"><div class="lab">Arbeitsprozessphase</div><div>${arrow(p.n)}</div></div>
+    <div class="row three"><div class="lab">Handlungsschritte:</div>
+      <div class="cell">${F(b + 'steps', { blue: 1, rows: 7, hint: `Welche Handlungsschritte werden ${p.bei} durchlaufen? Bitte den generellen Ablauf anpassen!` })}</div>
+      <div class="cell">${F(b + 'ablauf', { rows: 7, hint: `Wie verläuft ${p.nom} genau? Was ist typisch, was ist besonders, was ist unbedingt zu bedenken?` })}</div></div>
+    ${row3('Arbeitsgegenstände:', G_GEG, F(b + 'gegen', { rows: 4, hint: `Welche Arbeitsgegenstände werden ${p.bei} benötigt?` }))}
+  </div>`;
+}
+function rZU() {
+  let h = `<div class="mx zu"><div class="corner hide-narrow">Arbeitsprozessphase</div>${PH.map(p => `<div class="ph hide-narrow">${arrow(p.n)}</div>`).join('')}`;
+  for (let r = 0; r < 4; r++) {
+    h += `<div class="rl"><div class="sublab">Zuständigkeit</div>${F(`lb2.zust.role.${r}`, { rows: 1, hint: 'Zuständigkeit', aria: `Zuständigkeit ${r + 1}` })}</div>`;
+    PH.forEach(p => {
+      const base = `lb2.zust.${r}.${p.k}`;
+      const boxes = Array.from({ length: 10 }, (_, i) => CB(`${base}.${i + 1}`, String(i + 1), { above: 1, aria: `${p.n}, Nr. ${i + 1}` })).join('');
+      h += `<div class="c"><div class="tcap">${esc(p.n)}</div><div class="ticks">${boxes}${MODE === 'ex' ? '' : qb(base, '')}</div></div>`;
+    });
+  }
+  return h + '</div>';
+}
+
+/* ---------- LB 3 ---------- */
+function rPA() {
+  let h = `<div class="box">
+    ${row2('Berufliches Handlungsfeld:', F('lb3.pa.feld', { rows: 1, hint: 'Wie heißt das Berufliche Handlungsfeld?' }))}
+    ${row2('Curricula:', F('lb3.pa.curricula', { rows: 2, hint: 'Welche curricularen Angaben (Ausbildungsrahmenplan, Rahmenlehrplan, ÜLU-Lehrgang) betrifft das Berufliche Handlungsfeld?' }))}
+    ${row2('Typische Aufträge:', F('lb3.pa.auftraege', { rows: 3, hint: 'Welche Aufträge / Arbeitsprozesse sind typisch für das Berufliche Handlungsfeld?' }))}
+  </div><div class="box"><div class="row half hide-narrow"><div class="colhead">Handlungsschritte</div><div class="colhead">Besonderheiten / Ergänzungen / Streichung / Reihenfolge</div></div>`;
+  PH.forEach(p => {
+    h += `<div class="phase solo"><div style="padding:0 0 0 0">${arrow(p.n)}</div></div><div class="row half">
+      <div class="cell">${F(`lb3.pa.${p.k}.steps`, { blue: 1, rows: 7, cap: 'Handlungsschritte', hint: `Welche Handlungsschritte treten in diesem Beruflichen Handlungsfeld ${p.dat} typischerweise auf?`, take: { from: `lb2.${p.k}.steps`, label: '↧ Handlungsschritte aus LB 2 übernehmen' } })}</div>
+      <div class="cell">${F(`lb3.pa.${p.k}.bes`, { rows: 7, cap: 'Besonderheiten / Ergänzungen / Streichung / Reihenfolge', hint: `Warum ist ein Handlungsschritt ergänzt, gestrichen oder umformuliert worden? Was charakterisiert den Handlungsablauf ${p.dat} in diesem Beruflichen Handlungsfeld? Was unterscheidet dieses Berufliche Handlungsfeld ${p.bei} von anderen?` })}</div></div>`;
+  });
+  return h + '</div>';
+}
+const DIMS = [['fach', 'fachlich', 'fachlicher'], ['methode', 'methodisch', 'methodischer'], ['sozial', 'sozial', 'sozialer']];
+function rKP() {
+  let h = `<div class="mx kp"><div class="title">Berufl. Handlungskompetenz: <span>Die Bearbeitung von Aufträgen aus diesem Handlungsfeld erfordert es, ...</span></div>
+    <div class="hide-narrow"></div>${PH.map(p => `<div class="colhead hide-narrow">${esc(p.n)}</div>`).join('')}`;
+  DIMS.forEach(([d, lab, adj]) => {
+    h += `<div class="dim">${lab}</div>` + PH.map(p => `<div class="c tint">${F(`lb3.kp.${d}.${p.k}`, { blue: 1, rows: 7, cap: p.n, hint: `Was erfordert ${p.nom} in diesem Beruflichen Handlungsfeld in ${adj} Hinsicht?` })}</div>`).join('');
+  });
+  h += `</div><div class="box"><div class="row"><div class="lab hide-narrow"></div><div class="colhead">Spezifikationen und Trends des Beruflichen Handlungsfelds</div></div>
+    ${row2('Technik, Arbeitsgegenstände, Produkte', F('lb3.kp.spez.technik', { rows: 5, hint: 'Welche Technik, Arbeitsgegenstände und Produkte sind für das Berufliche Handlungsfeld typisch? Welche diesbezüglichen Trends könnten das Berufliche Handlungsfeld zukünftig beeinflussen?' }))}
+    ${row2('Gesetze, Vorschriften, Normen', F('lb3.kp.spez.gesetze', { rows: 5, hint: 'Welche Gesetze, Vorschriften und Normen sind für dieses Berufliche Handlungsfeld von zentraler Bedeutung? Welche gesetzlichen Änderungen könnten das Berufliche Handlungsfeld zukünftig beeinflussen?' }))}
+    ${row2('Werkzeuge, Materialien', F('lb3.kp.spez.werkzeuge', { rows: 5, hint: 'Welche Werkzeuge und Materialien sind für das Berufliche Handlungsfeld typisch? Welche diesbezüglichen Trends könnten das Berufliche Handlungsfeld zukünftig beeinflussen?' }))}
+  </div>`;
+  return h;
+}
+
+/* ---------- LB 4 ---------- */
+function tbl(prefix, heads, hints, caps) {
+  let h = `<div class="tblgrid">${heads.map(x => `<div class="th">${x}</div>`).join('')}`;
+  for (let i = 0; i < 5; i++) ['a', 'b', 'c'].forEach((c, j) => { h += `<div class="td">${F(`${prefix}.${i}.${c}`, { rows: 2, hint: hints[j], cap: caps[j], exk: `${prefix}.${i}.${c}` })}</div>`; });
+  return h + '</div>';
+}
+function rVR() {
+  return `<div class="box">
+    ${row2('Lehrgang / Lernfeld:', F('lb4.vr.lehrgang', { rows: 1, hint: 'Zu welchem Lehrgang bzw. Lernfeld wird die Lern- und Arbeitsaufgabe entwickelt?' }))}
+    ${row2('Auszubildende:', `<div class="sub3"><div><div class="sublab">Ausbildungsjahr:</div>${F('lb4.vr.jahr', { rows: 1, hint: 'Ausbildungsjahr?' })}</div><div><div class="sublab">Anzahl:</div>${F('lb4.vr.anzahl', { rows: 1, hint: 'Zahl der Auszubildenden?' })}</div></div>
+      <div class="sublab">Vorerfahrungen / Wissen / Können</div>${F('lb4.vr.vorerf', { rows: 6, hint: 'Über welche Vorerfahrungen, welches Wissen und welche Kenntnisse verfügen die Auszubildenden in Bezug auf den Lehrgang bzw. das Lernfeld bereits?' })}`)}
+  </div><div class="box">
+    ${row2('Kollegen:', tbl('lb4.vr.koll', ['Kollege', 'Schwerpunkte', 'Wann verfügbar?'], ['Name?', 'Fachlicher Schwerpunkt?', 'Zeitfenster?'], ['Kollege', 'Schwerpunkte', 'Wann verfügbar?']))}
+  </div><div class="box">
+    ${row2('Zeitrahmen und Organisationsform:', `<div class="sublab">Zeitrahmen der Lern- und Arbeitsaufgabe</div>${F('lb4.vr.zeitrahmen', { rows: 1, hint: 'Wieviel Zeit steht zur Verfügung?' })}<div class="sublab">Teilzeit / Vollzeit</div>${F('lb4.vr.orga', { rows: 1, hint: 'Teilzeit oder Vollzeit?' })}`)}
+    ${row2('Räume und Ausstattung:', tbl('lb4.vr.raum', ['Räume, Labors, Werkstätten usw.', 'Ausstattung', 'Wann verfügbar?'], ['Welcher Raum?', 'Welche Ausstattung?', ''], ['Räume, Labors, Werkstätten usw.', 'Ausstattung', 'Wann verfügbar?']))}
+  </div>`;
+}
+const EN_ROWS = [
+  { r: 'methode', lab: 'Methodenkompetenz', sub: 'Die Auszubildenden sollen lernen, ...', k: p => `Welche Methodenkompetenzen sollen ${p.dat} gefördert werden?`, i: p => `Welche Inhalte spielen bei der Förderung der Methodenkompetenzen ${p.dat} eine besondere Rolle?`, from: p => `lb3.kp.methode.${p.k}`, src: 'Kompetenzprofil' },
+  { r: 'sozial', lab: 'Sozialkompetenz', sub: 'Die Auszubildenden sollen lernen, ...', k: p => `Welche Sozialkompetenzen sollen ${p.dat} gefördert werden?`, i: p => `Welche Inhalte spielen bei der Förderung der Sozialkompetenzen ${p.dat} eine besondere Rolle?`, from: p => `lb3.kp.sozial.${p.k}`, src: 'Kompetenzprofil' },
+  { r: '#phase' },
+  { r: 'steps', lab: 'Handlungsschritte', sub: 'Die Auszubildenden sollen Folgendes tun:', k: p => `Welche Handlungsschritte ${p.dat} sollen Gegenstand der Lern- und Arbeitsaufgabe sein?`, i: p => `Was ist bei den Handlungsschritten ${p.dat} inhaltlich besonders zu beachten?`, from: p => `lb3.pa.${p.k}.steps`, src: 'Prozessablauf' },
+  { r: 'fach', lab: 'Fachkompetenz', sub: 'Die Auszubildenden sollen lernen, ...', k: p => `Welche Fachkompetenzen sollen ${p.dat} gefördert werden?`, i: p => `Welche Inhalte spielen bei der Förderung der Fachkompetenzen ${p.dat} eine besondere Rolle?`, from: p => `lb3.kp.fach.${p.k}`, src: 'Kompetenzprofil' }
+];
+const INH = 'Inhaltliche Spezifikationen<small>(Grundlagen, Technik, Produkte, Werkzeuge, Materialien, Gesetze, Vorschriften, Normen)</small>';
+function rEN(idx) {
+  const ps = idx.map(i => PH[i]);
+  let h = `<div class="mx en"><div class="hide-narrow"></div>${ps.map(() => `<div class="hide-narrow"></div><div class="colhead hide-narrow">${INH}</div>`).join('')}`;
+  ps.forEach((p, pi) => { h += `<div class="phband" style="--o:${pi * 100}">${esc(p.n)}</div>`; });
+  EN_ROWS.forEach((R, ri) => {
+    if (R.r === '#phase') { h += `<div class="corner hide-narrow">Phase</div>${ps.map(p => `<div class="ph hide-narrow" style="grid-column: span 2; justify-content:center">${arrow(p.n)}</div>`).join('')}`; return; }
+    h += `<div class="rl hide-narrow">${R.lab}<small>${R.sub}</small></div>`;
+    ps.forEach((p, pi) => {
+      const b = `lb4.en.${p.k}.${R.r}`;
+      h += `<div class="c tint" style="--o:${pi * 100 + ri * 10 + 1}">${F(b + '.k', { blue: 1, rows: 6, cap: `${R.lab} – ${R.sub}`, hint: R.k(p), take: { from: R.from(p), label: `↧ aus LB 3 (${R.src}) übernehmen` } })}</div>`;
+      h += `<div class="c" style="--o:${pi * 100 + ri * 10 + 2}">${F(b + '.i', { rows: 6, cap: `${R.lab}: Inhaltliche Spezifikationen`, hint: R.i(p) })}</div>`;
+    });
+  });
+  return h + '</div>';
+}
+const TA = [
+  ['titel', 'Titel:', 'Titel der Teilaufgabe?', 1],
+  ['schritte', 'Handlungsschritt(e):', 'Welche Handlungsschritte sollen Gegenstand dieser Teilaufgabe sein?', 3],
+  ['ziele', 'Ziele:', 'Welche Kompetenzen sollen in dieser Teilaufgabe gefördert werden?', 6],
+  ['inhalte', 'Inhalte:', 'Welche Inhalte spielen bei der Förderung der Kompetenzen in dieser Teilaufgabe eine besondere Rolle?', 6],
+  ['#typus'],
+  ['raeume', 'Benötigte Räume / Ausstattung:', 'Welche Räume und Ausstattung werden für diese Teilaufgabe benötigt?', 3],
+  ['medien', 'Benötigte Materialien / Medien:', 'Welche Materialien und Medien werden für diese Teilaufgabe benötigt?', 4],
+  ['kollegen', 'Benötigte Kollegen (Zuständigkeit):', 'Welche Kollegen übernehmen welche Abschnitte dieser Teilaufgabe?', 3],
+  ['zeit', 'Benötigte Zeit:', 'Wieviel Zeit wird für diese Teilaufgabe benötigt?', 1]
+];
+const TA_FIELDS = ['titel', 'schritte', 'ziele', 'inhalte', 'typus', 'raeume', 'medien', 'kollegen', 'zeit'];
+function radio(n) {
+  const k = `lb4.ta.${n}.typus`, cur = MODE === 'ex' ? 'prozess' : val(k);
+  const opt = (v, l) => `<label><input type="radio" name="${esc(k)}" data-r="${esc(k)}" value="${v}"${cur === v ? ' checked' : ''}${MODE === 'ex' ? ' disabled' : ''}>${l}</label>`;
+  return `<div class="radio">${opt('prozess', 'Prozessorientiert')}${opt('thema', 'Themenorientiert')}${MODE === 'ex' ? '' : qb('lb4.ta.typus', '')}</div>`;
+}
+function rTA() {
+  const count = MODE === 'ex' ? 1 : S.ta;
+  let h = '';
+  for (let n = 0; n < count; n++) {
+    const head = count > 1 || MODE !== 'ex' ? `<h4>Teilaufgabe ${n + 1}${MODE !== 'ex' && count > 1 ? `<button type="button" class="btn ta-remove" data-ta-remove="${n}">Entfernen</button>` : ''}</h4>` : '';
+    h += `<div class="ta-block">${head}<div class="box">${TA.map(([f, lab, hint, rows]) => f === '#typus' ? row2('Typus:', radio(n)) : row2(lab, F(`lb4.ta.${n}.${f}`, { exk: `lb4.ta.${f}`, hint, rows }))).join('')}</div></div>`;
+  }
+  if (MODE !== 'ex') h += `<button type="button" class="btn ta-add" id="ta-add">+ Weitere Teilaufgabe</button>`;
+  return h;
+}
+function rZP() {
+  let h = `<div class="mx zp"><div class="hide-narrow"></div>`;
+  for (let d = 0; d < 5; d++) h += `<div class="ph zp-day" style="display:block">${F(`lb4.zp.day.${d}`, { rows: 1, hint: 'Tag', aria: `Tag ${d + 1}`, cap: `Tag ${d + 1}` })}</div>`;
+  for (let b = 0; b < 4; b++) {
+    const alt = b % 2 ? ' alt' : '';
+    h += `<div class="times${alt}"><span>von</span>${F(`lb4.zp.von.${b}`, { rows: 1, noq: 1, aria: `Block ${b + 1} von` })}<span>bis</span>${F(`lb4.zp.bis.${b}`, { rows: 1, noq: 1, aria: `Block ${b + 1} bis` })}${MODE === 'ex' ? '' : qb(`lb4.zp.zeit.${b}`, '')}</div>`;
+    for (let d = 0; d < 5; d++) {
+      const c = `lb4.zp.${b}.${d}`;
+      h += `<div class="slot${alt}"><div class="tcap">Tag ${d + 1} · Block ${b + 1}</div><div class="slotlab">Teilaufgabe:</div>${F(c + '.ta', { rows: 2, noq: 1, aria: `Tag ${d + 1}, Block ${b + 1}: Teilaufgabe` })}<div class="slotlab">Kollege:</div>${F(c + '.koll', { rows: 1, noq: 1, aria: `Tag ${d + 1}, Block ${b + 1}: Kollege` })}<div class="slotlab">Raum:</div>${F(c + '.raum', { rows: 1, noq: 1, aria: `Tag ${d + 1}, Block ${b + 1}: Raum` })}${MODE === 'ex' ? '' : qb(c, '')}</div>`;
+    }
+  }
+  return h + '</div>';
+}
+
+/* ---------- Struktur ---------- */
+const LBS = [
+  { id: 'lb2', no: 'Lernbaustein 2', name: 'Analysieren und Beschreiben von Arbeitsprozessen', sheets: [
+    { id: 'bb', t: 'Begleitbogen – Analyse', r: rBB },
+    ...PH.map(p => ({ id: 'ap-' + p.k, t: 'Arbeitsprozess – ' + p.n, r: () => rAP(p) })),
+    { id: 'zust', t: 'Arbeitsprozess – Zuständigkeiten', r: rZU }] },
+  { id: 'lb3', no: 'Lernbaustein 3', name: 'Beschreiben von Beruflichen Handlungsfeldern', sheets: [
+    { id: 'pa', t: 'Prozessablauf', r: rPA },
+    { id: 'kp', t: 'Kompetenzprofil', r: rKP }] },
+  { id: 'lb4', no: 'Lernbaustein 4', name: 'Entwickeln von Lern- und Arbeitsaufgaben', sheets: [
+    { id: 'vr', t: 'Voraussetzungen und Rahmenbedingungen', r: rVR },
+    { id: 'en1', t: 'Lern- und Arbeitsaufgabe – Entwurf (Teil 1)', r: () => rEN([0, 1]) },
+    { id: 'en2', t: 'Lern- und Arbeitsaufgabe – Entwurf (Teil 2)', r: () => rEN([2, 3]) },
+    { id: 'ta', t: 'Teilaufgabe', r: rTA },
+    { id: 'zp', t: 'Zeit- und Arbeitsplan', r: rZP }] }
+];
+const lbById = id => LBS.find(l => l.id === id);
+
+function sheetInner(lb, sh) {
+  const m = MODES[lb.id + '/' + sh.id] || 'edit';
+  MODE = m;
+  const body = sh.r();
+  MODE = 'edit';
+  const i = lb.sheets.indexOf(sh), prev = lb.sheets[i - 1], next = lb.sheets[i + 1];
+  return `<div class="sheethead"><h3>${esc(sh.t)}</h3>
+    <div class="modes" role="group" aria-label="Ansicht"><button type="button" data-mode="edit" data-sid="${sh.id}" aria-pressed="${m === 'edit'}">Arbeitsblatt</button><button type="button" data-mode="ex" data-sid="${sh.id}" aria-pressed="${m === 'ex'}">Beispiel (Teil C)</button></div></div>
+    ${m === 'ex' ? '<div class="exbanner">Ausgefülltes Beispielblatt aus Teil C (nur lesen). Ihre eigenen Eingaben bleiben erhalten – zurück über „Arbeitsblatt“.</div>' : ''}
+    <div class="sbody">${body}</div>
+    <div class="pager">${prev ? `<button type="button" class="btn" data-go="${prev.id}">← ${esc(prev.t)}</button>` : '<span></span>'}${next ? `<button type="button" class="btn" data-go="${next.id}">${esc(next.t)} →</button>` : '<span></span>'}</div>`;
+}
+function renderApp() {
+  document.getElementById('lbtabs').innerHTML = LBS.map(lb => `<button type="button" class="lbtab" role="tab" data-lb="${lb.id}" aria-selected="${lb.id === NAV.lb}"><b>${lb.no}</b><span>${esc(lb.name)}</span></button>`).join('');
+  document.getElementById('app').innerHTML = LBS.map(lb => `<section class="lb${lb.id === NAV.lb ? ' active' : ''}" id="${lb.id}" aria-label="${esc(lb.no)}">
+    <div class="lbhead"><h2>${lb.no}: ${esc(lb.name)}</h2><span class="authors">Falk Howe · Sönke Knutzen</span></div>
+    <ul class="sheetnav" aria-label="Arbeitsblätter">${lb.sheets.map(sh => `<li><button type="button" data-go="${sh.id}" aria-current="${NAV.sheet[lb.id] === sh.id}">${esc(sh.t)}</button></li>`).join('')}</ul>
+    <p class="legend"><span><span class="qi">?</span> Hinweis und Beispiel aus Teil C</span><span><span class="bl">Blau</span> vorbelegt: generelle Vorgabe aus Teil B – bitte anpassen</span><span>„Beispiel (Teil C)“ zeigt das ganze ausgefüllte Beispielblatt</span></p>
+    ${lb.sheets.map(sh => `<section class="sheet${NAV.sheet[lb.id] === sh.id ? ' active' : ''}" id="sh-${lb.id}-${sh.id}">${sheetInner(lb, sh)}</section>`).join('')}
+  </section>`).join('');
+  growIn(document.querySelector('.lb.active .sheet.active'));
+}
+function rerenderSheet(lbId, shId) {
+  const lb = lbById(lbId), sh = lb.sheets.find(s => s.id === shId);
+  const el = document.getElementById(`sh-${lbId}-${shId}`);
+  el.innerHTML = sheetInner(lb, sh);
+  growIn(el);
+}
+function show(lbId, shId, scroll) {
+  closePop();
+  NAV.lb = lbId; if (shId) NAV.sheet[lbId] = shId;
+  document.querySelectorAll('.lbtab').forEach(b => b.setAttribute('aria-selected', b.dataset.lb === lbId));
+  document.querySelectorAll('.lb').forEach(s => s.classList.toggle('active', s.id === lbId));
+  const lbEl = document.getElementById(lbId);
+  lbEl.querySelectorAll('.sheetnav button').forEach(b => b.setAttribute('aria-current', b.dataset.go === NAV.sheet[lbId]));
+  lbEl.querySelectorAll('.sheet').forEach(s => s.classList.toggle('active', s.id === `sh-${lbId}-${NAV.sheet[lbId]}`));
+  growIn(lbEl.querySelector('.sheet.active'));
+  try { history.replaceState(null, '', `#${lbId}/${NAV.sheet[lbId]}`); } catch (e) {}
+  if (scroll) lbEl.scrollIntoView({ block: 'start' });
+}
+
+/* ---------- Textfelder wachsen mit ---------- */
+function grow(t) { t.style.height = 'auto'; t.style.height = (t.scrollHeight + 2) + 'px'; }
+function growIn(el) { if (el) el.querySelectorAll('textarea').forEach(grow); }
+
+/* ---------- Popover ---------- */
+const pop = document.getElementById('pop');
+let popBtn = null;
+function closePop() { if (popBtn) popBtn.setAttribute('aria-expanded', 'false'); popBtn = null; pop.classList.remove('open'); }
+function openPop(btn) {
+  if (popBtn === btn) { closePop(); return; }
+  closePop();
+  const ex = EX[btn.dataset.q], hint = btn.dataset.hint;
+  pop.innerHTML = `<button type="button" class="close" aria-label="Schließen">×</button>${hint ? `<h4>Hinweis</h4><p class="hint">${esc(hint)}</p>` : ''}<h4>Beispiel (Teil C)</h4><div class="exv">${esc(ex)}</div>`;
+  pop.classList.add('open');
+  popBtn = btn; btn.setAttribute('aria-expanded', 'true');
+  const r = btn.getBoundingClientRect(), w = pop.offsetWidth, h = pop.offsetHeight;
+  let left = Math.min(Math.max(12, r.right - w), window.innerWidth - w - 12);
+  let top = r.bottom + 6;
+  if (top + h > window.innerHeight - 12) top = Math.max(12, r.top - h - 6);
+  pop.style.left = left + 'px'; pop.style.top = top + 'px';
+}
+
+/* ---------- Übernehmen ---------- */
+function take(btn) {
+  const k = btn.dataset.take, from = btn.dataset.from;
+  const src = String(val(from)), cur = String(val(k));
+  if (!src.trim()) { alert('Im Ausgangsfeld ist noch nichts eingetragen.'); return; }
+  if (cur.trim() && cur !== src && cur !== String(DEF[k] ?? '') && !confirm('Den vorhandenen Eintrag in diesem Feld ersetzen?')) return;
+  S.v[k] = src; save();
+  const t = document.querySelector(`textarea[data-k="${k}"]`);
+  if (t) { t.value = src; grow(t); }
+  status('Übernommen ✓');
+}
+
+/* ---------- Teilaufgaben ---------- */
+function taRemove(n) {
+  if (!confirm(`Teilaufgabe ${n + 1} entfernen?`)) return;
+  for (let i = n; i < S.ta - 1; i++) TA_FIELDS.forEach(f => {
+    const a = `lb4.ta.${i}.${f}`, b = `lb4.ta.${i + 1}.${f}`;
+    if (has(S.v, b)) S.v[a] = S.v[b]; else delete S.v[a];
+  });
+  TA_FIELDS.forEach(f => delete S.v[`lb4.ta.${S.ta - 1}.${f}`]);
+  S.ta = Math.max(1, S.ta - 1); save(); rerenderSheet('lb4', 'ta');
+}
+
+/* ---------- Export / Import / Druck / Reset ---------- */
+function exportJSON() {
+  const data = { app: 'psobf-arbeitsmappe', version: 1, exported: new Date().toISOString(), data: S };
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(data, null, 1)], { type: 'application/json' }));
+  a.download = `arbeitsmappe-psobf-${new Date().toISOString().slice(0, 10)}.json`;
+  document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+  status('Exportiert ✓');
+}
+function importJSON(file) {
+  const fr = new FileReader();
+  fr.onload = () => {
+    try {
+      const o = JSON.parse(fr.result);
+      if (!o || o.app !== 'psobf-arbeitsmappe' || !o.data || typeof o.data.v !== 'object') throw new Error('format');
+      if (!confirm('Alle aktuellen Eingaben durch den Inhalt der Datei ersetzen?')) return;
+      S = { v: clean(o.data.v), ta: clampTa(o.data.ta) }; save(); renderApp(); show(NAV.lb, NAV.sheet[NAV.lb]);
+      status('Importiert ✓');
+    } catch (e) { alert('Die Datei konnte nicht gelesen werden. Bitte eine mit „Exportieren“ erstellte JSON-Datei wählen.'); }
+  };
+  fr.readAsText(file);
+}
+function doPrint(all) {
+  closePop();
+  document.body.classList.toggle('print-all', all);
+  growIn(document.querySelector('.lb.active'));
+  setTimeout(() => window.print(), 60);
+}
+window.addEventListener('beforeprint', () => growIn(document.querySelector('.lb.active')));
+window.addEventListener('afterprint', () => { document.body.classList.remove('print-all'); });
+function resetLB() {
+  const lb = lbById(NAV.lb);
+  if (!confirm(`Alle Eingaben in ${lb.no} zurücksetzen? Blau vorbelegte Felder erhalten wieder die Vorgabe aus Teil B.`)) return;
+  Object.keys(S.v).forEach(k => { if (k.startsWith(lb.id + '.')) delete S.v[k]; });
+  if (lb.id === 'lb4') S.ta = 1;
+  save(); lb.sheets.forEach(sh => rerenderSheet(lb.id, sh.id));
+  status('Zurückgesetzt');
+}
+
+/* ---------- Ereignisse ---------- */
+document.addEventListener('input', e => {
+  const t = e.target;
+  if (t.matches('textarea[data-k]')) { S.v[t.dataset.k] = t.value; save(); grow(t); }
+});
+document.addEventListener('change', e => {
+  const t = e.target;
+  if (t.matches('input[data-c]')) { S.v[t.dataset.c] = t.checked; save(); }
+  else if (t.matches('input[data-r]')) { S.v[t.dataset.r] = t.value; save(); }
+  else if (t.id === 'imp' && t.files[0]) { importJSON(t.files[0]); t.value = ''; }
+});
+document.addEventListener('click', e => {
+  const t = e.target.closest('button');
+  if (!t) { if (!e.target.closest('#pop')) closePop(); return; }
+  if (t.classList.contains('q')) { openPop(t); return; }
+  if (t.classList.contains('close') && t.closest('#pop')) { const b = popBtn; closePop(); if (b) b.focus(); return; }
+  if (!t.closest('#pop')) closePop();
+  if (t.classList.contains('take')) take(t);
+  else if (t.dataset.lb) show(t.dataset.lb, null, false);
+  else if (t.dataset.go) show(NAV.lb, t.dataset.go, t.closest('.pager') !== null);
+  else if (t.dataset.mode) { MODES[NAV.lb + '/' + t.dataset.sid] = t.dataset.mode; rerenderSheet(NAV.lb, t.dataset.sid); }
+  else if (t.dataset.taRemove !== undefined) taRemove(parseInt(t.dataset.taRemove, 10));
+  else if (t.id === 'ta-add') { S.ta = clampTa(S.ta + 1); save(); rerenderSheet('lb4', 'ta'); }
+  else if (t.id === 'b-export') exportJSON();
+  else if (t.id === 'b-import') document.getElementById('imp').click();
+  else if (t.id === 'b-print-sheet') doPrint(false);
+  else if (t.id === 'b-print-lb') doPrint(true);
+  else if (t.id === 'b-reset') resetLB();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && popBtn) { const b = popBtn; closePop(); b.focus(); } });
+window.addEventListener('scroll', closePop, { passive: true });
+let rzT; window.addEventListener('resize', () => { closePop(); clearTimeout(rzT); rzT = setTimeout(() => growIn(document.querySelector('.lb.active .sheet.active')), 150); });
+
+/* ---------- Start ---------- */
+const stored = load();
+(function initNav() {
+  const m = (location.hash || '').match(/^#(lb[234])(?:\/([\w-]+))?/);
+  if (m) { NAV.lb = m[1]; if (m[2] && lbById(m[1]).sheets.some(s => s.id === m[2])) NAV.sheet[m[1]] = m[2]; }
+})();
+renderApp();
+show(NAV.lb, NAV.sheet[NAV.lb]);
+status(stored ? (Object.keys(S.v).length ? 'Gespeicherte Eingaben geladen' : '') : 'Speichern im Browser nicht möglich – bitte „Exportieren“ nutzen', !stored);
+</script>
+</body>
+</html>
